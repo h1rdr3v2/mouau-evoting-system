@@ -1,115 +1,76 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, SafeAreaView, Dimensions } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
+import {useState} from "react";
+import {View} from "react-native";
+import {StatusBar} from "expo-status-bar";
+import {ThemedView} from "@/components/ThemedView";
+import {ThemedText} from "@/components/ThemedText";
+import {ThemedButton} from "@/components/ThemedButton";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const OnboardingScreen = ({ navigation }) => {
+const OnboardingScreen = ( ) => {
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const totalSlides = slides.length;
+    const insets = useSafeAreaInsets();
+    
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.skipContainer}>
-                <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                    <Text style={styles.skipText}>Skip</Text>
-                </TouchableOpacity>
-            </View>
+        <ThemedView className="flex-1" style={{paddingBottom: insets.bottom}}>
+            <ThemedView style={{backgroundColor: 'gray'}} className="w-full flex-grow min-h-[50%]">
+            </ThemedView>
 
-            <View style={styles.contentContainer}>
-                <Image
-                    source={require('@/assets/auth/onboard-1.jpg')}
-                    style={styles.image}
-                    resizeMode="contain"
-                />
+            <ThemedView className="ml-4 mr-4 mt-5 flex flex-col gap-4">
+                {/*Title and caption*/}
+                <ThemedView className="flex flex-col gap-3 items-center">
+                    <ThemedText type="title" className="text-center">Your Campus Voice Matters</ThemedText>
+                    <ThemedText className="text-center">Shape your campus experience by participating in student elections and initiatives</ThemedText>
+                </ThemedView>
 
-                <Text style={styles.title}>Your Campus Voice Matters</Text>
+                {/*Pagination Dots*/}
+                <ThemedView className="flex flex-row justify-center gap-2" style={{marginBottom: 10}}>
+                    {slides.map((_, index) => (
+                        <View
+                            key={`dot-${index}`}
+                            className={`w-2 h-2 rounded-full ${currentSlide === index ? 'bg-primary-light' : 'bg-gray-300'}`}
+                        />
+                    ))}
+                </ThemedView>
 
-                <Text style={styles.subtitle}>
-                    Shape your campus experience by participating in student elections and initiatives
-                </Text>
+                {/* Navigation Buttons */}
+                <ThemedView className="mt-2 mb-4">
+                    <ThemedButton
+                        title={currentSlide < totalSlides - 1 ? 'Next' : 'Login with Student ID'}
+                        variant="primary"
+                        size="large"
+                    />
 
-                <View style={styles.paginationContainer}>
-                    <View style={[styles.paginationDot, styles.activeDot]} />
-                    <View style={styles.paginationDot} />
-                    <View style={styles.paginationDot} />
-                </View>
-            </View>
-
-            <TouchableOpacity
-                style={styles.nextButton}
-                onPress={() => navigation.navigate('NextScreen')}
-            >
-                <Text style={styles.nextButtonText}>Next</Text>
-            </TouchableOpacity>
-
-            <StatusBar style="auto" />
-        </SafeAreaView>
+                    <ThemedButton
+                        title="Back"
+                        variant="text"
+                        className={`opacity-${currentSlide > 0 ? 1 : 0}`}
+                        disabled={currentSlide === 0}
+                    />
+                </ThemedView>
+            </ThemedView>
+            <StatusBar style='dark' />
+        </ThemedView>
     );
 };
 
-const { width } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
+// Slide content data
+const slides = [
+    {
+        image: require('@/assets/auth/onboard-1.jpg'),
+        title: 'Your Campus Voice Matters',
+        subtitle: 'Shape your campus experience by participating in student elections and initiatives.',
     },
-    skipContainer: {
-        alignItems: 'flex-end',
-        paddingHorizontal: 20,
-        paddingTop: 20,
+    {
+        image: require('@/assets/auth/onboard-2.jpg'),
+        title: 'Stay Informed & Engaged',
+        subtitle: 'Get updates on upcoming elections, candidate profiles, and important campus initiatives.',
     },
-    skipText: {
-        fontSize: 16,
-        color: '#333',
-    },
-    contentContainer: {
-        flex: 1,
-        alignItems: 'center',
-        paddingHorizontal: 30,
-        justifyContent: 'center',
-    },
-    image: {
-        width: width * 0.8,
-        height: width * 0.8,
-        marginBottom: 30,
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#051C60',
-        textAlign: 'center',
-        marginBottom: 10,
-    },
-    subtitle: {
-        fontSize: 16,
-        color: '#666',
-        textAlign: 'center',
-        marginBottom: 30,
-    },
-    paginationContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-    },
-    paginationDot: {
-        width: 8,
-        height: 8,
-        borderRadius: 4,
-        backgroundColor: '#ccc',
-        marginHorizontal: 4,
-    },
-    activeDot: {
-        backgroundColor: '#B22222',
-    },
-    nextButton: {
-        backgroundColor: '#051C60',
-        paddingVertical: 15,
-        marginHorizontal: 20,
-        borderRadius: 5,
-        marginBottom: 30,
-        alignItems: 'center',
-    },
-    nextButtonText: {
-        color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-});
+    {
+        image: require('@/assets/auth/onboard-3.jpg'),
+        title: 'Ready to Get Started?',
+        subtitle: 'Sign in to cast your vote and make your voice heard on campus.',
+    }
+];
 
 export default OnboardingScreen;
