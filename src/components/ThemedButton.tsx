@@ -12,6 +12,7 @@ export type ThemedButtonProps = {
     disabled?: boolean;
     onPress?: () => void;
     className?: string;
+    textClassName?: string;
 };
 
 export function ThemedButton({
@@ -24,6 +25,7 @@ export function ThemedButton({
                                  loading = false,
                                  onPress,
                                  className = '',
+                                 textClassName = '',
                              }: ThemedButtonProps) {
     const { currentTheme } = useTheme();
     const isDark = currentTheme === 'dark';
@@ -97,7 +99,7 @@ export function ThemedButton({
                         color={getLoaderColor()}
                     />
                 ) : (
-                    <Text className={textClasses}>
+                    <Text className={`${textClasses} ${textClassName}`}>
                         {title}
                     </Text>
                 )}

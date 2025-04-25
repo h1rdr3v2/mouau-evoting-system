@@ -1,20 +1,63 @@
 import {useState} from "react";
-import {View} from "react-native";
+import {Image, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import {ThemedView} from "@/components/ThemedView";
 import {ThemedText} from "@/components/ThemedText";
 import {ThemedButton} from "@/components/ThemedButton";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {router} from "expo-router";
 
 const OnboardingScreen = ( ) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const totalSlides = slides.length;
     const insets = useSafeAreaInsets();
-    
+    const isLastSlide = currentSlide === totalSlides - 1;
+
+    // Helper function
+    const goToSlide = (index: number) => {
+        //Do anything else
+        setCurrentSlide(index);
+    };
+
+    // Navigation functions
+    const handleNext = () => {
+        if (currentSlide < totalSlides - 1) {
+            goToSlide(currentSlide + 1);
+        } else {
+            router.push('/login')
+        }
+    };
+
+    const handlePrev = () => {
+        if(isLastSlide) {
+            router.push('//help') // Need help button clicked
+        }else if (currentSlide > 0) {
+            goToSlide(currentSlide - 1);
+        }
+    };
+
+    const handleSkip = () => {
+        goToSlide(totalSlides - 1);
+    };
+
+
     return (
         <ThemedView className="flex-1" style={{paddingBottom: insets.bottom}}>
-            <ThemedView style={{backgroundColor: 'gray'}} className="w-full flex-grow min-h-[50%]">
-            </ThemedView>
+            <View className="w-full h-[70%] relative">
+                <View style={{zIndex: 10, top: insets.top}} className="absolute right-0" >
+                    <ThemedButton
+                        title="Skip"
+                        variant='text'
+                        textClassName='text-black'
+                        onPress={handleSkip}
+                    />
+                </View>
+                <Image
+                    source={require('@/assets/auth/onboard-1.jpg')}
+                    className='w-full h-full'
+                    resizeMode='cover'
+                />
+            </View>
 
             <ThemedView className="ml-4 mr-4 mt-5 flex flex-col gap-4">
                 {/*Title and caption*/}
@@ -36,16 +79,18 @@ const OnboardingScreen = ( ) => {
                 {/* Navigation Buttons */}
                 <ThemedView className="mt-2 mb-4">
                     <ThemedButton
-                        title={currentSlide < totalSlides - 1 ? 'Next' : 'Login with Student ID'}
+                        title={!isLastSlide ? 'Next' : 'Login with Student ID'}
                         variant="primary"
                         size="large"
+                        onPress={handleNext}
                     />
 
                     <ThemedButton
-                        title="Back"
+                        title={!isLastSlide ? 'Back' : 'Need Help?'}
                         variant="text"
                         className={`opacity-${currentSlide > 0 ? 1 : 0}`}
                         disabled={currentSlide === 0}
+                        onPress={handlePrev}
                     />
                 </ThemedView>
             </ThemedView>
