@@ -5,7 +5,7 @@ export default function StackLayout() {
     return (
         <Stack
             screenOptions={{
-                headerShown: true,
+                headerShown: false,
             }}
         >
             <Stack.Screen name="onboarding" />

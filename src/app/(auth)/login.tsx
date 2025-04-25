@@ -1,11 +1,11 @@
 import React from 'react';
-import {Text, View} from "react-native";
+import {SafeAreaView, Text, View} from "react-native";
 
 function Login() {
     return (
-        <View>
+        <SafeAreaView>
             <Text>Login Screen</Text>
-        </View>
+        </SafeAreaView>
     );
 }
 
