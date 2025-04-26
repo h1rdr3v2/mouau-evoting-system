@@ -1,5 +1,5 @@
 import React from 'react';
-import {KeyboardAvoidingView, ScrollView, Platform} from "react-native";
+import {KeyboardAvoidingView, ScrollView, Platform, View, Image} from "react-native";
 import {ThemedText} from "@/components/ThemedText";
 import {ThemedView} from "@/components/ThemedView";
 
@@ -16,11 +16,16 @@ function Verification() {
                 contentContainerStyle={{flexGrow: 1}}
                 keyboardShouldPersistTaps="handled"
             >
-                <ThemedView className='flex flex-col items-center'>
+                <ThemedView className='flex flex-col flex-grow items-center'>
+                    <View className='my-12'>
+                        <Image
+                            source={require('@/assets/auth/verification-illustraion.png')}
+                        />
+                    </View>
                     <ThemedText type='title'>
                         Verification Code
                     </ThemedText>
-                    <ThemedText className='w-[288px] leading-4 text-center opacity-70 font-medium text-xs mt-2'>
+                    <ThemedText className='w-[288px] text-xs leading-[13px] text-center opacity-70 font-montserrat-medium mt-2 mb-8'>
                         Enter the 4-digit verification code that was sent to your school email that ends in @mouau.edu.ng attached with your matric number
                     </ThemedText>
                 </ThemedView>

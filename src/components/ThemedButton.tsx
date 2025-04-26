@@ -58,7 +58,7 @@ export function ThemedButton({
     }
 
     // Text classes
-    let textClasses = "font-semibold";
+    let textClasses = "font-montserrat-semibold";
 
     if (variant === 'primary') {
         textClasses += " text-white dark:text-text-dark";
