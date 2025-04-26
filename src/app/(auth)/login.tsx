@@ -41,7 +41,7 @@ function Login() {
                         resizeMode='cover'
                     />
                 </View>
-                <ThemedView className='w-full pl-4 pr-4 flex-grow'>
+                <ThemedView className='w-full px-4 flex-grow'>
                     <ThemedText type='title' className='mt-6'>
                         Login with your Matric Number
                     </ThemedText>
@@ -55,14 +55,14 @@ function Login() {
                         keyboardType="default"
                         containerClassName='pt-6'
                     />
-                    <View className='flex flex-row gap-3 items-center justify-center mb-7'>
+                    <View className='flex flex-row gap-3 w-full items-center mb-7'>
                         <Checkbox
                             value={isChecked}
                             style={{borderRadius: 4}}
                             onValueChange={setChecked}
                             color={isChecked ? '#000' : undefined}
                         />
-                        <ThemedText className='opacity-70'>
+                        <ThemedText className='opacity-70 flex-1'>
                             By logging in, you agree to the terms of service and school election rules.
                         </ThemedText>
                     </View>
