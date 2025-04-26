@@ -1,11 +1,11 @@
 import {useState} from "react";
+import {router} from "expo-router";
 import {Image, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import {ThemedView} from "@/components/ThemedView";
 import {ThemedText} from "@/components/ThemedText";
 import {ThemedButton} from "@/components/ThemedButton";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {router} from "expo-router";
 
 const OnboardingScreen = ( ) => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -15,7 +15,7 @@ const OnboardingScreen = ( ) => {
 
     // Helper function
     const goToSlide = (index: number) => {
-        //Do anything else
+        // Do anything else
         setCurrentSlide(index);
     };
 
@@ -48,7 +48,8 @@ const OnboardingScreen = ( ) => {
                     <ThemedButton
                         title="Skip"
                         variant='text'
-                        textClassName='text-black'
+                        className={!isLastSlide ? 'block' : 'hidden'}
+                        textClassName='color-black dark:color-black'
                         onPress={handleSkip}
                     />
                 </View>
@@ -88,8 +89,7 @@ const OnboardingScreen = ( ) => {
                     <ThemedButton
                         title={!isLastSlide ? 'Back' : 'Need Help?'}
                         variant="text"
-                        className={`opacity-${currentSlide > 0 ? 1 : 0}`}
-                        disabled={currentSlide === 0}
+                        className={currentSlide > 0 ? 'block' : 'hidden'}
                         onPress={handlePrev}
                     />
                 </ThemedView>
