@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { View, TextInput, Text, Pressable, TextInputProps } from 'react-native';
+import { View, TextInput, Text, Pressable, TextInputProps, Platform, StyleSheet } from 'react-native';
 import { useTheme } from '@/core/contexts/ThemeContext';
 
 export type ThemedInputProps = TextInputProps & {
@@ -33,6 +33,7 @@ export const ThemedInput = forwardRef<TextInput, ThemedInputProps>(
             labelClassName = '',
             disabled = false,
             secureTextEntry,
+            style,
             ...rest
         },
         ref
@@ -92,6 +93,21 @@ export const ThemedInput = forwardRef<TextInput, ThemedInputProps>(
             inputWrapperClasses += " opacity-50 bg-gray-50 dark:bg-gray-900";
         }
 
+        // Create input styles based on size and platform
+        const getLineHeight = () => {
+            if (size === 'large') return 22;
+            if (size === 'medium') return 20;
+            return 18; // small
+        };
+
+        const inputStyles = StyleSheet.create({
+            input: {
+                ...(Platform.OS === 'ios'
+                    ? { lineHeight: getLineHeight() }
+                    : { textAlignVertical: 'center' }),
+            }
+        });
+
         return (
             <View className={`${containerClasses} ${containerClassName}`}>
                 {label && (
@@ -113,6 +129,7 @@ export const ThemedInput = forwardRef<TextInput, ThemedInputProps>(
                         placeholderTextColor={isDark ? "#9ca3af" : "#6b7280"}
                         editable={!disabled}
                         secureTextEntry={secureTextEntry}
+                        style={[inputStyles.input, style]}
                         {...rest}
                     />
 
