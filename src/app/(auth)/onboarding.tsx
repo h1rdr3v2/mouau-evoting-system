@@ -64,7 +64,7 @@ const OnboardingScreen = ( ) => {
 
     return (
         <ThemedView className="flex-1" style={{paddingBottom: insets.bottom}}>
-            <View className="w-full h-[70%] relative">
+            <View className="w-full h-[67%] relative">
                 <View style={{zIndex: 10, top: insets.top}} className="absolute right-0" >
                     <ThemedButton
                         title="Skip"
@@ -84,7 +84,7 @@ const OnboardingScreen = ( ) => {
             <ThemedView className="ml-4 mr-4 mt-5 flex flex-col gap-4">
                 {/*Title and caption*/}
                 <ThemedView className="flex flex-col gap-3 items-center">
-                    <ThemedText type="title" className="text-center">{currentSlideData.title}</ThemedText>
+                    <ThemedText type="title" className="text-center max-w-[300px]">{currentSlideData.title}</ThemedText>
                     <ThemedText className="text-center">{currentSlideData.subtitle}</ThemedText>
                 </ThemedView>
 
@@ -110,7 +110,7 @@ const OnboardingScreen = ( ) => {
                     <ThemedButton
                         title={!isLastSlide ? 'Back' : 'Need Help?'}
                         variant="text"
-                        className={currentSlide > 0 ? 'block' : 'hidden'}
+                        className={currentSlide > 0 ? 'block' : 'invisible'}
                         onPress={handlePrev}
                     />
                 </ThemedView>
