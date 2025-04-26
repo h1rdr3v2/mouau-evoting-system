@@ -14,15 +14,15 @@ export function ThemedText({
       let textClasses = "";
 
       if (type === 'default') {
-        textClasses += "text-base leading-6";
+        textClasses += "text-base font-montserrat leading-6";
       } else if (type === 'defaultSemiBold') {
-        textClasses += "text-base leading-6 font-semibold";
+        textClasses += "text-base leading-6 font-montserrat-semibold";
       } else if (type === 'title') {
-        textClasses += "text-3xl font-bold leading-8";
+        textClasses += "text-3xl font-montserrat-bold leading-8";
       } else if (type === 'subtitle') {
-        textClasses += "text-xl font-bold";
+        textClasses += "text-xl font-montserrat-bold";
       } else if (type === 'link') {
-        textClasses += "text-base leading-7 text-[#0a7ea4]";
+        textClasses += "text-base leading-7 font-montserrat text-[#0a7ea4]";
       }
 
       return (
