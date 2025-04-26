@@ -7,14 +7,27 @@ import {ThemedText} from "@/components/ThemedText";
 import {ThemedInput} from "@/components/ThemedInput";
 import {ThemedButton} from "@/components/ThemedButton";
 import {Image, KeyboardAvoidingView, ScrollView, Text, View, Platform, Pressable} from "react-native";
+import {useAuth} from "@/core/contexts/AuthContext";
 
 function Login() {
     const [isChecked, setChecked] = useState(false);
+    const [inputValue, setInputValue] = useState('');
+    const [error, setError] = useState<string>('');
+    const { login } = useAuth();
 
-    const goToVerification = () => {
-        router.push("/verification");
+    const goToVerification = async () => {
+        const response: boolean = await login(inputValue);
+        if (response) {
+            router.push("/verification");
+        }else{
+            setError('Login failed!')
+        }
     }
 
+    const handleTextChange = (inputValue: string)=> {
+        setInputValue(inputValue);
+        setError('');
+    }
     return (
         <KeyboardAvoidingView
             style={{flex: 1}}
@@ -54,6 +67,8 @@ function Login() {
                         autoCapitalize="characters"
                         keyboardType="default"
                         containerClassName='pt-6'
+                        error={error}
+                        onChangeText={handleTextChange}
                     />
                     <View className='flex flex-row gap-3 w-full items-center mb-7'>
                         <Checkbox

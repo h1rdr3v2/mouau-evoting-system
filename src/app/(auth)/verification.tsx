@@ -1,13 +1,17 @@
+import {router} from "expo-router";
 import React, {useState} from 'react';
 import {ThemedText} from "@/components/ThemedText";
 import {ThemedView} from "@/components/ThemedView";
 import {ThemedButton} from "@/components/ThemedButton";
 import {KeyboardAvoidingView, ScrollView, Platform, View, Image, TextInput, Alert} from "react-native";
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
+import {useAuth} from "@/core/contexts/AuthContext";
+
+const CELL_COUNT = 4;
 
 function Verification() {
     const [value, setValue] = useState('');
-    const CELL_COUNT = 4;
+    const { verifyOtp } = useAuth();
 
     const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
     const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -15,8 +19,13 @@ function Verification() {
         setValue,
     });
 
-    const handleFullLogin = () => {
-        Alert.alert("Logged in!", "We did it, you logged in!");
+    const handleFullLogin = async () => {
+        const response: boolean = await verifyOtp(value)
+        if (response) {
+            router.replace('/')
+        }else{
+            Alert.alert("Incorrect OTP", "The otp you entered is incorrect please try again.")
+        }
     }
 
     return (

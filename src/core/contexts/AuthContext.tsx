@@ -32,11 +32,11 @@ const AuthService = {
     },
 
     // User login
-    login: async (email: string): Promise<{ success: boolean; userId?: number; temp_token?: string; }> => {
+    login: async (regno: string): Promise<{ success: boolean; userId?: number; temp_token?: string; }> => {
         if (AuthService.USE_MOCK_DATA) {
             // Mock implementation
             // Finds a user with matching email in mockUsers
-            const user = mockUsers.find(u => u.email === email);
+            const user = mockUsers.find(u => u.regNo === regno);
 
             // Simulate password check (in real app, never hard-code passwords)
             if (user) {
@@ -124,7 +124,7 @@ type AuthContextType = {
     user: User | null;
     isLoading: boolean;
     isAdmin: boolean;
-    login: (email: string, password: string) => Promise<boolean>;
+    login: (reg_no: string) => Promise<boolean>;
     logout: () => Promise<void>;
     verifyOtp: (code: string) => Promise<boolean>;
 };
@@ -192,10 +192,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     // Login function
-    const login = async (email: string): Promise<boolean> => {
+    const login = async (reg_no: string): Promise<boolean> => {
         setIsLoading(true);
         try {
-            const result = await AuthService.login(email);
+            const result = await AuthService.login(reg_no);
 
             if (result.success && result.temp_token && result.userId) {
                 setTempToken(result.temp_token);
