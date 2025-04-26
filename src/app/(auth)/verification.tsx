@@ -1,23 +1,29 @@
 import React, {useState} from 'react';
-import {KeyboardAvoidingView, ScrollView, Platform, View, Text, Image} from "react-native";
 import {ThemedText} from "@/components/ThemedText";
 import {ThemedView} from "@/components/ThemedView";
+import {ThemedButton} from "@/components/ThemedButton";
+import {KeyboardAvoidingView, ScrollView, Platform, View, Image, TextInput, Alert} from "react-native";
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
-
 
 function Verification() {
     const [value, setValue] = useState('');
-    const ref = useBlurOnFulfill({value, cellCount: 6});
+    const CELL_COUNT = 4;
+
+    const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
     const [props, getCellOnLayoutHandler] = useClearByFocusCell({
         value,
         setValue,
     });
 
+    const handleFullLogin = () => {
+        Alert.alert("Logged in!", "We did it, you logged in!");
+    }
+
     return (
         <KeyboardAvoidingView
             style={{flex: 1}}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 120 : 20}
         >
             <ScrollView
                 style={{flex: 1}}
@@ -38,13 +44,13 @@ function Verification() {
                     </ThemedText>
 
                     {/*Code input here*/}
-                    <View className='w-full'>
+                    <View className='w-full mb-8'>
                         <CodeField
                             ref={ref}
                             {...props}
                             value={value}
                             onChangeText={setValue}
-                            cellCount={4}
+                            cellCount={CELL_COUNT}
                             keyboardType="number-pad"
                             textContentType="oneTimeCode" // enables auto-fill
                             renderCell={({index, symbol, isFocused}) => (
@@ -53,13 +59,30 @@ function Verification() {
                                     className="flex-1 h-24 border-2 rounded-md mx-2 border-gray-300 items-center justify-center"
                                     style={isFocused && {borderColor: '#000'}}
                                     onLayout={getCellOnLayoutHandler(index)}>
-                                    <ThemedText className="text-xl font-montserrat-medium">
+                                    <TextInput className="text-3xl font-montserrat-medium dark:text-text-dark">
                                         {symbol || (isFocused ? <Cursor /> : null)}
-                                    </ThemedText>
+                                    </TextInput>
                                 </ThemedView>
                             )}
                         />
+                        <View  className='flex flex-row items-center gap-1 self-center pt-6'>
+                            <ThemedText className=''>Didn’t get the code?</ThemedText>
+                            <ThemedButton
+                                title='Resend'
+                                variant='text'
+                                className='px-0 py-0 min-w-0'
+                            />
+                        </View>
                     </View>
+
+                    {/*Continue button*/}
+                    <ThemedButton
+                        title='Continue'
+                        size='large'
+                        className='w-full'
+                        onPress={handleFullLogin}
+                        disabled={value.length < CELL_COUNT}
+                    />
                 </ThemedView>
             </ScrollView>
         </KeyboardAvoidingView>

@@ -6,7 +6,7 @@ import {ThemedView} from "@/components/ThemedView";
 import {ThemedText} from "@/components/ThemedText";
 import {ThemedInput} from "@/components/ThemedInput";
 import {ThemedButton} from "@/components/ThemedButton";
-import {Image, KeyboardAvoidingView, ScrollView, Text, View, Platform} from "react-native";
+import {Image, KeyboardAvoidingView, ScrollView, Text, View, Platform, Pressable} from "react-native";
 
 function Login() {
     const [isChecked, setChecked] = useState(false);
@@ -62,9 +62,18 @@ function Login() {
                             onValueChange={setChecked}
                             color={isChecked ? '#000' : undefined}
                         />
-                        <ThemedText className='opacity-70 flex-1'>
-                            By logging in, you agree to the terms of service and school election rules.
-                        </ThemedText>
+                        <Pressable
+                            onPress={() => setChecked(!isChecked)}
+                            className='flex-1'
+                            android_ripple={{color: 'rgba(0,0,0,0.1)'}}
+                            style={({pressed}) => [
+                                {opacity: pressed ? 0.8 : 1}
+                            ]}
+                        >
+                            <ThemedText className='opacity-70'>
+                                By logging in, you agree to the terms of service and school election rules.
+                            </ThemedText>
+                        </Pressable>
                     </View>
                     <ThemedButton
                         title="Continue"
