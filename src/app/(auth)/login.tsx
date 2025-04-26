@@ -25,6 +25,11 @@ function Login() {
                     <Text className='z-10 w-[300px] text-5xl/[50px] absolute text-white bottom-10 left-4 font-black'>
                         A Citadel For Learning
                     </Text>
+                    <View className='z-10 absolute text-white flex justify-center top-safe right-4 bg-white px-3 rounded-lg h-[39px]'>
+                        <Image
+                            source={require('@/assets/images/logo-transparent-label.png')}
+                        />
+                    </View>
                     <Image
                         source={require('@/assets/auth/login-img-head.png')}
                         className='w-full h-full'
