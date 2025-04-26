@@ -7,6 +7,25 @@ import {ThemedText} from "@/components/ThemedText";
 import {ThemedButton} from "@/components/ThemedButton";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+// Slide content data
+const slides = [
+    {
+        image: require('@/assets/auth/onboard-1.jpg'),
+        title: 'Your Campus Voice Matters',
+        subtitle: 'Shape your campus experience by participating in student elections and initiatives.',
+    },
+    {
+        image: require('@/assets/auth/onboard-2.jpg'),
+        title: 'Stay Informed & Engaged',
+        subtitle: 'Get updates on upcoming elections, candidate profiles, and important campus initiatives.',
+    },
+    {
+        image: require('@/assets/auth/onboard-3.jpg'),
+        title: 'Ready to Get Started?',
+        subtitle: 'Sign in to cast your vote and make your voice heard on campus.',
+    }
+];
+
 const OnboardingScreen = ( ) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const totalSlides = slides.length;
@@ -40,6 +59,8 @@ const OnboardingScreen = ( ) => {
         goToSlide(totalSlides - 1);
     };
 
+    // Get current slide data
+    const currentSlideData = slides[currentSlide];
 
     return (
         <ThemedView className="flex-1" style={{paddingBottom: insets.bottom}}>
@@ -54,7 +75,7 @@ const OnboardingScreen = ( ) => {
                     />
                 </View>
                 <Image
-                    source={require('@/assets/auth/onboard-1.jpg')}
+                    source={currentSlideData.image}
                     className='w-full h-full'
                     resizeMode='cover'
                 />
@@ -63,8 +84,8 @@ const OnboardingScreen = ( ) => {
             <ThemedView className="ml-4 mr-4 mt-5 flex flex-col gap-4">
                 {/*Title and caption*/}
                 <ThemedView className="flex flex-col gap-3 items-center">
-                    <ThemedText type="title" className="text-center">Your Campus Voice Matters</ThemedText>
-                    <ThemedText className="text-center">Shape your campus experience by participating in student elections and initiatives</ThemedText>
+                    <ThemedText type="title" className="text-center">{currentSlideData.title}</ThemedText>
+                    <ThemedText className="text-center">{currentSlideData.subtitle}</ThemedText>
                 </ThemedView>
 
                 {/*Pagination Dots*/}
@@ -98,24 +119,5 @@ const OnboardingScreen = ( ) => {
         </ThemedView>
     );
 };
-
-// Slide content data
-const slides = [
-    {
-        image: require('@/assets/auth/onboard-1.jpg'),
-        title: 'Your Campus Voice Matters',
-        subtitle: 'Shape your campus experience by participating in student elections and initiatives.',
-    },
-    {
-        image: require('@/assets/auth/onboard-2.jpg'),
-        title: 'Stay Informed & Engaged',
-        subtitle: 'Get updates on upcoming elections, candidate profiles, and important campus initiatives.',
-    },
-    {
-        image: require('@/assets/auth/onboard-3.jpg'),
-        title: 'Ready to Get Started?',
-        subtitle: 'Sign in to cast your vote and make your voice heard on campus.',
-    }
-];
 
 export default OnboardingScreen;
