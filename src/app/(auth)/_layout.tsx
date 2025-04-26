@@ -10,7 +10,11 @@ export default function StackLayout() {
         >
             <Stack.Screen name="onboarding" />
             <Stack.Screen name="login" />
-            <Stack.Screen name="confirmotp" />
+            <Stack.Screen name="verification" options={{
+                headerShown: true,
+                title: "",
+                headerBackTitle: "Back" }}
+            />
         </Stack>
     );
 }

@@ -1,3 +1,4 @@
+import {router} from "expo-router";
 import React, {useState} from 'react';
 import { Checkbox } from 'expo-checkbox';
 import { UserRound } from "lucide-react-native";
@@ -9,6 +10,10 @@ import {Image, KeyboardAvoidingView, ScrollView, Text, View, Platform} from "rea
 
 function Login() {
     const [isChecked, setChecked] = useState(false);
+
+    const goToVerification = () => {
+        router.push("/verification");
+    }
 
     return (
         <KeyboardAvoidingView
@@ -65,6 +70,7 @@ function Login() {
                         title="Continue"
                         disabled={!isChecked}
                         size='large'
+                        onPress={goToVerification}
                     />
                     <ThemedButton
                         title='Need Help?'
