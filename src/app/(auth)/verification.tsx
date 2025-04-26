@@ -23,7 +23,7 @@ function Verification() {
         <KeyboardAvoidingView
             style={{flex: 1}}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 120 : 20}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 20}
         >
             <ScrollView
                 style={{flex: 1}}
@@ -53,6 +53,8 @@ function Verification() {
                             cellCount={CELL_COUNT}
                             keyboardType="number-pad"
                             textContentType="oneTimeCode" // enables auto-fill
+                            autoComplete={(Platform.select({ android: 'sms-otp', default: 'one-time-code' })) as 'sms-otp' | 'one-time-code'}
+                            testID="verification-code-input"
                             renderCell={({index, symbol, isFocused}) => (
                                 <ThemedView
                                     key={index}
