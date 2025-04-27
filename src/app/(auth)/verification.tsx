@@ -6,6 +6,7 @@ import {ThemedButton} from "@/components/ThemedButton";
 import {KeyboardAvoidingView, ScrollView, Platform, View, Image, TextInput, Alert} from "react-native";
 import {CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell} from 'react-native-confirmation-code-field';
 import {useAuth} from "@/core/contexts/AuthContext";
+import {ThemeToggle} from "@/components/ThemeToggle";
 
 const CELL_COUNT = 4;
 
@@ -86,7 +87,7 @@ function VerificationScreen() {
 							<ThemedButton
 								title='Resend'
 								variant='text'
-								className='py-[0px] px-[0px] min-w-[0px]'
+								className='min-w-0 py-0 px-0'
 							/>
 						</View>
 					</View>
@@ -100,6 +101,7 @@ function VerificationScreen() {
 						disabled={value.length < CELL_COUNT}
 					/>
 				</ThemedView>
+				<ThemeToggle/>
 			</ScrollView>
 		</KeyboardAvoidingView>
 	);
