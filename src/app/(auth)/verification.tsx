@@ -83,11 +83,11 @@ function VerificationScreen() {
 							)}
 						/>
 						<View className='flex flex-row items-center gap-1 self-center pt-6'>
-							<ThemedText className=''>Didn’t get the code?</ThemedText>
+							<ThemedText>Didn’t get the code?</ThemedText>
 							<ThemedButton
 								title='Resend'
 								variant='text'
-								className='min-w-0 py-0 px-0'
+								className='min-w-[0px] -ml-3'
 							/>
 						</View>
 					</View>

@@ -37,7 +37,7 @@ export function ThemedButton({
 	if (variant === 'primary') {
 		buttonClasses += " bg-primary-light";
 	} else if (variant === 'secondary') {
-		buttonClasses += " border border-primary-light bg-transparent";
+		buttonClasses += " border border-primary-light dark:border-primary-dark bg-transparent";
 	} else if (variant === 'text') {
 		buttonClasses += " bg-transparent";
 	}
