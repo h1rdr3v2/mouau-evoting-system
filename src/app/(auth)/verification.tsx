@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {ThemedText} from "@/components/ThemedText";
 import {ThemedView} from "@/components/ThemedView";
 import {ThemedButton} from "@/components/ThemedButton";
-import {KeyboardAvoidingView, ScrollView, Platform, View, Image, TextInput, Alert} from "react-native";
+import {KeyboardAvoidingView, ScrollView, Platform, View, Image, TextInput, Alert, Pressable} from "react-native";
 import {CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell} from 'react-native-confirmation-code-field';
 import {useAuth} from "@/core/contexts/AuthContext";
 import {ThemeToggle} from "@/components/ThemeToggle";
@@ -84,11 +84,12 @@ function VerificationScreen() {
 						/>
 						<View className='flex flex-row items-center gap-1 self-center pt-6'>
 							<ThemedText>Didn’t get the code?</ThemedText>
-							<ThemedButton
-								title='Resend'
-								variant='text'
-								className='min-w-[0px] -ml-3'
-							/>
+							<Pressable>
+								<ThemedText
+									className="font-montserrat-semibold dark:text-white text-primary-light text-lg">
+									Resend
+								</ThemedText>
+							</Pressable>
 						</View>
 					</View>
 					
