@@ -86,7 +86,7 @@ function VerificationScreen() {
 							<ThemedButton
 								title='Resend'
 								variant='text'
-								className='px-0 py-0 min-w-0'
+								className='py-[0px] px-[0px] min-w-[0px]'
 							/>
 						</View>
 					</View>
