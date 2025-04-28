@@ -2,25 +2,25 @@ import {router} from "expo-router";
 import React, {useState} from 'react';
 import {Checkbox} from 'expo-checkbox';
 import {UserRound} from "lucide-react-native";
+import {useAuth} from "@/core/queries/useAuth";
 import {ThemedView} from "@/components/ThemedView";
 import {ThemedText} from "@/components/ThemedText";
 import {ThemedInput} from "@/components/ThemedInput";
 import {ThemedButton} from "@/components/ThemedButton";
 import {Image, KeyboardAvoidingView, ScrollView, Text, View, Platform, Pressable} from "react-native";
-import {useAuth} from "@/core/contexts/AuthContext";
 
 function LoginScreen() {
 	const [isChecked, setChecked] = useState(false);
 	const [inputValue, setInputValue] = useState('');
 	const [error, setError] = useState<string>('');
-	const {login} = useAuth();
+	const {login, isLoading, loginError} = useAuth();
 	
 	const goToVerification = async () => {
-		const response: boolean = await login(inputValue);
-		if (response) {
-			router.push("/verification");
+		const response: boolean = (await login(inputValue)).success;
+		if (!response) {
+			setError(loginError ? loginError.message : "Login failed");
 		} else {
-			setError('Login failed!')
+			router.push("/verification");
 		}
 	}
 	
@@ -96,6 +96,7 @@ function LoginScreen() {
 					<ThemedButton
 						title="Continue"
 						disabled={!isChecked}
+						loading={isLoading}
 						size='large'
 						onPress={goToVerification}
 					/>

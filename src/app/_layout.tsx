@@ -1,13 +1,12 @@
 import "../../global.css";
+import * as Network from 'expo-network'
 import {StatusBar} from "expo-status-bar";
 import {SplashScreen, Stack} from "expo-router";
 import React, {useEffect, useState} from "react";
-import {AuthProvider} from "@/core/contexts/AuthContext";
+import {onlineManager} from '@tanstack/react-query'
 import {ThemeProvider} from "@/core/contexts/ThemeContext";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import * as Network from 'expo-network'
-import {onlineManager} from '@tanstack/react-query'
 
 onlineManager.setEventListener((setOnline) => {
 	const eventSubscription = Network.addNetworkStateListener((state) => {
@@ -96,9 +95,7 @@ export default function RootLayout() {
 		<GestureHandlerRootView style={{flex: 1}}>
 			<QueryClientProvider client={queryClient}>
 				<ThemeProvider>
-					<AuthProvider>
-						<AppContent/>
-					</AuthProvider>
+					<AppContent/>
 				</ThemeProvider>
 			</QueryClientProvider>
 		</GestureHandlerRootView>

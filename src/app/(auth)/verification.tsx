@@ -1,11 +1,11 @@
 import {router} from "expo-router";
 import React, {useState} from 'react';
+import {useAuth} from "@/core/queries/useAuth";
 import {ThemedText} from "@/components/ThemedText";
 import {ThemedView} from "@/components/ThemedView";
 import {ThemedButton} from "@/components/ThemedButton";
-import {KeyboardAvoidingView, ScrollView, Platform, View, Image, TextInput, Alert, Pressable} from "react-native";
 import {CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell} from 'react-native-confirmation-code-field';
-import {useAuth} from "@/core/contexts/AuthContext";
+import {KeyboardAvoidingView, ScrollView, Platform, View, Image, TextInput, Alert, Pressable} from "react-native";
 import {ThemeToggle} from "@/components/ThemeToggle";
 
 const CELL_COUNT = 4;
@@ -21,7 +21,7 @@ function VerificationScreen() {
 	});
 	
 	const handleFullLogin = async () => {
-		const response: boolean = await verifyOtp(value)
+		const response: boolean = (await verifyOtp(value)).success;
 		if (response) {
 			router.replace('/')
 		} else {
