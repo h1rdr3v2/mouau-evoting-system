@@ -144,23 +144,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState<User | null>(null);
     const [tempToken, setTempToken] = useState<string | null>(null);
+    const [token, setToken] = useState<string | null>(null);
     const [userId, setUserId] = useState<number | null>(null);
 
     // Storage helpers
     const storeToken = async (token: string) => {
-        if (Platform.OS !== 'web') {
-            await SecureStore.setItemAsync('userToken', token);
-        } else {
-            localStorage.setItem('userToken', token);
-        }
+        // if (Platform.OS !== 'web') {
+        //     await SecureStore.setItemAsync('userToken', token);
+        // } else {
+        //     localStorage.setItem('userToken', token);
+        // }
+        setToken(token);
     };
 
     const getToken = async (): Promise<string | null> => {
-        if (Platform.OS !== 'web') {
-            return await SecureStore.getItemAsync('userToken');
-        } else {
-            return localStorage.getItem('userToken');
-        }
+        // if (Platform.OS !== 'web') {
+        //     return await SecureStore.getItemAsync('userToken');
+        // } else {
+        //     return localStorage.getItem('userToken');
+        // }
+        return token;
     };
 
     const removeToken = async () => {
