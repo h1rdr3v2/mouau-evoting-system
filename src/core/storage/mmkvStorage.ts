@@ -1,4 +1,3 @@
-// src/core/storage/mmkvStorage.ts
 import {MMKV} from 'react-native-mmkv';
 
 // Create the storage instance
