@@ -1,33 +1,17 @@
-// src/core/api/authApi.ts
-import {mockUsers} from '@/core/data/mockUsers';
 import {User} from '@/core/types/user';
+import {mockUsers} from '@/core/data/mockUsers';
 
 // Create API service with the same methods as before
-export const authApi = {
+export const authApiService = {
 	USE_MOCK_DATA: true,
-	
-	getUserByToken: async (token: string): Promise<User | null> => {
-		if (authApi.USE_MOCK_DATA) {
-			return mockUsers[0] || null;
-		} else {
-			try {
-				const response = await fetch('your-api-endpoint/user', {
-					headers: {Authorization: `Bearer ${token}`}
-				});
-				return response.json();
-			} catch (error) {
-				console.error('Error fetching user:', error);
-				return null;
-			}
-		}
-	},
 	
 	login: async (regno: string): Promise<{
 		success: boolean;
 		userId?: number;
 		temp_token?: string;
 	}> => {
-		if (authApi.USE_MOCK_DATA) {
+		await new Promise(resolve => setTimeout(resolve, 3000)); // Wait for 3 seconds
+		if (authApiService.USE_MOCK_DATA) {
 			const user = mockUsers.find(u => u.regNo === regno);
 			
 			if (user) {
@@ -42,7 +26,7 @@ export const authApi = {
 		} else {
 			// Real API implementation
 			try {
-				// const response = await fetch('your-api-endpoint/login', {...})
+				// const response = await fetch('your-services-endpoint/login', {...})
 				// const data = await response.json();
 				// return {...}
 				return {success: false};
@@ -62,7 +46,7 @@ export const authApi = {
 			return {success: false};
 		}
 		
-		if (authApi.USE_MOCK_DATA) {
+		if (authApiService.USE_MOCK_DATA) {
 			if (code !== '1234') {
 				return {success: false};
 			}
@@ -82,7 +66,7 @@ export const authApi = {
 		} else {
 			// Real API implementation
 			try {
-				// const response = await fetch('your-api-endpoint/verify', {...})
+				// const response = await fetch('your-services-endpoint/verify', {...})
 				// return {...}
 				return {success: false};
 			} catch (error) {

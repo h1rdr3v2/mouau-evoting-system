@@ -1,12 +1,10 @@
 import {Redirect, Stack} from "expo-router";
-import {useAuth} from "@/core/queries/useAuth";
+import {useAuthStore} from "@/core/stores/authStore";
 
 export default function ProtectedLayout() {
-	const {user, isLoading} = useAuth();
+	const isLoggedIn = useAuthStore(state => state.isLoggedIn());
 	
-	if (isLoading) return null; // Return null while loading
-	
-	if (!user) return <Redirect href="/onboarding"/>;
+	if (!isLoggedIn) return <Redirect href="/onboarding"/>;
 	
 	return (
 		<Stack>

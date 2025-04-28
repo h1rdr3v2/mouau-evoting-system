@@ -1,5 +1,5 @@
 import {useAuthStore} from '@/core/stores/authStore';
-import {authApiService} from '@/core/services/authApi';
+import {authApiService} from '@/core/services/authApiService';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 export function useAuth() {
