@@ -6,7 +6,6 @@ import {ThemedView} from "@/components/ThemedView";
 import {ThemedButton} from "@/components/ThemedButton";
 import {CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell} from 'react-native-confirmation-code-field';
 import {KeyboardAvoidingView, ScrollView, Platform, View, Image, TextInput, Alert, Pressable} from "react-native";
-import {ThemeToggle} from "@/components/ThemeToggle";
 
 const CELL_COUNT = 4;
 
@@ -102,7 +101,6 @@ function VerificationScreen() {
 						disabled={value.length < CELL_COUNT}
 					/>
 				</ThemedView>
-				<ThemeToggle/>
 			</ScrollView>
 		</KeyboardAvoidingView>
 	);
