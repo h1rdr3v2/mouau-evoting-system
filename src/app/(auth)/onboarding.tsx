@@ -1,9 +1,9 @@
 import {useState} from "react";
 import {router} from "expo-router";
-import {Image, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import {ThemedView} from "@/components/ThemedView";
 import {ThemedText} from "@/components/ThemedText";
+import {Image, ScrollView, View} from "react-native";
 import {ThemedButton} from "@/components/ThemedButton";
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
@@ -63,8 +63,13 @@ const OnboardingScreen = () => {
 	const currentSlideData = slides[currentSlide];
 	
 	return (
-		<ThemedView className="flex-1" style={{paddingBottom: insets.bottom}}>
-			<View className="w-full h-[67%] relative">
+		<ScrollView
+			bounces={false}
+			style={{flex: 1}}
+			showsVerticalScrollIndicator={false}
+			contentContainerStyle={{paddingBottom: insets.bottom, flexGrow: 1}}
+		>
+			<View className="w-full h-[60vh] relative">
 				<View style={{zIndex: 10, top: insets.top}} className="absolute right-0">
 					<ThemedButton
 						title="Skip"
@@ -80,16 +85,16 @@ const OnboardingScreen = () => {
 					resizeMode='cover'
 				/>
 			</View>
-			
-			<ThemedView className="ml-4 mr-4 mt-5 flex flex-col gap-4">
+			<ThemedView className="mx-4 mt-5 flex flex-col gap-4">
 				{/*Title and caption*/}
 				<ThemedView className="flex flex-col gap-3 items-center">
-					<ThemedText type="title" className="text-center max-w-[300px]">{currentSlideData.title}</ThemedText>
+					<ThemedText type="title"
+								className="text-center max-w-[300px]">{currentSlideData.title}</ThemedText>
 					<ThemedText className="text-center">{currentSlideData.subtitle}</ThemedText>
 				</ThemedView>
 				
 				{/*Pagination Dots*/}
-				<ThemedView className="flex flex-row justify-center gap-2" style={{marginBottom: 10}}>
+				<ThemedView className="flex flex-row justify-center gap-2 mb-2">
 					{slides.map((_, index) => (
 						<View
 							key={`dot-${index}`}
@@ -99,7 +104,7 @@ const OnboardingScreen = () => {
 				</ThemedView>
 				
 				{/* Navigation Buttons */}
-				<ThemedView className="mt-2 mb-4">
+				<ThemedView>
 					<ThemedButton
 						title={!isLastSlide ? 'Next' : 'Login with Student ID'}
 						variant="primary"
@@ -107,16 +112,18 @@ const OnboardingScreen = () => {
 						onPress={handleNext}
 					/>
 					
+					{/*Back or help button*/}
 					<ThemedButton
 						title={!isLastSlide ? 'Back' : 'Need Help?'}
-						variant="text"
+						variant='text'
+						size="large"
 						className={currentSlide > 0 ? 'block' : 'invisible'}
 						onPress={handlePrev}
 					/>
 				</ThemedView>
 			</ThemedView>
 			<StatusBar style='dark'/>
-		</ThemedView>
+		</ScrollView>
 	);
 };
 

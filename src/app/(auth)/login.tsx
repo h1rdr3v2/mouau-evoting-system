@@ -35,9 +35,11 @@ function LoginScreen() {
 			keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
 		>
 			<ScrollView
+				bounces={false}
 				style={{flex: 1}}
-				contentContainerStyle={{flexGrow: 1}}
+				showsVerticalScrollIndicator={false}
 				keyboardShouldPersistTaps="handled"
+				contentContainerStyle={{flexGrow: 1}}
 			>
 				<View className="w-full h-[60vh] relative">
 					<Text className='z-10 w-[300px] text-5xl/[50px] absolute text-white bottom-10 left-4 font-black'>
