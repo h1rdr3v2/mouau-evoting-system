@@ -3,7 +3,7 @@ import {ActivityIndicator, Pressable, Text, View} from 'react-native';
 import {useTheme} from '@/core/contexts/ThemeContext';
 
 export type ThemedButtonProps = {
-	variant?: 'primary' | 'secondary' | 'text';
+	variant?: 'primary' | 'secondary' | 'text' | 'destructive';
 	size?: 'small' | 'medium' | 'large';
 	title: string;
 	leftIcon?: React.ReactNode;
@@ -40,6 +40,8 @@ export function ThemedButton({
 		buttonClasses += " border border-primary-light dark:border-primary-dark bg-transparent";
 	} else if (variant === 'text') {
 		buttonClasses += " bg-transparent";
+	} else if (variant === 'destructive') {
+		buttonClasses += " bg-red-400";
 	}
 	
 	// Size classes
@@ -63,6 +65,8 @@ export function ThemedButton({
 		textClasses += " text-white dark:text-text-dark";
 	} else if (variant === 'secondary' || variant === 'text') {
 		textClasses += " dark:text-white text-primary-light";
+	} else if (variant === 'destructive') {
+		textClasses += " text-red-900";
 	}
 	
 	// Text size classes
