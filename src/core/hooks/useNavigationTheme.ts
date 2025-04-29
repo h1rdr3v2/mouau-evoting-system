@@ -6,7 +6,6 @@ export function useNavigationTheme(customOptions = {}): NativeStackNavigationOpt
 	
 	const defaultOptions: NativeStackNavigationOptions = {
 		headerShown: false,
-		animation: "none",
 		headerStyle: {
 			backgroundColor: colors.navigation.header.background,
 		},

@@ -34,6 +34,10 @@ export const Colors = {
 				light: '#fff',
 				dark: '#151718',
 			}
+		},
+		border: {
+			light: '#e0e0e0',
+			dark: '#e0e0e0',
 		}
 	}
 };
@@ -54,7 +58,8 @@ export function getThemeColors(isDark: boolean): AppColors {
 			},
 			content: {
 				background: Colors.navigation.content.background[theme],
-			}
+			},
+			border: Colors.navigation.border[theme]
 		}
 	};
 }

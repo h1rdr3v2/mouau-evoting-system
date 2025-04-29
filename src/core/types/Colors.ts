@@ -4,6 +4,7 @@ export type AppColors = {
 	text: string;
 	background: string;
 	navigation: {
+		border: string;
 		header: {
 			background: string;
 			tint: string;
