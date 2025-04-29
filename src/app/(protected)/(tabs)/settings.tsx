@@ -11,7 +11,7 @@ function SettingsScreen() {
 	const {logout} = useAuth();
 	
 	return (
-		<ThemedView>
+		<ThemedView className='flex-1'>
 			<ThemedText>Tabs index</ThemedText>
 			<ThemedText>User: {JSON.stringify(user)}</ThemedText>
 			<ThemedButton

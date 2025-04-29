@@ -9,9 +9,9 @@ function Layout() {
 	return (
 		<Tabs screenOptions={useNavigationTheme({
 			headerShown: true,
+			initialRouteName: 'index',
 			tabBarActiveTintColor: colors.primary,
 			tabBarStyle: {
-				height: 55,
 				backgroundColor: colors.navigation.content.background,
 				borderTopColor: colors.navigation.border || '#e0e0e0',
 			},
