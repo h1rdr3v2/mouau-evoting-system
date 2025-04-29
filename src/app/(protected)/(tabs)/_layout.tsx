@@ -1,8 +1,8 @@
 import {Tabs} from 'expo-router'
-import {Home, Settings} from "lucide-react-native"
 import {useTheme} from "@/core/contexts/ThemeContext";
 import {useNavigationTheme} from "@/core/hooks/useNavigationTheme";
 import {BottomTabNavigationOptions} from "@react-navigation/bottom-tabs";
+import {Feather, Ionicons} from "@expo/vector-icons";
 
 function Layout() {
 	const {colors} = useTheme();
@@ -27,14 +27,14 @@ function Layout() {
 				name="index"
 				options={{
 					title: 'Home',
-					tabBarIcon: ({color}) => <Home size={24} color={color}/>
+					tabBarIcon: ({color}) => <Feather name='home' size={24} color={color}/>
 				}}
 			/>
 			<Tabs.Screen
 				name="settings"
 				options={{
 					title: 'Settings',
-					tabBarIcon: ({color}) => <Settings size={24} color={color}/>
+					tabBarIcon: ({color}) => <Ionicons name='settings-sharp' size={24} color={color}/>
 				}}
 			/>
 		</Tabs>

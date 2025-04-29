@@ -1,7 +1,6 @@
 import {router} from "expo-router";
 import React, {useState} from 'react';
 import {Checkbox} from 'expo-checkbox';
-import {UserRound} from "lucide-react-native";
 import {useAuth} from "@/core/queries/useAuth";
 import {ThemedView} from "@/components/ThemedView";
 import {ThemedText} from "@/components/ThemedText";
@@ -65,10 +64,10 @@ function LoginScreen() {
 						Login with your Matric Number
 					</ThemedText>
 					<ThemedInput
-						placeholder="MOUAU/CMP/20/111111"
+						placeholder="DEPT/20/111111"
 						variant="outlined"
 						size="large"
-						leftIcon={<UserRound size={24} color="#6b7280"/>}
+						leftIcon={<ThemedText>MOUAU/</ThemedText>}
 						autoCorrect={false}
 						autoCapitalize="characters"
 						keyboardType="default"
@@ -98,7 +97,7 @@ function LoginScreen() {
 					</View>
 					<ThemedButton
 						title="Continue"
-						disabled={!isChecked}
+						disabled={!isChecked || inputValue === ''}
 						loading={isLoading}
 						size='large'
 						onPress={goToVerification}
