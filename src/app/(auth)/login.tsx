@@ -45,10 +45,13 @@ function LoginScreen() {
 					<Text className='z-10 w-[300px] text-5xl/[50px] absolute text-white bottom-10 left-4 font-black'>
 						A Citadel For Learning
 					</Text>
+					{/*Moaua school badge*/}
 					<View
-						className='z-10 absolute text-white flex justify-center top-safe right-4 bg-white px-3 rounded-lg h-[39px]'>
+						className='z-10 absolute items-center justify-center flex top-safe right-4 bg-white rounded-lg h-[35px] w-36'>
 						<Image
 							source={require('@/assets/images/logo-transparent-label.png')}
+							className='w-[90%]'
+							resizeMode="contain"
 						/>
 					</View>
 					<Image

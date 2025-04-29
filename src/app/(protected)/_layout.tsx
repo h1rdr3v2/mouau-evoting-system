@@ -1,5 +1,5 @@
 import {Redirect, Stack} from "expo-router";
-import {useAuthStore} from "@/core/stores/authStore";
+import {useAuthStore} from "@/core/stores/useAuthStore";
 
 export default function ProtectedLayout() {
 	const isLoggedIn = useAuthStore(state => state.isLoggedIn());

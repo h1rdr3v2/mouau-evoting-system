@@ -1,6 +1,6 @@
 import {create} from 'zustand';
-import {User} from '@/core/types/user';
-import {mmkvStorage} from '@/core/storage/mmkvStorage';
+import {User} from '@/core/types/User';
+import zustandStorage from "@/core/stores/storage";
 import {createJSONStorage, persist} from 'zustand/middleware';
 
 interface AuthState {
@@ -51,7 +51,7 @@ export const useAuthStore = create<AuthState>()(
 		}),
 		{
 			name: 'auth-storage',
-			storage: createJSONStorage(() => mmkvStorage),
+			storage: createJSONStorage(() => zustandStorage),
 			partialize: (state) => ({
 				// Only persist these properties
 				user: state.user,

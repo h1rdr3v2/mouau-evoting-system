@@ -1,4 +1,4 @@
-import {User} from '@/core/types/user';
+import {User} from '@/core/types/User';
 import {mockUsers} from '@/core/data/mockUsers';
 
 // Create API service with the same methods as before

@@ -6,6 +6,7 @@ import {ThemedText} from "@/components/ThemedText";
 import {Image, ScrollView, View} from "react-native";
 import {ThemedButton} from "@/components/ThemedButton";
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useAuthStore} from "@/core/stores/useAuthStore";
 
 // Slide content data
 const slides = [
@@ -27,6 +28,8 @@ const slides = [
 ];
 
 const OnboardingScreen = () => {
+	const isLoggedIn = useAuthStore(state => state.user);
+	console.log('onboard', isLoggedIn)
 	const [currentSlide, setCurrentSlide] = useState(0);
 	const totalSlides = slides.length;
 	const insets = useSafeAreaInsets();
