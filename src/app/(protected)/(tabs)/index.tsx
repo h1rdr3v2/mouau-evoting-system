@@ -28,7 +28,8 @@ const NewsItem = ({image, title, readTime}: NewsItemType) => (
 		/>
 		
 		<View className='absolute bottom-0 left-0 right-0 p-3'>
-			<ThemedText className='text-white text-xs leading-[13px] font-montserrat-medium' numberOfLines={2}>
+			<ThemedText type='defaultSemiBold' className='text-white text-xs leading-[13px]'
+						numberOfLines={2}>
 				{title}
 			</ThemedText>
 			<ThemedText className='text-white/70 text-opacity-80 text-xs'>
