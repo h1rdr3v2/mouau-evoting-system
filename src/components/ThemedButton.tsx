@@ -41,7 +41,7 @@ export function ThemedButton({
 	} else if (variant === 'text') {
 		buttonClasses += " bg-transparent";
 	} else if (variant === 'destructive') {
-		buttonClasses += " bg-red-100";
+		buttonClasses += " bg-red-300/20";
 	}
 	
 	// Size classes
