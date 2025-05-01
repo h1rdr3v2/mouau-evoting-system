@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ThemedView} from "@/components/ThemedView";
 import {ThemedText} from "@/components/ThemedText";
-import {TouchableOpacity, View} from 'react-native';
-import {useTheme} from "@/core/contexts/ThemeContext";
+import {Modal, TouchableOpacity, View} from 'react-native';
+import {ThemeModeProp, useTheme} from "@/core/contexts/ThemeContext";
 import {FontAwesome5 as Icon} from "@expo/vector-icons";
 
 interface AppearanceItemProps {
@@ -39,7 +39,13 @@ const AppearanceItem: React.FC<AppearanceItemProps> = ({
 };
 
 const AppAppearance: React.FC = () => {
-	const {getThemeModeLabel} = useTheme();
+	const {getThemeModeLabel, setThemeMode} = useTheme();
+	const [modalVisible, setModalVisible] = useState(false);
+	const themeOptions: { label: string; value: ThemeModeProp }[] = [
+		{label: 'Light', value: 'light'},
+		{label: 'Dark', value: 'dark'},
+		{label: 'System', value: 'system'}
+	];
 	
 	return (
 		<ThemedView className="rounded-xl shadow-sm p-4">
@@ -52,13 +58,50 @@ const AppAppearance: React.FC = () => {
 					icon="moon"
 					label="Theme"
 					value={getThemeModeLabel()}
+					onPress={() => setModalVisible(true)}
 				/>
+				<Modal
+					animationType="fade"
+					transparent={true}
+					visible={modalVisible}
+					onRequestClose={() => setModalVisible(false)}
+				>
+					<TouchableOpacity
+						style={{
+							flex: 1,
+							backgroundColor: 'rgba(0,0,0,0.5)',
+							justifyContent: 'center',
+							alignItems: 'center'
+						}}
+						activeOpacity={1}
+						onPress={() => setModalVisible(false)}
+					>
+						<ThemedView className="w-4/5 rounded-xl p-4" style={{elevation: 5}}>
+							<ThemedText type='defaultSemiBold' className="text-lg mb-3">Select Theme</ThemedText>
+							{themeOptions.map((option) => (
+								<TouchableOpacity
+									key={option.value}
+									className="py-3 border-b border-gray-200"
+									onPress={() => {
+										setModalVisible(false);
+										setThemeMode(option.value).then();
+									}}
+								>
+									<ThemedText className={getThemeModeLabel() === option.label ? "text-primary" : ""}>
+										{option.label}
+									</ThemedText>
+								</TouchableOpacity>
+							))}
+						</ThemedView>
+					</TouchableOpacity>
+				</Modal>
 				
 				<AppearanceItem
 					icon="language"
 					label="Display Language"
 					value="English"
 				/>
+			
 			</View>
 		</ThemedView>
 	);

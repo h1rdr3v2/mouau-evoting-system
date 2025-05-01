@@ -25,7 +25,7 @@ function SettingsScreen() {
 			>
 				<View className='px-4 gap-8'>
 					{/*User profile bubble*/}
-					<ThemedView className='flex flex-row gap-3 px-4 pt-6 rounded-xl'>
+					<ThemedView className='flex flex-row gap-3 px-4 py-6 rounded-xl'>
 						<Image
 							source={require('@/assets/images/avatar.webp')}
 							className='w-[45px] h-[45px] rounded-full'
