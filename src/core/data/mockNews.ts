@@ -12,7 +12,7 @@ export const trendingNews: NewsItemType[] = [
 		readTime: '3 minutes read'
 	},
 	{
-		image: require('@/assets/images/news-1.png'),
+		image: require('@/assets/images/freeandfair.webp'),
 		title: 'Third News Story Headline',
 		readTime: '7 minutes read'
 	}
