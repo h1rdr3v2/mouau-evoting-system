@@ -1,75 +1,12 @@
 import React from 'react';
-import {NewsItemType} from "@/core/types/News";
 import {ThemedText} from '@/components/ThemedText';
 import {ThemedView} from '@/components/ThemedView';
-import {LinearGradient} from 'expo-linear-gradient';
 import {useAuthStore} from '@/core/stores/useAuthStore';
-import {Image, SafeAreaView, ScrollView, View} from 'react-native';
 import {trendingNews} from "@/core/data/mockNews";
-
-// Single News Item Component
-const NewsItem = ({image, title, readTime}: NewsItemType) => (
-	<View className='rounded-lg relative overflow-hidden' accessible={true} accessibilityLabel={title}>
-		<Image
-			source={image}
-			className='aspect-[300/163] w-full'
-			accessibilityRole="image"
-		/>
-		
-		<LinearGradient
-			colors={[
-				'rgba(255,255,255,0)',
-				'rgba(31,31,31,0.55)',
-				'rgba(0,0,0,0.7)',
-				'#000000'
-			]}
-			locations={[0, 0.5, 0.68, 1]}
-			style={{position: 'absolute', left: 0, right: 0, top: 0, bottom: 0}}
-		/>
-		
-		<View className='absolute bottom-0 left-0 right-0 p-3'>
-			<ThemedText type='defaultSemiBold' className='text-white text-xs leading-[13px]'
-						numberOfLines={2}>
-				{title}
-			</ThemedText>
-			<ThemedText className='text-white/70 text-opacity-80 text-xs'>
-				{readTime}
-			</ThemedText>
-		</View>
-	</View>
-);
-
-// Trending News Section
-const TrendingNewsSection = ({newsItems = []}: {
-	newsItems?: NewsItemType[]
-}) => {
-	if (newsItems.length <= 0) {
-		return (<></>);
-	}
-	
-	return (
-		<View className='flex gap-4'>
-			<ThemedText className='opacity-70 px-4'>Trending news</ThemedText>
-			<ScrollView
-				horizontal
-				showsHorizontalScrollIndicator={false}
-				contentContainerStyle={{
-					gap: 16,
-					paddingInline: 16,
-				}}
-			>
-				{newsItems.map((item, index) => (
-					<NewsItem
-						key={`news-${index}`}
-						image={item.image}
-						title={item.title}
-						readTime={item.readTime}
-					/>
-				))}
-			</ScrollView>
-		</View>
-	)
-};
+import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
+import {TrendingNewsSection} from "@/components/TrendingNews";
+import {ScrollView, View, Text} from 'react-native';
+import {OverylayImageView} from "@/components/OverlayImageView";
 
 // Main HomeScreen Component
 function HomeScreen() {
@@ -77,22 +14,38 @@ function HomeScreen() {
 	const firstName = user?.name?.split(" ")?.[0];
 	
 	return (
-		<SafeAreaView style={{flex: 1}}>
+		<ThemedSafeAreaView>
 			<ScrollView
 				bounces={false}
 				showsVerticalScrollIndicator={false}
 				keyboardShouldPersistTaps="handled"
 				contentContainerStyle={{flexGrow: 1}}
 			>
-				<ThemedView className='flex-1'>
-					<View className='my-5 px-4'>
+				<ThemedView className='flex-1 gap-5'>
+					<View className='mt-5 px-4'>
 						<ThemedText type='title'>Hello {firstName || 'Guest'}</ThemedText>
 					</View>
 					
+					{/*Trending News*/}
 					<TrendingNewsSection newsItems={trendingNews}/>
+					
+					<View className='px-4'>
+						
+						{/*Vote counts banner*/}
+						<View className='flex-1 relative justify-center'>
+							<OverylayImageView
+								image={require("@/assets/images/freeandfair.webp")}
+								className='aspect-[370/96]'
+								containerClassName='rounded-2xl max-h-[96px]'
+							/>
+							<Text className="absolute w-full text-center text-white font-montserrat-bold">
+								Say <Text className='text-green-500 text-xl'>YES</Text> to Free and Fair
+								Elections</Text>
+						</View>
+					</View>
 				</ThemedView>
 			</ScrollView>
-		</SafeAreaView>
+		</ThemedSafeAreaView>
 	);
 }
 
