@@ -8,7 +8,7 @@ function Layout() {
 	const {colors} = useTheme();
 	return (
 		<Tabs screenOptions={useNavigationTheme({
-			headerShown: true,
+			headerShown: false,
 			initialRouteName: 'index',
 			tabBarActiveTintColor: colors.primary,
 			tabBarStyle: {
@@ -19,9 +19,6 @@ function Layout() {
 				fontSize: 12,
 				fontWeight: '500',
 			},
-			tabBarIconStyle: {
-				marginTop: 4,
-			}
 		}) as BottomTabNavigationOptions}>
 			<Tabs.Screen
 				name="index"
