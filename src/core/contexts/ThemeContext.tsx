@@ -13,6 +13,7 @@ type ThemeContextType = {
 	isDark: boolean;
 	colors: AppColors;
 	setThemeMode: (mode: ThemeModeProp) => Promise<void>;
+	getThemeModeLabel: () => string;
 };
 
 // Function to validate theme mode
@@ -27,6 +28,7 @@ const defaultContext: ThemeContextType = {
 	colors: getThemeColors(false),
 	setThemeMode: async () => {
 	},
+	getThemeModeLabel: () => 'auto'
 };
 
 // Create the context
@@ -82,11 +84,23 @@ export function ThemeProvider({children}: ThemeProviderProps) {
 			.catch(error => console.error('Error loading theme preference:', error));
 	}, []);
 	
+	const getThemeModeLabel = () => {
+		switch (themeMode) {
+			case "light":
+				return "Light";
+			case "dark":
+				return "Dark";
+			default:
+				return "Auto";
+		}
+	}
+	
 	// Memoize context value to prevent unnecessary re-renders
 	const contextValue = useMemo(() => ({
 		themeMode,
 		isDark,
 		colors,
+		getThemeModeLabel,
 		setThemeMode,
 	}), [themeMode, isDark, colors, setThemeMode]);
 	

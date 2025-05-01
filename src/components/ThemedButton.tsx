@@ -41,7 +41,7 @@ export function ThemedButton({
 	} else if (variant === 'text') {
 		buttonClasses += " bg-transparent";
 	} else if (variant === 'destructive') {
-		buttonClasses += " bg-red-400";
+		buttonClasses += " bg-red-100";
 	}
 	
 	// Size classes
@@ -66,7 +66,7 @@ export function ThemedButton({
 	} else if (variant === 'secondary' || variant === 'text') {
 		textClasses += " dark:text-white text-primary-light";
 	} else if (variant === 'destructive') {
-		textClasses += " text-red-900";
+		textClasses += " text-red-600";
 	}
 	
 	// Text size classes

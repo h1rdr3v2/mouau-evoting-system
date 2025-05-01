@@ -2,7 +2,8 @@ import {Tabs} from 'expo-router'
 import {useTheme} from "@/core/contexts/ThemeContext";
 import {useNavigationTheme} from "@/core/hooks/useNavigationTheme";
 import {BottomTabNavigationOptions} from "@react-navigation/bottom-tabs";
-import {Feather, Ionicons} from "@expo/vector-icons";
+import {Feather, FontAwesome5, Ionicons} from "@expo/vector-icons";
+import React from "react";
 
 function Layout() {
 	const {colors} = useTheme();
@@ -25,6 +26,13 @@ function Layout() {
 				options={{
 					title: 'Home',
 					tabBarIcon: ({color}) => <Feather name='home' size={24} color={color}/>
+				}}
+			/>
+			<Tabs.Screen
+				name="vote"
+				options={{
+					title: 'Vote',
+					tabBarIcon: ({color}) => <FontAwesome5 name="vote-yea" size={24} color={color}/>
 				}}
 			/>
 			<Tabs.Screen
