@@ -47,7 +47,7 @@ export const TrendingNewsSection = ({newsItems = []}: {
 	}
 	
 	return (
-		<View className='flex gap-4 w-full'>
+		<View className='flex gap-4 w-full mb-5'>
 			<ThemedText className='opacity-70 px-4'>Trending news</ThemedText>
 			<ScrollView
 				horizontal
