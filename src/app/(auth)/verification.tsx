@@ -37,6 +37,7 @@ function VerificationScreen() {
 			<ScrollView
 				style={{flex: 1}}
 				contentContainerStyle={{flexGrow: 1}}
+				showsVerticalScrollIndicator={false}
 				keyboardShouldPersistTaps="handled"
 			>
 				<ThemedView className='flex flex-col flex-grow items-center px-4'>

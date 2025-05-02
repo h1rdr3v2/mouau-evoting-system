@@ -25,21 +25,21 @@ function Layout() {
 				name="index"
 				options={{
 					title: 'Home',
-					tabBarIcon: ({color}) => <Feather name='home' size={24} color={color}/>
+					tabBarIcon: ({color}) => <Feather name='home' size={22} color={color}/>
 				}}
 			/>
 			<Tabs.Screen
 				name="vote"
 				options={{
 					title: 'Vote',
-					tabBarIcon: ({color}) => <FontAwesome5 name="vote-yea" size={24} color={color}/>
+					tabBarIcon: ({color}) => <FontAwesome5 name="vote-yea" size={22} color={color}/>
 				}}
 			/>
 			<Tabs.Screen
 				name="settings"
 				options={{
 					title: 'Settings',
-					tabBarIcon: ({color}) => <Ionicons name='settings-sharp' size={24} color={color}/>
+					tabBarIcon: ({color}) => <Ionicons name='settings-sharp' size={22} color={color}/>
 				}}
 			/>
 		</Tabs>
