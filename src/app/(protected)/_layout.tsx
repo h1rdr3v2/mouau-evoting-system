@@ -14,6 +14,14 @@ export default function ProtectedLayout() {
 					headerShown: false,
 				}}
 			/>
+			<Stack.Screen
+				name="election"
+				options={{
+					headerShown: true,
+					headerBackTitle: "Back",
+					headerTitle: "",
+				}}
+			/>
 		</Stack>
 	);
 }
