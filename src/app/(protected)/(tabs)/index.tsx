@@ -1,13 +1,13 @@
 import React from 'react';
-import {ThemedText} from '@/components/ThemedText';
-import {useAuthStore} from '@/core/stores/useAuthStore';
 import {trendingNews} from "@/core/data/mockNews";
-import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
-import {TrendingNewsSection} from "@/components/TrendingNews";
+import {ThemedText} from '@/components/ThemedText';
 import {ScrollView, View, Text} from 'react-native';
-import {OverylayImageView} from "@/components/OverlayImageView";
 import {ThemedButton} from "@/components/ThemedButton";
-import Ionicons from '@expo/vector-icons/Ionicons';
+import {useAuthStore} from '@/core/stores/useAuthStore';
+import {TrendingNewsSection} from "@/components/TrendingNews";
+import {OverylayImageView} from "@/components/OverlayImageView";
+import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
+import EligibilityBadge from "@/components/Badges/EligibilityBadge";
 
 // Main HomeScreen Component
 function HomeScreen() {
@@ -43,7 +43,7 @@ function HomeScreen() {
 							</ThemedText>
 							<View className='gap-1'>
 								<ThemedText type='subtitle'>NACOS Executive Elections 2025</ThemedText>
-								<ThemedText className='text-sm opacity-80 leading-normal' numberOfLines={2}>
+								<ThemedText type='light' numberOfLines={2}>
 									Annual elections for the executive committee of the National Association of
 									Computing Students
 								</ThemedText>
@@ -76,19 +76,14 @@ function HomeScreen() {
 									<ThemedText type='light'>Date: 4/10/2025</ThemedText>
 									<ThemedText type='light'>5 Positions</ThemedText>
 								</View>
-								<View className='flex-row gap-1 px-2 py-1 rounded-full items-center bg-green-300/20'>
-									<Ionicons name='checkmark-circle' size={16} color='#16a34a'/>
-									<Text className='text-green-600 rounded-full '>
-										Eligble to vote
-									</Text>
-								</View>
+								<EligibilityBadge isEligible={true}/>
 							</View>
 							<ThemedText>
 								<ThemedText type='title'>2h 20m 49s</ThemedText> to election day
 							</ThemedText>
 							<View className='gap-1'>
 								<ThemedText type='subtitle'>Student Affairs Representatives Election</ThemedText>
-								<ThemedText className='text-sm opacity-80 leading-normal' numberOfLines={2}>
+								<ThemedText type='light' numberOfLines={2}>
 									Election for the departmental representatives to represent students in the SA
 									sectors
 								</ThemedText>
@@ -99,7 +94,6 @@ function HomeScreen() {
 							/>
 						</View>
 					</View>
-				
 				</View>
 			</ScrollView>
 		</ThemedSafeAreaView>
