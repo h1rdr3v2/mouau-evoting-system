@@ -24,7 +24,7 @@ export function ThemedText({
 	} else if (type === 'link') {
 		textClasses += "text-base leading-7 font-montserrat text-[#0a7ea4]";
 	} else if (type === 'light') {
-		textClasses += "font-montserrat-light";
+		textClasses += "font-montserrat-light text-[13px]";
 	}
 	
 	return (
