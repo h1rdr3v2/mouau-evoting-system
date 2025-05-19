@@ -12,7 +12,7 @@ const Index = () => {
 	
 	return (
 		<ThemedSafeAreaView>
-			<View className="py-3 px-4 gap-8">
+			<View className="pt-3 px-4 gap-8">
 				<ThemedText type='title'>
 					NACOS Executive Elections 2025
 				</ThemedText>
@@ -36,7 +36,7 @@ const Index = () => {
 					/>
 				</View>
 			</View>
-			<View className='flex-1 flex-grow'>
+			<View className='flex-1 flex-grow pt-8'>
 				<ViewArea/>
 			</View>
 		</ThemedSafeAreaView>
