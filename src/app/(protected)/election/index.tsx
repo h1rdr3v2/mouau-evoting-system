@@ -32,7 +32,7 @@ const Index = () => {
 					<ThemedButton
 						variant='primary'
 						title="Vote"
-						className='rounded-[100px] min-w-[0px] w-[80px] h-[40px]'
+						className='rounded-[999px] min-w-0 p-0 m-0 w-[78px] h-[50px]'
 					/>
 				</View>
 			</View>
