@@ -1,5 +1,6 @@
 import {Redirect, Stack} from "expo-router";
 import {useAuthStore} from "@/core/stores/useAuthStore";
+import {useNavigationTheme} from "@/core/hooks/useNavigationTheme";
 
 export default function ProtectedLayout() {
 	const isLoggedIn = useAuthStore(state => state.isLoggedIn());
@@ -7,7 +8,7 @@ export default function ProtectedLayout() {
 	if (!isLoggedIn) return <Redirect href="/onboarding"/>;
 	
 	return (
-		<Stack>
+		<Stack screenOptions={useNavigationTheme({})}>
 			<Stack.Screen
 				name="(tabs)"
 				options={{
