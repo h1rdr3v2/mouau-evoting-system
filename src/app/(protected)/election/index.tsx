@@ -6,7 +6,7 @@ import {SceneMap, TabBar, TabView} from "react-native-tab-view";
 import {ScrollView, useWindowDimensions, View} from "react-native";
 import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import {router} from "expo-router";
+import {Link, router} from "expo-router";
 
 const Index = () => {
 	const {colors} = useTheme()
@@ -81,12 +81,12 @@ const LiveResultCandidate = ({name, votes, position}: { name: string, votes: num
 			<View className='flex-row items-start'>
 				<ThemedText
 					type='subtitle'
-					className='text-primary-light dark:text-primary-dark'
+					className='dark:text-primary-light text-primary-light'
 				>
 					{position}
 				</ThemedText>
 				<ThemedText
-					className='font-montserrat-medium text-primary-light dark:text-primary-dark -top-1'
+					className='font-montserrat-medium dark:text-primary-light text-primary-light -top-1'
 				>
 					{getSuffix(position)}
 				</ThemedText>
@@ -97,15 +97,17 @@ const LiveResultCandidate = ({name, votes, position}: { name: string, votes: num
 
 const Candidate = ({name}: { name: string }) => {
 	return (
-		<View
-			className='flex-row justify-between items-center border border-primary-light dark:border-primary-dark p-4 rounded-xl'>
-			<View className='flex-row gap-3 items-center'>
-				<View className='bg-neutral-100 rounded-xl w-16 h-16 items-center gap-2'></View>
-				<View>
-					<ThemedText type='subtitle'>{name}</ThemedText>
+		<Link href='/election/candidate-modal'>
+			<View
+				className='flex-row justify-between items-center border border-primary-light dark:border-primary-dark p-4 rounded-xl w-full'>
+				<View className='flex-row gap-3 items-center'>
+					<View className='bg-neutral-100 rounded-xl w-16 h-16 items-center gap-2'></View>
+					<View>
+						<ThemedText type='subtitle'>{name}</ThemedText>
+					</View>
 				</View>
 			</View>
-		</View>
+		</Link>
 	)
 }
 
