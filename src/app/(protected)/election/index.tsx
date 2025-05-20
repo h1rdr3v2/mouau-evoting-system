@@ -6,6 +6,7 @@ import {SceneMap, TabBar, TabView} from "react-native-tab-view";
 import {ScrollView, useWindowDimensions, View} from "react-native";
 import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import {router} from "expo-router";
 
 const Index = () => {
 	const {colors} = useTheme()
@@ -33,6 +34,7 @@ const Index = () => {
 						variant='primary'
 						title="Vote"
 						className='rounded-[999px] min-w-0 p-0 m-0 w-[78px] h-[50px]'
+						onPress={() => router.push('/(protected)/election/voting-rules')}
 					/>
 				</View>
 			</View>
@@ -67,7 +69,8 @@ const LiveResultCandidate = ({name, votes, position}: { name: string, votes: num
 	};
 	
 	return (
-		<View className='flex-row justify-between items-center border dark:border-primary-dark p-4 rounded-xl'>
+		<View
+			className='flex-row justify-between items-center border border-primary-light dark:border-primary-dark p-4 rounded-xl'>
 			<View className='flex-row gap-3 items-center'>
 				<View className='bg-neutral-100 rounded-xl w-16 h-16 items-center gap-2'></View>
 				<View>
@@ -94,7 +97,8 @@ const LiveResultCandidate = ({name, votes, position}: { name: string, votes: num
 
 const Candidate = ({name}: { name: string }) => {
 	return (
-		<View className='flex-row justify-between items-center border dark:border-primary-dark p-4 rounded-xl'>
+		<View
+			className='flex-row justify-between items-center border border-primary-light dark:border-primary-dark p-4 rounded-xl'>
 			<View className='flex-row gap-3 items-center'>
 				<View className='bg-neutral-100 rounded-xl w-16 h-16 items-center gap-2'></View>
 				<View>

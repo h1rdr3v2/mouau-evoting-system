@@ -8,6 +8,7 @@ import {TrendingNewsSection} from "@/components/TrendingNews";
 import {OverylayImageView} from "@/components/OverlayImageView";
 import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
 import EligibilityBadge from "@/components/Badges/EligibilityBadge";
+import {router} from "expo-router";
 
 // Main HomeScreen Component
 function HomeScreen() {
@@ -51,6 +52,7 @@ function HomeScreen() {
 							<ThemedButton
 								title="Vote now"
 								size='large'
+								onPress={() => router.push('/election')}
 							/>
 						</View>
 					</View>
@@ -89,8 +91,9 @@ function HomeScreen() {
 								</ThemedText>
 							</View>
 							<ThemedButton
-								title="Vote now"
+								title="View Details"
 								size='large'
+								onPress={() => router.push('/election')}
 							/>
 						</View>
 					</View>
