@@ -1,16 +1,13 @@
 import {Tabs} from 'expo-router'
 import {useTheme} from "@/core/contexts/ThemeContext";
-import {useNavigationTheme} from "@/core/hooks/useNavigationTheme";
-import {BottomTabNavigationOptions} from "@react-navigation/bottom-tabs";
 import {Feather, FontAwesome5, Ionicons} from "@expo/vector-icons";
 import React from "react";
 
 function Layout() {
 	const {colors} = useTheme();
 	return (
-		<Tabs screenOptions={useNavigationTheme({
+		<Tabs screenOptions={{
 			headerShown: false,
-			initialRouteName: 'index',
 			tabBarActiveTintColor: colors.primary,
 			tabBarStyle: {
 				backgroundColor: colors.navigation.content.background,
@@ -20,7 +17,7 @@ function Layout() {
 				fontSize: 12,
 				fontWeight: '500',
 			},
-		}) as BottomTabNavigationOptions}>
+		}}>
 			<Tabs.Screen
 				name="index"
 				options={{
