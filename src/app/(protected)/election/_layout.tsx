@@ -23,7 +23,10 @@ export default function ElectionLayout() {
 			}}
 			/>
 			<Stack.Screen name="voting-rules" options={{headerShown: false}}/>
-			<Stack.Screen name="cast-vote" options={{headerShown: false}}/>
+			<Stack.Screen name="cast-vote" options={{
+				headerShown: true,
+				headerTitle: "",
+			}}/>
 			<Stack.Screen name="candidate-modal" options={{
 				presentation: "modal",
 				headerShown: false,

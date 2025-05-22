@@ -24,7 +24,7 @@ const CastVote = () => {
 				}} // Android
 			>
 				<View className='gap-5' style={{paddingTop: top}}>
-					<ThemedText type='defaultSemiBold' className='text-lg'>it's time to cast your vote</ThemedText>
+					<ThemedText type='defaultSemiBold' className='text-lg'>confirm your selected candidates</ThemedText>
 					<ThemedText type='title'>
 						NACOS Executive Elections 2025
 					</ThemedText>
@@ -119,7 +119,7 @@ const CastVote = () => {
 				<View className='px-4'>
 					<ThemedButton
 						size='large'
-						title='Cast Vote'
+						title='Slide to confirm'
 						onPress={() => router.push('/election/confirm-vote')}
 					/>
 				</View>
