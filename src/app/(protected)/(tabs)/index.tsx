@@ -1,5 +1,4 @@
 import React from 'react';
-import {router} from "expo-router";
 import {useUser} from "@/core/hooks/useUser";
 import {useNews} from "@/core/queries/useNews";
 import {ThemedText} from '@/components/ThemedText';
