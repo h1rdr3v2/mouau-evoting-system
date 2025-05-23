@@ -1,13 +1,13 @@
 import React from 'react';
 import {router} from "expo-router";
-import {ThemedText} from "@/components/ThemedText";
 import {ThemedView} from "@/components/ThemedView";
+import {ThemedText} from "@/components/ThemedText";
 import AntDesign from '@expo/vector-icons/AntDesign';
+import {getElections} from "@/core/queries/useElections";
+import {useElectionTimer} from "@/core/hooks/useElectionTimer";
 import {Image, Pressable, ScrollView, View} from "react-native";
 import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
 import VotingStatusBadge from "@/components/Badges/VotingStatusBadge";
-import {getElections} from "@/core/queries/useElections";
-import {useElectionTimer} from "@/core/hooks/useElectionTimer";
 
 function VoteScreen() {
 	const {data: elections} = getElections();
