@@ -17,7 +17,7 @@ export default function ElectionLayout() {
 			headerShown: true,
 			headerBackTitle: "Back",
 		})}>
-			<Stack.Screen name="index" options={{
+			<Stack.Screen name="[id]" options={{
 				headerTitle: "",
 				headerLeft: () => <CustomBackButton/>
 			}}
