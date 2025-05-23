@@ -1,18 +1,21 @@
+import {useMemo} from 'react';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {useAuthStore} from '@/core/stores/useAuthStore';
 import {authApiService} from '@/core/services/authApiService';
-import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 export function useAuth() {
 	const queryClient = useQueryClient();
+	
 	const {
 		user,
-		tempToken,
 		userId,
+		tempToken,
 		setUser,
 		setToken,
-		setTempToken,
 		setUserId,
+		setTempToken,
 		clearAuth,
+		isLoggedIn,
 	} = useAuthStore();
 	
 	// Login mutation
@@ -34,42 +37,54 @@ export function useAuth() {
 		mutationFn: (code: string) =>
 			authApiService.verifyOtp(code, userId, tempToken),
 		onSuccess: (data) => {
-			if (data.success && data.token && data.user) {
-				setToken(data.token);
+			if (data.success && data.token && data.expiry && data.user) {
+				setToken(data.token, data.expiry);
 				setUser(data.user);
 				queryClient.setQueryData(['user', data.token], data.user);
 				setTempToken(null);
 			}
 		},
 		onError: (error) => {
-			console.error('Verification error:', error);
-		}
+			console.error('OTP verification error:', error);
+		},
 	});
 	
-	
-	// Login function
 	const login = async (regno: string) => {
-		return await loginMutation.mutateAsync(regno);
+		try {
+			return await loginMutation.mutateAsync(regno);
+		} catch (err) {
+			throw err;
+		}
 	};
 	
-	// Verify OTP function
-	const verifyOtp = (code: string) => {
-		return otpMutation.mutateAsync(code);
+	const verifyOtp = async (code: string) => {
+		try {
+			return await otpMutation.mutateAsync(code);
+		} catch (err) {
+			throw err;
+		}
 	};
 	
-	// Logout function
 	const logout = () => {
 		clearAuth();
-		return;
 	};
 	
-	return {
+	return useMemo(() => ({
 		user,
 		login,
 		logout,
 		verifyOtp,
-		otpError: otpMutation.error,
+		isLoggedIn,
 		loginError: loginMutation.error,
+		otpError: otpMutation.error,
 		isLoading: loginMutation.isPending || otpMutation.isPending,
-	};
+		isLoggingIn: loginMutation.isPending,
+		isVerifying: otpMutation.isPending,
+	}), [
+		user,
+		loginMutation.error,
+		otpMutation.error,
+		loginMutation.isPending,
+		otpMutation.isPending,
+	]);
 }

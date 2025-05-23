@@ -4,15 +4,15 @@ import {useAuth} from "@/core/queries/useAuth";
 import {ThemedText} from "@/components/ThemedText";
 import {ThemedView} from "@/components/ThemedView";
 import {ThemedButton} from "@/components/ThemedButton";
+import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
 import {CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell} from 'react-native-confirmation-code-field';
 import {KeyboardAvoidingView, ScrollView, Platform, View, Image, TextInput, Alert, Pressable} from "react-native";
-import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
 
 const CELL_COUNT = 4;
 
 function VerificationScreen() {
 	const [value, setValue] = useState('');
-	const {verifyOtp} = useAuth();
+	const {verifyOtp, otpError} = useAuth();
 	
 	const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
 	const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -22,10 +22,10 @@ function VerificationScreen() {
 	
 	const handleFullLogin = async () => {
 		const response: boolean = (await verifyOtp(value)).success;
-		if (response) {
-			router.replace('/')
+		if (!response) {
+			Alert.alert("OTP Error", otpError ? otpError.message : "The otp you entered is incorrect please try again.")
 		} else {
-			Alert.alert("Incorrect OTP", "The otp you entered is incorrect please try again.")
+			router.replace('/')
 		}
 	}
 	

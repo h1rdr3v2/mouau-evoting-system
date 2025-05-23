@@ -5,16 +5,19 @@ import {createJSONStorage, persist} from 'zustand/middleware';
 
 interface AuthState {
 	user: User | null;
-	token: string | null;
-	tempToken: string | null;
 	userId: number | null;
+	
+	// Token management
+	token: string | null;
+	tokenExpiry: number | null; // timestamp in milliseconds
+	tempToken: string | null;
 	
 	// Derived state using selector
 	isLoggedIn: () => boolean;
 	
 	// Actions
 	setUser: (user: User | null) => void;
-	setToken: (token: string | null) => void;
+	setToken: (token: string | null, expiry: number | null) => void;
 	setTempToken: (tempToken: string | null) => void;
 	setUserId: (userId: number | null) => void;
 	clearAuth: () => void;
@@ -24,12 +27,24 @@ export const useAuthStore = create<AuthState>()(
 	persist(
 		(set, get) => ({
 			user: null,
-			token: null,
-			tempToken: null,
 			userId: null,
+			token: null,
+			tokenExpiry: null,
+			tempToken: null,
 			
 			// Derived state using selector function
-			isLoggedIn: () => !!get().user && !!get().token,
+			isLoggedIn: () => {
+				const {token, user, tokenExpiry} = get();
+				if (!token || !user) return false;
+				return !tokenExpiry || Date.now() < tokenExpiry;
+			},
+			
+			setToken: (token: string | null, expiry?: number | null) =>
+				set({
+					token,
+					tokenExpiry: expiry ?? null,
+				}),
+			
 			
 			setTempToken: (tempToken) => set({tempToken}),
 			
@@ -39,8 +54,6 @@ export const useAuthStore = create<AuthState>()(
 				user,
 				userId: user?.id || null,
 			}),
-			
-			setToken: (token) => set({token}),
 			
 			clearAuth: () => set({
 				user: null,
@@ -56,7 +69,8 @@ export const useAuthStore = create<AuthState>()(
 				// Only persist these properties
 				user: state.user,
 				token: state.token,
-				userId: state.userId
+				userId: state.userId,
+				tokenExpiry: state.tokenExpiry
 			}),
 		}
 	)

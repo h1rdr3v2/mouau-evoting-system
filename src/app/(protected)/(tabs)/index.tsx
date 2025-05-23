@@ -1,19 +1,18 @@
 import React from 'react';
+import {router} from "expo-router";
+import {useUser} from "@/core/hooks/useUser";
 import {trendingNews} from "@/core/data/mockNews";
 import {ThemedText} from '@/components/ThemedText';
 import {ScrollView, View, Text} from 'react-native';
 import {ThemedButton} from "@/components/ThemedButton";
-import {useAuthStore} from '@/core/stores/useAuthStore';
 import {TrendingNewsSection} from "@/components/TrendingNews";
 import {OverylayImageView} from "@/components/OverlayImageView";
 import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
 import EligibilityBadge from "@/components/Badges/EligibilityBadge";
-import {router} from "expo-router";
 
 // Main HomeScreen Component
 function HomeScreen() {
-	const user = useAuthStore(state => state.user);
-	const firstName = user?.name?.split(" ")?.[0];
+	const {firstName} = useUser()
 	
 	return (
 		<ThemedSafeAreaView>

@@ -1,34 +1,16 @@
 import {useState} from "react";
 import {router} from "expo-router";
 import {StatusBar} from "expo-status-bar";
+import {slidesData} from "@/core/data/slidesData";
 import {ThemedView} from "@/components/ThemedView";
 import {ThemedText} from "@/components/ThemedText";
 import {Image, ScrollView, View} from "react-native";
 import {ThemedButton} from "@/components/ThemedButton";
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-// Slide content data
-const slides = [
-	{
-		image: require('@/assets/auth/onboard-1.jpg'),
-		title: 'Your Campus Voice Matters',
-		subtitle: 'Shape your campus experience by participating in student elections and initiatives.',
-	},
-	{
-		image: require('@/assets/auth/onboard-2.jpg'),
-		title: 'Stay Informed & Engaged',
-		subtitle: 'Get updates on upcoming elections, candidate profiles, and important campus initiatives.',
-	},
-	{
-		image: require('@/assets/auth/onboard-3.jpg'),
-		title: 'Ready to Get Started?',
-		subtitle: 'Sign in to cast your vote and make your voice heard on campus.',
-	}
-];
-
 const OnboardingScreen = () => {
 	const [currentSlide, setCurrentSlide] = useState(0);
-	const totalSlides = slides.length;
+	const totalSlides = slidesData.length;
 	const insets = useSafeAreaInsets();
 	const isLastSlide = currentSlide === totalSlides - 1;
 	
@@ -60,7 +42,7 @@ const OnboardingScreen = () => {
 	};
 	
 	// Get current slide data
-	const currentSlideData = slides[currentSlide];
+	const currentSlideData = slidesData[currentSlide];
 	
 	return (
 		<ScrollView
@@ -95,7 +77,7 @@ const OnboardingScreen = () => {
 				
 				{/*Pagination Dots*/}
 				<ThemedView className="flex flex-row justify-center gap-2 mb-2">
-					{slides.map((_, index) => (
+					{slidesData.map((_, index) => (
 						<View
 							key={`dot-${index}`}
 							className={`w-2 h-2 rounded-full ${currentSlide === index ? 'bg-primary-light' : 'bg-gray-300'}`}

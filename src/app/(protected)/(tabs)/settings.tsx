@@ -1,18 +1,18 @@
 import React from 'react';
 import {Feather} from "@expo/vector-icons";
+import {useUser} from "@/core/hooks/useUser";
 import {useAuth} from "@/core/queries/useAuth";
 import {ThemedView} from "@/components/ThemedView";
 import {ThemedText} from "@/components/ThemedText";
 import {Image, ScrollView, View} from "react-native";
 import {ThemedButton} from "@/components/ThemedButton";
-import {useAuthStore} from "@/core/stores/useAuthStore";
 import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
 import Notification from "@/components/Preferences/Notification";
 import AppAppearance from "@/components/Preferences/AppAppeareance";
 import HelpAndSupportSection from "@/components/Preferences/HelpAndSupportSection";
 
 function SettingsScreen() {
-	const user = useAuthStore(state => state.user);
+	const {department, level, fullName} = useUser()
 	const {logout} = useAuth();
 	
 	return (
@@ -32,8 +32,8 @@ function SettingsScreen() {
 							resizeMode={'cover'}
 						/>
 						<View>
-							<ThemedText>{user?.name}</ThemedText>
-							<ThemedText>{user?.department}, {user?.level} Level</ThemedText>
+							<ThemedText>{fullName}</ThemedText>
+							<ThemedText>{department}, {level} Level</ThemedText>
 						</View>
 					</ThemedView>
 					<Notification/>

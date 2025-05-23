@@ -40,6 +40,7 @@ export const authApiService = {
 	verifyOtp: async (code: string, userId: number | null, temp_token: string | null): Promise<{
 		success: boolean;
 		token?: string;
+		expiry?: number;
 		user?: User
 	}> => {
 		if (!userId || !temp_token) {
@@ -58,6 +59,7 @@ export const authApiService = {
 				return {
 					success: true,
 					token: 'mock-token-' + user.id,
+					expiry: 3600,
 					user: verifiedUser
 				};
 			}
