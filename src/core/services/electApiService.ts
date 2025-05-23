@@ -26,4 +26,27 @@ export const electApiService = {
 			}
 		}
 	},
+	getElection: async (electionId: string): Promise<{
+		success: boolean;
+		election?: ElectionPayload;
+	}> => {
+		if (USE_MOCK_DATA) {
+			await new Promise(resolve => setTimeout(resolve, 200)); // Wait for 200ms
+			return {
+				success: true,
+				election: mockElections.filter(election => election.id === electionId)[0],
+			};
+		} else {
+			// Real API implementation
+			try {
+				// const response = await fetch('your-services-endpoint/login', {...})
+				// const data = await response.json();
+				// return {...}
+				return {success: false};
+			} catch (error) {
+				console.error('news error:', error);
+				return {success: false};
+			}
+		}
+	},
 };

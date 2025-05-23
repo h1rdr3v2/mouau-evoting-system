@@ -1,6 +1,7 @@
 import {useQuery} from '@tanstack/react-query';
-import {electApiService} from "@/core/services/electApiService";
 import {format, isPast, isFuture} from 'date-fns';
+import {ElectionPayload} from "@/core/data/mockElections";
+import {electApiService} from "@/core/services/electApiService";
 
 export function getElections() {
 	return useQuery({
@@ -13,20 +14,7 @@ export function getElections() {
 			if (!data?.elections) return {upcoming: [], ongoing: [], success: data?.success};
 			
 			// Process each election
-			const processedElections = data.elections.map(election => {
-				const startDate = new Date(election.startDate);
-				const endDate = new Date(election.endDate);
-				
-				return {
-					...election,
-					startTimestamp: startDate.getTime(),
-					endTimestamp: endDate.getTime(),
-					formattedStartDate: format(startDate, 'dd/MM/yyyy'),
-					formattedEndDate: format(endDate, 'dd/MM/yyyy'),
-					// Dynamic status based on dates
-					dateBasedStatus: isPast(startDate) && isFuture(endDate) ? 'ongoing' : isFuture(startDate) ? 'upcoming' : 'ended'
-				};
-			});
+			const processedElections = data.elections.map(election => processElection(election));
 			
 			// Sort and filter into upcoming and ongoing arrays
 			const upcoming = processedElections
@@ -49,4 +37,37 @@ export function getElections() {
 			};
 		}
 	});
+}
+
+export function getElection(id: string) {
+	return useQuery({
+		queryKey: ['election', id],
+		queryFn: () => electApiService.getElection(id),
+		staleTime: 600,
+		retry: 2,
+		retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+		select: (data) => {
+			if (!data?.election) return {success: data?.success};
+			
+			return {
+				success: data.success,
+				election: processElection(data.election)
+			}
+		}
+	})
+}
+
+const processElection = (election: ElectionPayload) => {
+	const startDate = new Date(election.startDate);
+	const endDate = new Date(election.endDate);
+	
+	return {
+		...election,
+		startTimestamp: startDate.getTime(),
+		endTimestamp: endDate.getTime(),
+		formattedStartDate: format(startDate, 'dd/MM/yyyy'),
+		formattedEndDate: format(endDate, 'dd/MM/yyyy'),
+		// Dynamic status based on dates
+		dateBasedStatus: isPast(startDate) && isFuture(endDate) ? 'ongoing' : isFuture(startDate) ? 'upcoming' : 'ended'
+	};
 }
