@@ -45,6 +45,7 @@ export type Election = {
 	description: string;
 	startDate: string; // ISO date string
 	endDate: string; // ISO date string
+	positions: number;
 	status: 'upcoming' | 'active' | 'completed';
 	isPublished: boolean;
 	totalVotes: number;
