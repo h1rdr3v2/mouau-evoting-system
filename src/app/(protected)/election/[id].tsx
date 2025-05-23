@@ -2,20 +2,24 @@ import React, {useState} from 'react';
 import {ThemedText} from "@/components/ThemedText";
 import {useTheme} from "@/core/contexts/ThemeContext";
 import {ThemedButton} from "@/components/ThemedButton";
+import {Link, router, useLocalSearchParams} from 'expo-router';
 import {SceneMap, TabBar, TabView} from "react-native-tab-view";
 import {ScrollView, useWindowDimensions, View} from "react-native";
 import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import {Link, router} from "expo-router";
+import {getElection} from "@/core/queries/useElections";
 
 const Index = () => {
+	const {id} = useLocalSearchParams<{ id: string }>();
+	const {data} = getElection(id)
+	console.log(data)
 	const {colors} = useTheme()
 	
 	return (
 		<ThemedSafeAreaView>
 			<View className="pt-3 px-4 gap-8">
 				<ThemedText type='title'>
-					NACOS Executive Elections 2025
+					{data?.election?.title}
 				</ThemedText>
 				<View className='flex-row justify-between items-center'>
 					<View className='gap-2'>
@@ -25,17 +29,19 @@ const Index = () => {
 						</View>
 						<View>
 							<ThemedText type='title'>
-								4,234
+								{data?.election?.totalVotes}
 								<ThemedText>{" "}votes</ThemedText>
 							</ThemedText>
 						</View>
 					</View>
-					<ThemedButton
-						variant='primary'
-						title="Vote"
-						className='rounded-[999px] min-w-0 p-0 m-0 w-[78px] h-[50px]'
-						onPress={() => router.push('/(protected)/election/voting-rules')}
-					/>
+					{data?.election?.dateBasedStatus !== 'upcoming' && (
+						<ThemedButton
+							variant='primary'
+							title="Vote"
+							className='rounded-[999px] min-w-0 p-0 m-0 w-[78px] h-[50px]'
+							onPress={() => router.push('/(protected)/election/voting-rules')}
+						/>
+					)}
 				</View>
 			</View>
 			<View className='flex-1 flex-grow pt-8'>
