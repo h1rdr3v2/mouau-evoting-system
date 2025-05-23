@@ -4,7 +4,7 @@ import {useUser} from "@/core/hooks/useUser";
 export default function ProtectedLayout() {
 	const {isLoggedIn} = useUser()
 	
-	if (!isLoggedIn) return <Redirect href="/onboarding"/>;
+	if (!isLoggedIn()) return <Redirect href="/onboarding"/>;
 	
 	return (
 		<Stack>

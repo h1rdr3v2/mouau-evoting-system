@@ -12,7 +12,7 @@ const CELL_COUNT = 4;
 
 function VerificationScreen() {
 	const [value, setValue] = useState('');
-	const {verifyOtp, otpError} = useAuth();
+	const {verifyOtp, isVerifying, otpError} = useAuth();
 	
 	const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
 	const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -100,6 +100,7 @@ function VerificationScreen() {
 							title='Continue'
 							size='large'
 							className='w-full'
+							loading={isVerifying}
 							onPress={handleFullLogin}
 							disabled={value.length < CELL_COUNT}
 						/>

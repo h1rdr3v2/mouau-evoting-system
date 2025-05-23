@@ -60,7 +60,7 @@ export const authApiService = {
 				return {
 					success: true,
 					token: 'mock-token-' + user.id,
-					expiry: 3600,
+					expiry: Date.now() + 3600 * 60 * 1000,
 					user: verifiedUser
 				};
 			}
