@@ -1,15 +1,14 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {router} from "expo-router";
 import {useUser} from "@/core/hooks/useUser";
 import {useNews} from "@/core/queries/useNews";
 import {ThemedText} from '@/components/ThemedText';
-import {ThemedButton} from "@/components/ThemedButton";
+import ElectionCard from "@/components/ElectionCard";
+import {getElections} from "@/core/queries/useElections";
 import {TrendingNewsSection} from "@/components/TrendingNews";
 import {OverylayImageView} from "@/components/OverlayImageView";
 import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
-import EligibilityBadge from "@/components/Badges/EligibilityBadge";
 import {ScrollView, View, Text, RefreshControl} from 'react-native';
-import {getElections} from "@/core/queries/useElections";
 
 // Main HomeScreen Component
 function HomeScreen() {
@@ -17,9 +16,6 @@ function HomeScreen() {
 	const {data: elections} = getElections();
 	const {data: news, isLoading: newsLoading, isRefetching, refetch} = useNews()
 	
-	useEffect(() => {
-		console.log(elections)
-	}, [elections])
 	return (
 		<ThemedSafeAreaView>
 			<ScrollView
@@ -50,9 +46,11 @@ function HomeScreen() {
 						{elections?.ongoing.map((item, index) => (
 							<ElectionCard
 								key={index}
+								electionId={item.id}
 								title={item.title}
 								description={item.description}
 								EndDate={item.formattedEndDate}
+								endTimeStamp={item.endTimestamp}
 								positions={`${item.positions}`}
 								buttonText={"Vote Now"}
 								onButtonPress={() => router.push('/election')}
@@ -78,9 +76,11 @@ function HomeScreen() {
 						{elections?.upcoming.map((item, index) => (
 							<ElectionCard
 								key={index}
+								electionId={item.id}
 								title={item.title}
 								description={item.description}
 								StartDate={item.formattedStartDate}
+								startTimeStamp={item.startTimestamp}
 								buttonText={"View Details"}
 								positions={`${item.positions}`}
 								EligbleToVote={true}
@@ -94,54 +94,5 @@ function HomeScreen() {
 		</ThemedSafeAreaView>
 	);
 }
-
-interface ElectionsProps {
-	title: string;
-	description: string;
-	buttonText: string;
-	onButtonPress: () => void;
-	positions: string;
-	StartDate?: string;
-	EndDate?: string;
-	EligbleToVote?: boolean;
-	upcomingElection?: boolean;
-}
-
-const ElectionCard = ({
-						  title,
-						  description,
-						  buttonText,
-						  onButtonPress,
-						  positions,
-						  StartDate,
-						  EndDate,
-						  EligbleToVote,
-						  upcomingElection = false,
-					  }: ElectionsProps) => (
-	<View className='border border-black/40 dark:border-white/40 rounded-lg px-2 py-3 gap-3'>
-		<View className='flex-row justify-between items-center'>
-			<View>
-				{StartDate && (<ThemedText type='light'>Date: {StartDate}</ThemedText>)}
-				{positions && (<ThemedText type='light'>{positions} Positions</ThemedText>)}
-				{EndDate && (<ThemedText type='light'>Ends: {EndDate}</ThemedText>)}
-			</View>
-			{EligbleToVote !== undefined && (<EligibilityBadge isEligible={EligbleToVote}/>)}
-		</View>
-		<ThemedText>
-			<ThemedText type='title'>2h 20m 49s</ThemedText> {upcomingElection ? "To election day" : "Remaining"}
-		</ThemedText>
-		<View className='gap-1'>
-			<ThemedText type='subtitle'>{title}</ThemedText>
-			<ThemedText type='light' numberOfLines={2}>
-				{description}
-			</ThemedText>
-		</View>
-		<ThemedButton
-			title={buttonText}
-			size='large'
-			onPress={onButtonPress}
-		/>
-	</View>
-)
 
 export default HomeScreen;
