@@ -47,7 +47,7 @@ const VotingRules = () => {
 					<ThemedButton
 						variant='text'
 						title='Go Back'
-						onPress={() => router.dismissTo('/election')}
+						onPress={() => router.back()}
 					/>
 				</View>
 			</View>
