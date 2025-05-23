@@ -5,12 +5,12 @@ import {ThemedText} from "@/components/ThemedText";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import {getElections} from "@/core/queries/useElections";
 import {useElectionTimer} from "@/core/hooks/useElectionTimer";
-import {Image, Pressable, ScrollView, View} from "react-native";
 import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
 import VotingStatusBadge from "@/components/Badges/VotingStatusBadge";
+import {Image, Pressable, RefreshControl, ScrollView, View} from "react-native";
 
 function VoteScreen() {
-	const {data: elections} = getElections();
+	const {data: elections, refetch, isRefetching} = getElections();
 	
 	const noElection = elections?.ongoing.length == 0;
 	
@@ -18,6 +18,7 @@ function VoteScreen() {
 		<ThemedSafeAreaView className='bg-blend-overlay'>
 			<ScrollView
 				bounces={!noElection}
+				refreshControl={<RefreshControl onRefresh={refetch} refreshing={isRefetching}/>}
 				showsVerticalScrollIndicator={false}
 				keyboardShouldPersistTaps="handled"
 				contentContainerStyle={{flexGrow: 1, paddingBottom: 0}}
