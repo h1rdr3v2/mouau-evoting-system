@@ -16,11 +16,11 @@ export const mockElections: ElectionPayload[] = [
 	},
 	{
 		id: 'election2',
-		title: 'NACOS Executive Elections 2025',
+		title: 'Computer Science Rep 2025',
 		description: 'Annual elections for the executive committee of the National Association of Computing Students.',
 		startDate: '2026-04-10T09:00:00.000Z',
 		endDate: '2027-04-12T18:00:00.000Z',
-		positions: countElectionPositions('election1', mockPositions),
+		positions: countElectionPositions('election2', mockPositions),
 		status: 'upcoming',
 		totalVotes: 0,
 	}
