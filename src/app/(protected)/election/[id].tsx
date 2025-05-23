@@ -1,18 +1,17 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {ThemedText} from "@/components/ThemedText";
 import {useTheme} from "@/core/contexts/ThemeContext";
 import {ThemedButton} from "@/components/ThemedButton";
+import {getElection} from "@/core/queries/useElections";
 import {Link, router, useLocalSearchParams} from 'expo-router';
 import {SceneMap, TabBar, TabView} from "react-native-tab-view";
 import {ScrollView, useWindowDimensions, View} from "react-native";
 import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import {getElection} from "@/core/queries/useElections";
 
 const Index = () => {
 	const {id} = useLocalSearchParams<{ id: string }>();
-	const {data} = getElection(id)
-	console.log(data)
+	const {data, isLoading} = getElection(id)
 	const {colors} = useTheme()
 	
 	return (
@@ -45,7 +44,7 @@ const Index = () => {
 				</View>
 			</View>
 			<View className='flex-1 flex-grow pt-8'>
-				<ViewArea/>
+				{!isLoading && (<ViewArea/>)}
 			</View>
 		</ThemedSafeAreaView>
 	);
@@ -183,9 +182,11 @@ const renderScene = SceneMap({
 })
 
 const ViewArea = () => {
-	const layout = useWindowDimensions();
+	const {id} = useLocalSearchParams<{ id: string }>();
+	const {data} = getElection(id)
 	
 	const {colors} = useTheme();
+	const layout = useWindowDimensions();
 	
 	// Get theme colors (adjust based on your actual theming system)
 	const backgroundColor = colors.background;
@@ -194,17 +195,30 @@ const ViewArea = () => {
 	
 	// Tab state
 	const [index, setIndex] = useState(0);
-	const [routes] = useState([
-		{key: 'liveResult', title: 'Live Result'},
-		{key: 'candidates', title: 'Candidates'},
-	]);
+	
+	const routes = useMemo(() => {
+		if (data?.election?.dateBasedStatus === 'upcoming') {
+			return [
+				{key: 'candidates', title: 'Candidates'},
+			];
+		} else {
+			return [
+				{key: 'liveResult', title: 'Live Result'},
+				{key: 'candidates', title: 'Candidates'},
+			];
+		}
+	}, [data?.election?.dateBasedStatus]);
 	
 	// Custom tab bar
 	const renderTabBar = (props: any) => (
 		<TabBar
 			{...props}
 			indicatorStyle={{height: 3, backgroundColor: primaryColor}}
-			style={{backgroundColor, width: '80%', alignSelf: 'center'}}
+			style={{
+				backgroundColor,
+				width: data?.election?.dateBasedStatus == 'upcoming' ? '50%' : '80%',
+				alignSelf: 'center'
+			}}
 			activeColor={primaryColor}
 			inactiveColor={secondaryColor}
 		/>
