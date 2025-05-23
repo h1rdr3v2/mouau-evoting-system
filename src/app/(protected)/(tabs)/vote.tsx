@@ -37,7 +37,7 @@ function VoteScreen() {
 								<VotingCard
 									key={index}
 									title={item.title}
-									hourLeft={(useElectionTimer(item.endTimestamp).hours).toString()}
+									endTimestamp={item.endTimestamp}
 									description={item.description}
 									handlePress={() => router.push(`/election/${item.id}`)}
 									hasVoted={false}
@@ -69,28 +69,32 @@ const NoElection = () => (
 interface VotingCardProps {
 	title: string;
 	description: string;
-	hourLeft: string;
+	endTimestamp: number;
 	handlePress: () => void,
 	hasVoted: boolean
 }
 
-const VotingCard = ({title, description, hourLeft, handlePress, hasVoted}: VotingCardProps) => (
-	<View className='gap-3 px-4 py-3 border border-black/40 dark:border-white/40 rounded-xl'>
-		<View className='flex flex-row justify-between items-center'>
-			<VotingStatusBadge hasVoted={hasVoted}/>
-			<ThemedText>{hourLeft}h left</ThemedText>
-		</View>
-		<Pressable onPress={handlePress}>
-			<View className='flex flex-row items-center justify-between'>
-				<View className='max-w-[84%]'>
-					<ThemedText type='subtitle'>{title}</ThemedText>
-					<ThemedText type='light' numberOfLines={2}>
-						{description}
-					</ThemedText>
-				</View>
-				<AntDesign name="right" size={24} color='#9ca3af'/>
+const VotingCard = ({title, description, endTimestamp, handlePress, hasVoted}: VotingCardProps) => {
+	const {hours} = useElectionTimer(endTimestamp);
+	
+	return (
+		<View className='gap-3 px-4 py-3 border border-black/40 dark:border-white/40 rounded-xl'>
+			<View className='flex flex-row justify-between items-center'>
+				<VotingStatusBadge hasVoted={hasVoted}/>
+				<ThemedText>{hours}h left</ThemedText>
 			</View>
-		</Pressable>
-	</View>
-)
+			<Pressable onPress={handlePress}>
+				<View className='flex flex-row items-center justify-between'>
+					<View className='max-w-[84%]'>
+						<ThemedText type='subtitle'>{title}</ThemedText>
+						<ThemedText type='light' numberOfLines={2}>
+							{description}
+						</ThemedText>
+					</View>
+					<AntDesign name="right" size={24} color='#9ca3af'/>
+				</View>
+			</Pressable>
+		</View>
+	)
+}
 export default VoteScreen;
