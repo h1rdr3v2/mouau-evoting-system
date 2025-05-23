@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {router} from "expo-router";
 import {useUser} from "@/core/hooks/useUser";
 import {useNews} from "@/core/queries/useNews";
@@ -14,9 +14,12 @@ import {getElections} from "@/core/queries/useElections";
 // Main HomeScreen Component
 function HomeScreen() {
 	const {firstName} = useUser()
-	const {data: news, isLoading: newsLoading, isRefetching, refetch} = useNews()
 	const {data: elections} = getElections();
+	const {data: news, isLoading: newsLoading, isRefetching, refetch} = useNews()
 	
+	useEffect(() => {
+		console.log(elections)
+	}, [elections])
 	return (
 		<ThemedSafeAreaView>
 			<ScrollView
@@ -44,27 +47,17 @@ function HomeScreen() {
 					{/*Ongoing elections*/}
 					<View className='gap-4'>
 						<ThemedText>Ongoing Election/s</ThemedText>
-						<View className='border border-black/40 dark:border-white/40 rounded-lg px-2 py-3 gap-3'>
-							<View>
-								<ThemedText type='light'>5 Positions</ThemedText>
-								<ThemedText type='light'>Ends: 3/18/2025</ThemedText>
-							</View>
-							<ThemedText>
-								<ThemedText type='title'>2h 20m 49s</ThemedText> Remaining
-							</ThemedText>
-							<View className='gap-1'>
-								<ThemedText type='subtitle'>NACOS Executive Elections 2025</ThemedText>
-								<ThemedText type='light' numberOfLines={2}>
-									Annual elections for the executive committee of the National Association of
-									Computing Students
-								</ThemedText>
-							</View>
-							<ThemedButton
-								title="Vote now"
-								size='large'
-								onPress={() => router.push('/election')}
+						{elections?.ongoing.map((item, index) => (
+							<ElectionCard
+								key={index}
+								title={item.title}
+								description={item.description}
+								EndDate={item.formattedEndDate}
+								positions={`${item.positions}`}
+								buttonText={"Vote Now"}
+								onButtonPress={() => router.push('/election')}
 							/>
-						</View>
+						))}
 					</View>
 					
 					{/*Vote counts banner*/}
@@ -82,35 +75,73 @@ function HomeScreen() {
 					{/*Upcoming elections*/}
 					<View className='gap-4'>
 						<ThemedText>Upcoming Election/s</ThemedText>
-						<View className='border border-black/40 dark:border-white/40 rounded-lg px-2 py-3 gap-3'>
-							<View className='flex-row justify-between items-center'>
-								<View>
-									<ThemedText type='light'>Date: 4/10/2025</ThemedText>
-									<ThemedText type='light'>5 Positions</ThemedText>
-								</View>
-								<EligibilityBadge isEligible={true}/>
-							</View>
-							<ThemedText>
-								<ThemedText type='title'>2h 20m 49s</ThemedText> to election day
-							</ThemedText>
-							<View className='gap-1'>
-								<ThemedText type='subtitle'>Student Affairs Representatives Election</ThemedText>
-								<ThemedText type='light' numberOfLines={2}>
-									Election for the departmental representatives to represent students in the SA
-									sectors
-								</ThemedText>
-							</View>
-							<ThemedButton
-								title="View Details"
-								size='large'
-								onPress={() => router.push('/election')}
+						{elections?.upcoming.map((item, index) => (
+							<ElectionCard
+								key={index}
+								title={item.title}
+								description={item.description}
+								StartDate={item.formattedStartDate}
+								buttonText={"View Details"}
+								positions={`${item.positions}`}
+								EligbleToVote={true}
+								onButtonPress={() => router.push('/election')}
+								upcomingElection
 							/>
-						</View>
+						))}
 					</View>
 				</View>
 			</ScrollView>
 		</ThemedSafeAreaView>
 	);
 }
+
+interface ElectionsProps {
+	title: string;
+	description: string;
+	buttonText: string;
+	onButtonPress: () => void;
+	positions: string;
+	StartDate?: string;
+	EndDate?: string;
+	EligbleToVote?: boolean;
+	upcomingElection?: boolean;
+}
+
+const ElectionCard = ({
+						  title,
+						  description,
+						  buttonText,
+						  onButtonPress,
+						  positions,
+						  StartDate,
+						  EndDate,
+						  EligbleToVote,
+						  upcomingElection = false,
+					  }: ElectionsProps) => (
+	<View className='border border-black/40 dark:border-white/40 rounded-lg px-2 py-3 gap-3'>
+		<View className='flex-row justify-between items-center'>
+			<View>
+				{StartDate && (<ThemedText type='light'>Date: {StartDate}</ThemedText>)}
+				{positions && (<ThemedText type='light'>{positions} Positions</ThemedText>)}
+				{EndDate && (<ThemedText type='light'>Ends: {EndDate}</ThemedText>)}
+			</View>
+			{EligbleToVote !== undefined && (<EligibilityBadge isEligible={EligbleToVote}/>)}
+		</View>
+		<ThemedText>
+			<ThemedText type='title'>2h 20m 49s</ThemedText> {upcomingElection ? "To election day" : "Remaining"}
+		</ThemedText>
+		<View className='gap-1'>
+			<ThemedText type='subtitle'>{title}</ThemedText>
+			<ThemedText type='light' numberOfLines={2}>
+				{description}
+			</ThemedText>
+		</View>
+		<ThemedButton
+			title={buttonText}
+			size='large'
+			onPress={onButtonPress}
+		/>
+	</View>
+)
 
 export default HomeScreen;
