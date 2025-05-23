@@ -9,7 +9,7 @@ export const authApiService = {
 		userId?: number;
 		temp_token?: string;
 	}> => {
-		await new Promise(resolve => setTimeout(resolve, 3000)); // Wait for 3 seconds
+		await new Promise(resolve => setTimeout(resolve, 300)); // Wait for 300ms
 		if (USE_MOCK_DATA) {
 			const user = mockUsers.find(u => u.regNo === regno);
 			
@@ -47,6 +47,8 @@ export const authApiService = {
 		}
 		
 		if (USE_MOCK_DATA) {
+			await new Promise(resolve => setTimeout(resolve, 300)); // Wait for 300ms
+			
 			if (code !== '1234') {
 				return {success: false};
 			}
