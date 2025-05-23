@@ -1,23 +1,34 @@
 import React from 'react';
 import {router} from "expo-router";
 import {useUser} from "@/core/hooks/useUser";
-import {trendingNews} from "@/core/data/mockNews";
+import {useNews} from "@/core/queries/useNews";
 import {ThemedText} from '@/components/ThemedText';
-import {ScrollView, View, Text} from 'react-native';
 import {ThemedButton} from "@/components/ThemedButton";
 import {TrendingNewsSection} from "@/components/TrendingNews";
 import {OverylayImageView} from "@/components/OverlayImageView";
 import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
 import EligibilityBadge from "@/components/Badges/EligibilityBadge";
+import {ScrollView, View, Text, RefreshControl} from 'react-native';
+import {getElections} from "@/core/queries/useElections";
 
 // Main HomeScreen Component
 function HomeScreen() {
 	const {firstName} = useUser()
+	const {data: news, isLoading: newsLoading, isRefetching, refetch} = useNews()
+	const {data: elections} = getElections();
 	
 	return (
 		<ThemedSafeAreaView>
 			<ScrollView
 				bounces={true}
+				refreshControl={
+					<RefreshControl
+						refreshing={isRefetching}
+						onRefresh={() => {
+							refetch();
+						}}
+					/>
+				}
 				showsVerticalScrollIndicator={false}
 				keyboardShouldPersistTaps="handled"
 				contentContainerStyle={{flexGrow: 1, paddingBottom: 50}}
@@ -27,7 +38,7 @@ function HomeScreen() {
 				</View>
 				
 				{/*Trending News*/}
-				<TrendingNewsSection newsItems={trendingNews}/>
+				<TrendingNewsSection isLoading={newsLoading} newsItems={news?.trendingNews}/>
 				
 				<View className='flex gap-5 px-4'>
 					{/*Ongoing elections*/}

@@ -1,17 +1,16 @@
 import {User} from '@/core/types/User';
 import {mockUsers} from '@/core/data/mockUsers';
+import {USE_MOCK_DATA} from "@/core/data/config";
 
 // Create API service with the same methods as before
 export const authApiService = {
-	USE_MOCK_DATA: true,
-	
 	login: async (regno: string): Promise<{
 		success: boolean;
 		userId?: number;
 		temp_token?: string;
 	}> => {
 		await new Promise(resolve => setTimeout(resolve, 3000)); // Wait for 3 seconds
-		if (authApiService.USE_MOCK_DATA) {
+		if (USE_MOCK_DATA) {
 			const user = mockUsers.find(u => u.regNo === regno);
 			
 			if (user) {
@@ -47,7 +46,7 @@ export const authApiService = {
 			return {success: false};
 		}
 		
-		if (authApiService.USE_MOCK_DATA) {
+		if (USE_MOCK_DATA) {
 			if (code !== '1234') {
 				return {success: false};
 			}

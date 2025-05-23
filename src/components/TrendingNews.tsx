@@ -39,12 +39,15 @@ export const NewsItem = ({image, title, readTime}: NewsItemType) => (
 );
 
 // Trending News Section
-export const TrendingNewsSection = ({newsItems = []}: {
+export const TrendingNewsSection = ({isLoading, newsItems = []}: {
+	isLoading: boolean;
 	newsItems?: NewsItemType[]
 }) => {
 	if (newsItems.length <= 0) {
 		return (<></>);
 	}
+	
+	//TODO: a placeholder using isLoading
 	
 	return (
 		<View className='flex gap-4 w-full mb-5'>

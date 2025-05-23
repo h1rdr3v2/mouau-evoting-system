@@ -1,6 +1,8 @@
 import {Election} from '@/core/types/Election';
 
-export const mockElections: Omit<Election, 'isPublished' | 'createdAt' | 'updatedAt' | 'createdBy'>[] = [
+export type ElectionPayload = Omit<Election, 'isPublished' | 'createdAt' | 'updatedAt' | 'createdBy'>;
+
+export const mockElections: ElectionPayload[] = [
 	{
 		id: 'election1',
 		title: 'NACOS Executive Elections 2025',
