@@ -6,7 +6,7 @@ export function getElections() {
 	return useQuery({
 		queryKey: ['elections'],
 		queryFn: () => electApiService.getElections(),
-		staleTime: 0,
+		staleTime: 600,
 		retry: 2,
 		retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
 		select: (data) => {

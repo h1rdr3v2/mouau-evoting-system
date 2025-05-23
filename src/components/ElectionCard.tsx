@@ -3,12 +3,12 @@ import {ThemedText} from './ThemedText';
 import {ThemedButton} from "@/components/ThemedButton";
 import {useElectionTimer} from '@/core/hooks/useElectionTimer';
 import EligibilityBadge from "@/components/Badges/EligibilityBadge";
+import {router} from "expo-router";
 
 interface ElectionsProps {
 	title: string;
 	description: string;
 	buttonText: string;
-	onButtonPress: () => void;
 	positions: string;
 	StartDate?: string;
 	startTimeStamp?: number;
@@ -23,7 +23,6 @@ const ElectionCard = ({
 						  title,
 						  description,
 						  buttonText,
-						  onButtonPress,
 						  positions,
 						  StartDate,
 						  EndDate,
@@ -37,7 +36,7 @@ const ElectionCard = ({
 	const timerTimestamp = upcomingElection ? startTimeStamp : endTimeStamp;
 	
 	// Use our custom timer hook
-	const {formattedTime} = useElectionTimer(timerTimestamp, upcomingElection);
+	const {formattedTime} = useElectionTimer(timerTimestamp);
 	
 	return (
 		<View className='border border-black/40 dark:border-white/40 rounded-lg px-2 py-3 gap-3'>
@@ -62,7 +61,7 @@ const ElectionCard = ({
 			<ThemedButton
 				title={buttonText}
 				size='large'
-				onPress={onButtonPress}
+				onPress={() => router.push(`/election/${electionId}`)}
 			/>
 		</View>
 	);

@@ -13,8 +13,8 @@ import {ScrollView, View, Text, RefreshControl} from 'react-native';
 // Main HomeScreen Component
 function HomeScreen() {
 	const {firstName} = useUser()
-	const {data: elections} = getElections();
-	const {data: news, isLoading: newsLoading, isRefetching, refetch} = useNews()
+	const {data: elections, refetch: electionRefetch, isRefetching: electionIsRefetching} = getElections();
+	const {data: news, isLoading: newsLoading, isRefetching: newsIsRefetching, refetch: newsRefetch} = useNews()
 	
 	return (
 		<ThemedSafeAreaView>
@@ -22,9 +22,10 @@ function HomeScreen() {
 				bounces={true}
 				refreshControl={
 					<RefreshControl
-						refreshing={isRefetching}
+						refreshing={newsIsRefetching && electionIsRefetching}
 						onRefresh={() => {
-							refetch();
+							newsRefetch();
+							electionRefetch();
 						}}
 					/>
 				}
@@ -53,7 +54,6 @@ function HomeScreen() {
 								endTimeStamp={item.endTimestamp}
 								positions={`${item.positions}`}
 								buttonText={"Vote Now"}
-								onButtonPress={() => router.push('/election')}
 							/>
 						))}
 					</View>
@@ -84,7 +84,6 @@ function HomeScreen() {
 								buttonText={"View Details"}
 								positions={`${item.positions}`}
 								EligbleToVote={true}
-								onButtonPress={() => router.push('/election')}
 								upcomingElection
 							/>
 						))}

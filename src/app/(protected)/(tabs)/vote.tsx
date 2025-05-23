@@ -6,9 +6,13 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import {Image, Pressable, ScrollView, View} from "react-native";
 import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
 import VotingStatusBadge from "@/components/Badges/VotingStatusBadge";
+import {getElections} from "@/core/queries/useElections";
+import {useElectionTimer} from "@/core/hooks/useElectionTimer";
 
 function VoteScreen() {
-	const noElection = false;
+	const {data: elections} = getElections();
+	
+	const noElection = elections?.ongoing.length == 0;
 	
 	return (
 		<ThemedSafeAreaView className='bg-blend-overlay'>
@@ -26,7 +30,20 @@ function VoteScreen() {
 							heard
 						</ThemedText>
 					</View>
-					{noElection ? (<NoElection/>) : (<ElectionItems/>)}
+					{noElection ? (<NoElection/>) : (
+						<View className='gap-4 pt-8'>
+							{elections?.ongoing.map((item, index) => (
+								<VotingCard
+									key={index}
+									title={item.title}
+									hourLeft={(useElectionTimer(item.endTimestamp).hours).toString()}
+									description={item.description}
+									handlePress={() => router.push(`/election/${item.id}`)}
+									hasVoted={false}
+								/>
+							))}
+						</View>
+					)}
 				</ThemedView>
 			</ScrollView>
 		</ThemedSafeAreaView>
@@ -48,32 +65,26 @@ const NoElection = () => (
 	</View>
 )
 
-const ElectionItems = () => {
-	const moveToElection = () => {
-		router.push('/election')
-	}
-	return (
-		<View className='gap-4 pt-8'>
-			<VotingCard handlePress={moveToElection} hasVoted={false}/>
-			<VotingCard handlePress={moveToElection} hasVoted={true}/>
-			<VotingCard handlePress={moveToElection} hasVoted={false}/>
-		</View>
-	)
+interface VotingCardProps {
+	title: string;
+	description: string;
+	hourLeft: string;
+	handlePress: () => void,
+	hasVoted: boolean
 }
 
-const VotingCard = ({handlePress, hasVoted}: { handlePress: () => void, hasVoted: boolean }) => (
+const VotingCard = ({title, description, hourLeft, handlePress, hasVoted}: VotingCardProps) => (
 	<View className='gap-3 px-4 py-3 border border-black/40 dark:border-white/40 rounded-xl'>
 		<View className='flex flex-row justify-between items-center'>
 			<VotingStatusBadge hasVoted={hasVoted}/>
-			<ThemedText>2h left</ThemedText>
+			<ThemedText>{hourLeft}h left</ThemedText>
 		</View>
 		<Pressable onPress={handlePress}>
 			<View className='flex flex-row items-center justify-between'>
 				<View className='max-w-[84%]'>
-					<ThemedText type='subtitle'>NACOS Executive Elections 2025</ThemedText>
+					<ThemedText type='subtitle'>{title}</ThemedText>
 					<ThemedText type='light' numberOfLines={2}>
-						Annual elections for the executive committee of the National Association of
-						Computing Students
+						{description}
 					</ThemedText>
 				</View>
 				<AntDesign name="right" size={24} color='#9ca3af'/>
