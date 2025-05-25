@@ -1,20 +1,25 @@
 import {Skeleton} from "moti/skeleton";
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {ThemedText} from "@/components/ThemedText";
 import {useTheme} from "@/core/contexts/ThemeContext";
 import {ThemedButton} from "@/components/ThemedButton";
-import {getElection} from "@/core/queries/useElections";
 import {Link, router, useLocalSearchParams} from 'expo-router';
 import {SceneMap, TabBar, TabView} from "react-native-tab-view";
 import {ScrollView, useWindowDimensions, View} from "react-native";
 import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import {getElection, getPositionsAndCandidates} from "@/core/queries/useElections";
 
 const Index = () => {
 	const {id} = useLocalSearchParams<{ id: string }>();
 	const {data, isLoading} = getElection(id)
 	const {colors, themeMode} = useTheme()
-	
+	const {data: posCandid} = getPositionsAndCandidates(id);
+	useEffect(() => {
+		console.log(
+			posCandid?.data
+		)
+	}, [posCandid]);
 	return (
 		<ThemedSafeAreaView>
 			<View className="pt-3 px-4 gap-8">

@@ -15,7 +15,7 @@ export const mockPositions: Position[] = [
 		title: 'Vice President',
 		description: 'Deputy leader who assists the president',
 		maxSelections: 1,
-		order: 1
+		order: 2
 	},
 	{
 		id: 'pos3',
@@ -23,7 +23,7 @@ export const mockPositions: Position[] = [
 		title: 'General Secretary',
 		description: 'Responsible for documentation and communication',
 		maxSelections: 1,
-		order: 1
+		order: 3
 	},
 	{
 		id: 'pos4',
@@ -39,6 +39,6 @@ export const mockPositions: Position[] = [
 		title: 'Assistant-Course Rep',
 		description: 'Manages public image and communication',
 		maxSelections: 1,
-		order: 1
+		order: 2
 	},
 ];

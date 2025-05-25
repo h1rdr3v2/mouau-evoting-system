@@ -108,3 +108,21 @@ export interface ElectionApiResponse {
 	election?: ElectionPayload;
 	success: boolean;
 }
+
+export type CandidateApiResponse = Omit<Candidate, 'createdAt' | 'updatedAt'>;
+
+interface CandidateWithPosition extends CandidateApiResponse {
+	positionTitle?: string;
+}
+
+export interface PositionsCandidatesResult {
+	[positionTitle: string]: {
+		candidates: CandidateApiResponse[];
+		maxSelections: number;
+	};
+}
+
+export interface PositionsCandidatesApiresponse {
+	data?: PositionsCandidatesResult;
+	success: boolean;
+}

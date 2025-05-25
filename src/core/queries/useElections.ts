@@ -3,7 +3,7 @@ import {
 	ProcessedElection,
 	ElectionQueryResult,
 	ElectionApiResponse,
-	ElectionsApiResponse, ElectionsQueryResult,
+	ElectionsApiResponse, ElectionsQueryResult, PositionsCandidatesApiresponse,
 } from "@/core/types/Election";
 import {useQuery} from '@tanstack/react-query';
 import {format, isPast, isFuture} from 'date-fns';
@@ -60,6 +60,16 @@ export function getElection(id: string) {
 				election: processElection(data.election)
 			}
 		}
+	})
+}
+
+export function getPositionsAndCandidates(electionId: string) {
+	return useQuery<PositionsCandidatesApiresponse, Error>({
+		queryKey: ['positionsWithCandidates', electionId],
+		queryFn: () => electApiService.getPositionsAndCandidates(electionId),
+		staleTime: 600,
+		retry: 2,
+		retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
 	})
 }
 

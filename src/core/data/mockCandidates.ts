@@ -1,6 +1,6 @@
-import {Candidate} from "@/core/types/Election";
+import {CandidateApiResponse} from "@/core/types/Election";
 
-export const mockCandidates: Omit<Candidate, 'createdAt' | 'updatedAt'>[] = [
+export const mockCandidates: CandidateApiResponse[] = [
 	{
 		id: 'cand1',
 		name: 'John Adebayo',
