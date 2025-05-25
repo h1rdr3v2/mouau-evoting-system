@@ -39,7 +39,7 @@ const Index = () => {
 								</View>
 							</View>
 							<View>
-								{data?.election?.dateBasedStatus !== 'upcoming' && (
+								{data?.election?.dateBasedStatus === 'ongoing' && (
 									<ThemedButton
 										variant='primary'
 										title="Vote"
