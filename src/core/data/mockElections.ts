@@ -1,7 +1,5 @@
-import {Election, Position} from '@/core/types/Election';
 import {mockPositions} from "@/core/data/mockPositions";
-
-export type ElectionPayload = Omit<Election, 'isPublished' | 'createdAt' | 'updatedAt' | 'createdBy'>;
+import {ElectionPayload, Position} from '@/core/types/Election';
 
 export const mockElections: ElectionPayload[] = [
 	{

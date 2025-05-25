@@ -1,5 +1,6 @@
 import {USE_MOCK_DATA} from "@/core/data/config";
-import {mockElections, ElectionPayload} from "@/core/data/mockElections";
+import {ElectionPayload} from "@/core/types/Election";
+import {mockElections} from "@/core/data/mockElections";
 
 // Create API service with the same methods as before
 export const electApiService = {

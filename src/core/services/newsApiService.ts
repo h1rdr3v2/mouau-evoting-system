@@ -9,7 +9,7 @@ export const newsApiService = {
 		trendingNews?: NewsItemType[];
 	}> => {
 		if (USE_MOCK_DATA) {
-			await new Promise(resolve => setTimeout(resolve, 200)); // Wait for 200ms
+			await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 200ms
 			return {
 				success: true,
 				trendingNews: trendingNews,

@@ -1,10 +1,16 @@
+import {
+	ElectionPayload,
+	ProcessedElection,
+	ElectionQueryResult,
+	ElectionApiResponse,
+	ElectionsApiResponse, ElectionsQueryResult,
+} from "@/core/types/Election";
 import {useQuery} from '@tanstack/react-query';
 import {format, isPast, isFuture} from 'date-fns';
-import {ElectionPayload} from "@/core/data/mockElections";
 import {electApiService} from "@/core/services/electApiService";
 
 export function getElections() {
-	return useQuery({
+	return useQuery<ElectionsApiResponse, Error, ElectionsQueryResult>({
 		queryKey: ['elections'],
 		queryFn: () => electApiService.getElections(),
 		staleTime: 600,
@@ -40,7 +46,7 @@ export function getElections() {
 }
 
 export function getElection(id: string) {
-	return useQuery({
+	return useQuery<ElectionApiResponse, Error, ElectionQueryResult>({
 		queryKey: ['election', id],
 		queryFn: () => electApiService.getElection(id),
 		staleTime: 600,
@@ -57,7 +63,7 @@ export function getElection(id: string) {
 	})
 }
 
-const processElection = (election: ElectionPayload) => {
+const processElection = (election: ElectionPayload): ProcessedElection => {
 	const startDate = new Date(election.startDate);
 	const endDate = new Date(election.endDate);
 	

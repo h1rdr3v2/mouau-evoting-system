@@ -71,3 +71,40 @@ export type VoteReceipt = {
 	timestamp: string;
 	verificationCode: string;
 };
+
+export type ElectionPayload = Omit<Election, 'isPublished' | 'createdAt' | 'updatedAt' | 'createdBy'>;
+
+// Processed election with added properties
+export interface ProcessedElection extends ElectionPayload {
+	startTimestamp: number;
+	endTimestamp: number;
+	formattedStartDate: string;
+	formattedEndDate: string;
+	dateBasedStatus: 'ongoing' | 'upcoming' | 'ended';
+}
+
+// Response from getElections hook
+export interface ElectionsQueryResult {
+	upcoming: ProcessedElection[];
+	ongoing: ProcessedElection[];
+	allElections?: ProcessedElection[];
+	success: boolean;
+}
+
+// Response from getElection hook
+export interface ElectionQueryResult {
+	success: boolean;
+	election?: ProcessedElection;
+}
+
+// API response for elections list
+export interface ElectionsApiResponse {
+	elections?: ElectionPayload[];
+	success: boolean;
+}
+
+// API response for single election
+export interface ElectionApiResponse {
+	election?: ElectionPayload;
+	success: boolean;
+}
