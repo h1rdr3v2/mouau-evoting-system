@@ -28,6 +28,7 @@ import {
 	Montserrat_800ExtraBold,
 	Montserrat_900Black,
 } from '@expo-google-fonts/montserrat';
+import NetworkStatusToast from "@/components/Toast/NetworkStatusToast";
 
 function AppContent() {
 	const [appIsReady, setAppIsReady] = useState(false);
@@ -77,6 +78,7 @@ function AppContent() {
 				<Stack.Screen name="(auth)"/>
 				<Stack.Screen name="+not-found" options={{title: 'Not Found'}}/>
 			</Stack>
+			<NetworkStatusToast/>
 		</>
 	);
 }
