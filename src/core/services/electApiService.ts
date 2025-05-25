@@ -9,7 +9,7 @@ export const electApiService = {
 		elections?: ElectionPayload[];
 	}> => {
 		if (USE_MOCK_DATA) {
-			await new Promise(resolve => setTimeout(resolve, 200)); // Wait for 200ms
+			await new Promise(resolve => setTimeout(resolve, 900)); // Wait for 200ms
 			return {
 				success: true,
 				elections: mockElections,
@@ -32,7 +32,7 @@ export const electApiService = {
 		election?: ElectionPayload;
 	}> => {
 		if (USE_MOCK_DATA) {
-			await new Promise(resolve => setTimeout(resolve, 200)); // Wait for 200ms
+			await new Promise(resolve => setTimeout(resolve, 400)); // Wait for 200ms
 			return {
 				success: true,
 				election: mockElections.filter(election => election.id === electionId)[0],
