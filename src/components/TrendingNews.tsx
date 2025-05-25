@@ -4,6 +4,25 @@ import {NewsItemType} from "@/core/types/News";
 import {ThemedText} from '@/components/ThemedText';
 import {LinearGradient} from 'expo-linear-gradient';
 import {Image, Pressable, ScrollView, View} from 'react-native';
+import {MotiView} from 'moti';
+import {Skeleton} from 'moti/skeleton';
+import {useTheme} from "@/core/contexts/ThemeContext";
+
+// Skeleton for News Item
+const NewsItemSkeleton = () => {
+	const {themeMode} = useTheme();
+	
+	return (
+		<View className='rounded-lg aspect-[300/163] w-[80vw] overflow-hidden'>
+			<Skeleton
+				width="100%"
+				height="100%"
+				radius={8}
+				colorMode={themeMode === 'dark' ? 'dark' : 'light'}
+			/>
+		</View>
+	);
+};
 
 // Single News Item Component
 export const NewsItem = ({image, title, readTime, id}: NewsItemType) => (
@@ -44,16 +63,40 @@ export const NewsItem = ({image, title, readTime, id}: NewsItemType) => (
 	</Pressable>
 );
 
+// Animated News Item with Skeleton
+const AnimatedNewsItem = ({item}: { item: NewsItemType }) => {
+	return (
+		<MotiView
+			from={{opacity: 0}}
+			animate={{opacity: 1}}
+			transition={{type: 'spring', duration: 500}}
+		>
+			<NewsItem
+				image={item.image}
+				title={item.title}
+				readTime={item.readTime}
+				id={item.id}
+			/>
+		</MotiView>
+	);
+};
+
 // Trending News Section
 export const TrendingNewsSection = ({isLoading, newsItems = []}: {
 	isLoading: boolean;
 	newsItems?: NewsItemType[]
 }) => {
-	if (newsItems.length <= 0) {
+	// When there are no trending news
+	if (newsItems.length <= 0 && !isLoading) {
 		return (<></>);
 	}
 	
-	//TODO: a placeholder using isLoading
+	// Create skeleton placeholders when loading
+	const skeletons = isLoading && newsItems.length === 0
+		? Array(3).fill(0).map((_, index) => ({id: `skeleton-${index}`, isSkeleton: true}))
+		: [];
+	
+	const itemsToRender = isLoading && newsItems.length === 0 ? skeletons : newsItems;
 	
 	return (
 		<View className='flex gap-4 w-full mb-5'>
@@ -66,16 +109,19 @@ export const TrendingNewsSection = ({isLoading, newsItems = []}: {
 					paddingInline: 16,
 				}}
 			>
-				{newsItems.map((item, index) => (
-					<NewsItem
-						key={`news-${index}`}
-						image={item.image}
-						title={item.title}
-						readTime={item.readTime}
-						id={item.id}
-					/>
-				))}
+				{itemsToRender.map((item: any, index) => {
+					if (item.isSkeleton || isLoading) {
+						return <NewsItemSkeleton key={`skeleton-${index}`}/>;
+					}
+					
+					return (
+						<AnimatedNewsItem
+							key={`news-${index}`}
+							item={item}
+						/>
+					);
+				})}
 			</ScrollView>
 		</View>
-	)
+	);
 };
