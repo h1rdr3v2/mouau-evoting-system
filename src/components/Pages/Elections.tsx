@@ -1,13 +1,13 @@
 import React from 'react';
 import {View} from "react-native";
 import {router} from "expo-router";
+import {Skeleton} from "moti/skeleton";
 import {ThemedText} from '@/components/ThemedText';
+import {useTheme} from "@/core/contexts/ThemeContext";
 import {ThemedButton} from "@/components/ThemedButton";
 import {ProcessedElection} from "@/core/types/Election";
 import {useElectionTimer} from '@/core/hooks/useElectionTimer';
 import EligibilityBadge from "@/components/Badges/EligibilityBadge";
-import {Skeleton} from "moti/skeleton";
-import {useTheme} from "@/core/contexts/ThemeContext";
 
 interface ElectionsProps {
 	title: string;
@@ -49,9 +49,12 @@ export const ElectionCardSkeleton = () => {
 };
 
 export const ElectionListSkeleton = ({count = 1}) => {
+	const {themeMode} = useTheme()
+	const isDark = themeMode === 'dark';
+	
 	return (
 		<View className='gap-4'>
-			<Skeleton width='40%' height={20}/>
+			<Skeleton width='40%' height={20} colorMode={isDark ? 'dark' : 'light'}/>
 			{Array(count).fill(0).map((_, index) => (
 				<ElectionCardSkeleton key={index}/>
 			))}

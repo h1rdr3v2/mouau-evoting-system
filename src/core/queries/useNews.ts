@@ -10,3 +10,13 @@ export function getAllNews() {
 		retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
 	});
 }
+
+export function getNews(id: string) {
+	return useQuery({
+		queryKey: ['news', id],
+		staleTime: 1800,
+		queryFn: () => newsApiService.getNews(),
+		retry: 2,
+		retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+	});
+}

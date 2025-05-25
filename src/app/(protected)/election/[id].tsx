@@ -1,3 +1,4 @@
+import {Skeleton} from "moti/skeleton";
 import React, {useMemo, useState} from 'react';
 import {ThemedText} from "@/components/ThemedText";
 import {useTheme} from "@/core/contexts/ThemeContext";
@@ -12,39 +13,51 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 const Index = () => {
 	const {id} = useLocalSearchParams<{ id: string }>();
 	const {data, isLoading} = getElection(id)
-	const {colors} = useTheme()
+	const {colors, themeMode} = useTheme()
 	
 	return (
 		<ThemedSafeAreaView>
 			<View className="pt-3 px-4 gap-8">
-				<ThemedText type='title'>
-					{data?.election?.title}
-				</ThemedText>
-				<View className='flex-row justify-between items-center'>
-					<View className='gap-2'>
-						<View className='flex-row items-center gap-2'>
-							<MaterialCommunityIcons name="vote-outline" size={24} color={colors.text}/>
-							<ThemedText>Total votes</ThemedText>
+				<Skeleton.Group show={isLoading}>
+					<Skeleton height={50} colorMode={themeMode === 'dark' ? 'dark' : 'light'}>
+						<ThemedText type='title'>
+							{data?.election?.title}
+						</ThemedText>
+					</Skeleton>
+					<Skeleton height={80} colorMode={themeMode === 'dark' ? 'dark' : 'light'}>
+						<View className='flex-row justify-between items-center'>
+							<View className='gap-2'>
+								<View className='flex-row items-center gap-2'>
+									<MaterialCommunityIcons name="vote-outline" size={24} color={colors.text}/>
+									<ThemedText>Total votes</ThemedText>
+								</View>
+								<View>
+									<ThemedText type='title'>
+										{data?.election?.totalVotes}
+										<ThemedText>{" "}votes</ThemedText>
+									</ThemedText>
+								</View>
+							</View>
+							<View>
+								{data?.election?.dateBasedStatus !== 'upcoming' && (
+									<ThemedButton
+										variant='primary'
+										title="Vote"
+										className='rounded-[999px] min-w-0 p-0 m-0 w-[78px] h-[50px]'
+										onPress={() => router.push('/(protected)/election/voting-rules')}
+									/>
+								)}
+							</View>
 						</View>
-						<View>
-							<ThemedText type='title'>
-								{data?.election?.totalVotes}
-								<ThemedText>{" "}votes</ThemedText>
-							</ThemedText>
-						</View>
-					</View>
-					{data?.election?.dateBasedStatus !== 'upcoming' && (
-						<ThemedButton
-							variant='primary'
-							title="Vote"
-							className='rounded-[999px] min-w-0 p-0 m-0 w-[78px] h-[50px]'
-							onPress={() => router.push('/(protected)/election/voting-rules')}
-						/>
-					)}
-				</View>
+					</Skeleton>
+				</Skeleton.Group>
 			</View>
 			<View className='flex-1 flex-grow pt-8'>
-				{!isLoading && (<ViewArea/>)}
+				{isLoading ? (
+					<View className='px-4 flex-1 flex-grow'>
+						<Skeleton height={'100%'} width='100%' colorMode={themeMode === 'dark' ? 'dark' : 'light'}/>
+					</View>
+				) : (<ViewArea/>)}
 			</View>
 		</ThemedSafeAreaView>
 	);
