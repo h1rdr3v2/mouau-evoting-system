@@ -1,12 +1,12 @@
 import React from 'react';
+import {MotiView} from 'moti';
 import {router} from "expo-router";
+import {Skeleton} from 'moti/skeleton';
 import {NewsItemType} from "@/core/types/News";
 import {ThemedText} from '@/components/ThemedText';
 import {LinearGradient} from 'expo-linear-gradient';
-import {Image, Pressable, ScrollView, View} from 'react-native';
-import {MotiView} from 'moti';
-import {Skeleton} from 'moti/skeleton';
 import {useTheme} from "@/core/contexts/ThemeContext";
+import {Image, Pressable, ScrollView, View} from 'react-native';
 
 // Skeleton for News Item
 const NewsItemSkeleton = () => {

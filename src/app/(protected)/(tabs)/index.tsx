@@ -12,7 +12,12 @@ import FreeFairElectionBanner from "@/components/Banner/FreeFairElectionBanner";
 // Main HomeScreen Component
 function HomeScreen() {
 	const {firstName} = useUser()
-	const {data: elections, refetch: electionRefetch, isRefetching: electionIsRefetching} = getElections();
+	const {
+		data: elections,
+		isLoading: electionLoading,
+		refetch: electionRefetch,
+		isRefetching: electionIsRefetching
+	} = getElections();
 	const {data: news, isLoading: newsLoading, isRefetching: newsIsRefetching, refetch: newsRefetch} = useNews()
 	
 	return (
@@ -41,13 +46,13 @@ function HomeScreen() {
 				
 				<View className='flex gap-5 px-4'>
 					{/*Ongoing elections*/}
-					<OngoingElection ongoing={elections?.ongoing}/>
+					<OngoingElection isLoading={electionLoading} ongoing={elections?.ongoing}/>
 					
 					{/*Vote counts banner*/}
 					<FreeFairElectionBanner/>
 					
 					{/*Upcoming elections*/}
-					<UpcomingElection upcoming={elections?.upcoming}/>
+					<UpcomingElection isLoading={electionLoading} upcoming={elections?.upcoming}/>
 				</View>
 			</ScrollView>
 		</ThemedSafeAreaView>

@@ -6,6 +6,8 @@ import {ThemedButton} from "@/components/ThemedButton";
 import {ProcessedElection} from "@/core/types/Election";
 import {useElectionTimer} from '@/core/hooks/useElectionTimer';
 import EligibilityBadge from "@/components/Badges/EligibilityBadge";
+import {Skeleton} from "moti/skeleton";
+import {useTheme} from "@/core/contexts/ThemeContext";
 
 interface ElectionsProps {
 	title: string;
@@ -21,58 +23,92 @@ interface ElectionsProps {
 	electionId: string; // Add this to uniquely identify the election
 }
 
-export const OngoingElection = ({ongoing}: { ongoing?: ProcessedElection[] }) => {
-	if (ongoing === undefined) return (
-		<></>
-	)
+export const ElectionCardSkeleton = () => {
+	const {themeMode} = useTheme()
+	const isDark = themeMode === 'dark';
 	
 	return (
+		<View className='border border-black/40 dark:border-white/40 rounded-lg px-2 py-3 gap-3'>
+			<View className='flex-row justify-between items-center'>
+				<View className='gap-1'>
+					<Skeleton width={120} height={16} colorMode={isDark ? 'dark' : 'light'}/>
+					<Skeleton width={100} height={16} colorMode={isDark ? 'dark' : 'light'}/>
+					<Skeleton width={140} height={16} colorMode={isDark ? 'dark' : 'light'}/>
+				</View>
+				<Skeleton width={80} height={24} colorMode={isDark ? 'dark' : 'light'} radius={12}/>
+			</View>
+			<Skeleton width={180} height={24} colorMode={isDark ? 'dark' : 'light'}/>
+			<View className='gap-1'>
+				<Skeleton width={'80%'} height={20} colorMode={isDark ? 'dark' : 'light'}/>
+				<Skeleton width={'95%'} height={16} colorMode={isDark ? 'dark' : 'light'}/>
+				<Skeleton width={'90%'} height={16} colorMode={isDark ? 'dark' : 'light'}/>
+			</View>
+			<Skeleton width={'100%'} height={44} colorMode={isDark ? 'dark' : 'light'} radius={4}/>
+		</View>
+	);
+};
+
+export const ElectionListSkeleton = ({count = 1}) => {
+	return (
 		<View className='gap-4'>
-			{/*Ongoing elections*/}
-			<ThemedText>Ongoing Election/s</ThemedText>
-			{ongoing?.map((item, index) => (
-				<ElectionCard
-					key={index}
-					electionId={item.id}
-					title={item.title}
-					description={item.description}
-					EndDate={item.formattedEndDate}
-					endTimeStamp={item.endTimestamp}
-					positions={`${item.positions}`}
-					buttonText={"Vote Now"}
-				/>
+			<Skeleton width='40%' height={20}/>
+			{Array(count).fill(0).map((_, index) => (
+				<ElectionCardSkeleton key={index}/>
 			))}
 		</View>
 	);
 };
 
-export const UpcomingElection = ({upcoming}: { upcoming?: ProcessedElection[] }) => {
-	if (upcoming === undefined) return (
-		<></>
-	)
-	
-	return (
-		<View className='gap-4'>
-			{/*Upcoming elections*/}
-			<ThemedText>Upcoming Election/s</ThemedText>
-			{upcoming?.map((item, index) => (
-				<ElectionCard
-					key={index}
-					electionId={item.id}
-					title={item.title}
-					description={item.description}
-					StartDate={item.formattedStartDate}
-					startTimeStamp={item.startTimestamp}
-					buttonText={"View Details"}
-					positions={`${item.positions}`}
-					EligbleToVote={true}
-					upcomingElection
-				/>
-			))}
-		</View>
-	)
-}
+export const OngoingElection = ({ongoing, isLoading}: { ongoing?: ProcessedElection[], isLoading: boolean }) => {
+	return isLoading ?
+		(<ElectionListSkeleton/>) : (
+			<View className='gap-4'>
+				{/*Ongoing elections*/}
+				<ThemedText>Ongoing Election{ongoing && ongoing.length <= 1 ? "" : "s"}</ThemedText>
+				{ongoing?.map((item, index) => (
+					<ElectionCard
+						key={index}
+						electionId={item.id}
+						title={item.title}
+						description={item.description}
+						EndDate={item.formattedEndDate}
+						endTimeStamp={item.endTimestamp}
+						positions={`${item.positions}`}
+						buttonText={"Vote Now"}
+					/>
+				))}
+			</View>
+		)
+};
 
+
+export const UpcomingElection = ({upcoming, isLoading}: { upcoming?: ProcessedElection[], isLoading: boolean }) => {
+	return isLoading ? (
+		<ElectionListSkeleton/>
+	) : (
+		<>
+			{upcoming && upcoming.length >= 1 && (
+				<View className='gap-4'>
+					<ThemedText>Upcoming Election{upcoming.length <= 1 ? "" : "s"}</ThemedText>
+					{upcoming.map((item, index) => (
+						<ElectionCard
+							key={index}
+							electionId={item.id}
+							title={item.title}
+							description={item.description}
+							StartDate={item.formattedStartDate}
+							startTimeStamp={item.startTimestamp}
+							buttonText={"View Details"}
+							positions={`${item.positions}`}
+							EligbleToVote={true}
+							upcomingElection
+						/>
+					))}
+				</View>
+			)}
+		</>
+	);
+};
 export const ElectionCard = ({
 								 title,
 								 description,
