@@ -1,8 +1,8 @@
 import React from 'react';
 import {useUser} from "@/core/hooks/useUser";
-import {getAllNews} from "@/core/queries/useNews";
 import {ThemedText} from '@/components/ThemedText';
 import {getElections} from "@/core/queries/useElections";
+import {getAllTrendingNews} from "@/core/queries/useNews";
 import {ScrollView, View, RefreshControl} from 'react-native';
 import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
 import {TrendingNewsSection} from "@/components/Pages/TrendingNews";
@@ -23,7 +23,7 @@ function HomeScreen() {
 		isLoading: newsLoading,
 		isRefetching: newsIsRefetching,
 		refetch: newsRefetch
-	} = getAllNews()
+	} = getAllTrendingNews()
 	
 	return (
 		<ThemedSafeAreaView>

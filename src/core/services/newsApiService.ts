@@ -1,12 +1,12 @@
-import {trendingNews} from '@/core/data/mockNews';
 import {USE_MOCK_DATA} from "@/core/data/config";
-import {NewsItemType} from "@/core/types/News";
+import {trendingNews} from '@/core/data/mockNews';
+import {NewsItemType, TrendingNews} from "@/core/types/News";
 
 // Create API service with the same methods as before
 export const newsApiService = {
-	getNews: async (): Promise<{
+	getTrendingNews: async (): Promise<{
 		success: boolean;
-		trendingNews?: NewsItemType[];
+		trendingNews?: TrendingNews[];
 	}> => {
 		if (USE_MOCK_DATA) {
 			await new Promise(resolve => setTimeout(resolve, 400)); // Wait for 200ms
@@ -27,5 +27,27 @@ export const newsApiService = {
 			}
 		}
 	},
-	
+	getNewsById: async (newsId: string): Promise<{
+		success: boolean;
+		newsData?: NewsItemType;
+	}> => {
+		if (USE_MOCK_DATA) {
+			await new Promise(resolve => setTimeout(resolve, 400)); // Wait for 200ms
+			return {
+				success: true,
+				newsData: trendingNews.filter(news => news.id === newsId)[0],
+			};
+		} else {
+			// Real API implementation
+			try {
+				// const response = await fetch('your-services-endpoint/login', {...})
+				// const data = await response.json();
+				// return {...}
+				return {success: false};
+			} catch (error) {
+				console.error('news error:', error);
+				return {success: false};
+			}
+		}
+	}
 };

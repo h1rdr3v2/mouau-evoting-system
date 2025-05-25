@@ -2,11 +2,19 @@ import React from 'react';
 import {MotiView} from 'moti';
 import {router} from "expo-router";
 import {Skeleton} from 'moti/skeleton';
-import {NewsItemType} from "@/core/types/News";
 import {ThemedText} from '@/components/ThemedText';
 import {LinearGradient} from 'expo-linear-gradient';
 import {useTheme} from "@/core/contexts/ThemeContext";
-import {Image, Pressable, ScrollView, View} from 'react-native';
+import {NewsItemType, TrendingNews} from "@/core/types/News";
+import {Image, ImageSourcePropType, Pressable, ScrollView, View} from 'react-native';
+
+export interface NewsItemProps {
+	title?: string;
+	readTime?: string;
+	id?: string;
+	image?: ImageSourcePropType;
+	
+}
 
 // Skeleton for News Item
 const NewsItemSkeleton = () => {
@@ -25,7 +33,7 @@ const NewsItemSkeleton = () => {
 };
 
 // Single News Item Component
-export const NewsItem = ({image, title, readTime, id}: NewsItemType) => (
+export const NewsItem = ({image, title, readTime, id}: NewsItemProps) => (
 	<Pressable onPress={() => router.push(`/trending-news/${id}`)}>
 		<View className='rounded-lg aspect-[300/163] w-[80vw] relative overflow-hidden' accessible={true}
 			  accessibilityLabel={title}>
@@ -84,7 +92,7 @@ const AnimatedNewsItem = ({item}: { item: NewsItemType }) => {
 // Trending News Section
 export const TrendingNewsSection = ({isLoading, newsItems = []}: {
 	isLoading: boolean;
-	newsItems?: NewsItemType[]
+	newsItems?: TrendingNews[]
 }) => {
 	// When there are no trending news
 	if (newsItems.length <= 0 && !isLoading) {
