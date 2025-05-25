@@ -1,7 +1,7 @@
 import {useQuery} from '@tanstack/react-query';
 import {newsApiService} from "@/core/services/newsApiService";
 
-export function useNews() {
+export function getAllNews() {
 	return useQuery({
 		queryKey: ['news'],
 		staleTime: 1800,
