@@ -1,8 +1,8 @@
 import {Skeleton} from "moti/skeleton";
-import React, {useEffect, useMemo, useState} from 'react';
 import {ThemedText} from "@/components/ThemedText";
 import {useTheme} from "@/core/contexts/ThemeContext";
 import {ThemedButton} from "@/components/ThemedButton";
+import React, {useEffect, useMemo, useState} from 'react';
 import {Link, router, useLocalSearchParams} from 'expo-router';
 import {SceneMap, TabBar, TabView} from "react-native-tab-view";
 import {ScrollView, useWindowDimensions, View} from "react-native";
@@ -15,11 +15,7 @@ const Index = () => {
 	const {data, isLoading} = getElection(id)
 	const {colors, themeMode} = useTheme()
 	const {data: posCandid} = getPositionsAndCandidates(id);
-	useEffect(() => {
-		console.log(
-			posCandid?.data
-		)
-	}, [posCandid]);
+	
 	return (
 		<ThemedSafeAreaView>
 			<View className="pt-3 px-4 gap-8">
@@ -57,7 +53,7 @@ const Index = () => {
 					</Skeleton>
 				</Skeleton.Group>
 			</View>
-			<View className='flex-1 flex-grow pt-8'>
+			<View className='flex-1  pt-8'>
 				{isLoading ? (
 					<View className='px-4 flex-1 flex-grow'>
 						<Skeleton height={'100%'} width='100%' colorMode={themeMode === 'dark' ? 'dark' : 'light'}/>

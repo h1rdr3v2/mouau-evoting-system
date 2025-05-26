@@ -38,7 +38,7 @@ const VotingRules = () => {
 						</View>
 					</View>
 				</View>
-				<View className='gap-5 mb-4'>
+				<View className='gap-1 mb-9'>
 					<ThemedButton
 						size='large'
 						title='I understand'
@@ -46,6 +46,7 @@ const VotingRules = () => {
 					/>
 					<ThemedButton
 						variant='text'
+						size='large'
 						title='Go Back'
 						onPress={() => router.back()}
 					/>
