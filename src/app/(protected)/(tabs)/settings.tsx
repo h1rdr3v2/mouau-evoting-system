@@ -16,14 +16,14 @@ function SettingsScreen() {
 	const {logout} = useAuth();
 	
 	return (
-		<ThemedSafeAreaView className='bg-background-dark/10 dark:bg-background-dark/90 px-4'>
+		<ThemedSafeAreaView className='bg-background-dark/10 dark:bg-background-dark/95 px-4'>
 			<ScrollView
 				bounces={true}
 				showsVerticalScrollIndicator={false}
 				keyboardShouldPersistTaps="handled"
 				contentContainerStyle={{flexGrow: 1, paddingBottom: 50}}
 			>
-				<View className='px-4 my-5 gap-8'>
+				<View className='my-5 gap-8'>
 					{/*User profile bubble*/}
 					<ThemedView className='flex flex-row gap-3 px-4 py-6 rounded-xl'>
 						<Image

@@ -51,57 +51,59 @@ const OnboardingScreen = () => {
 			showsVerticalScrollIndicator={false}
 			contentContainerStyle={{paddingBottom: insets.bottom, flexGrow: 1}}
 		>
-			<View className="w-full h-[60vh] relative">
-				<View style={{zIndex: 10, top: insets.top}} className="absolute right-0">
-					<ThemedButton
-						title="Skip"
-						variant='text'
-						className={!isLastSlide ? 'block' : 'hidden'}
-						textClassName='color-black dark:color-black'
-						onPress={handleSkip}
+			<ThemedView className='flex-1'>
+				<View className="w-full h-[60vh] relative">
+					<View style={{zIndex: 10, top: insets.top}} className="absolute right-0">
+						<ThemedButton
+							title="Skip"
+							variant='text'
+							className={!isLastSlide ? 'block' : 'hidden'}
+							textClassName='color-black dark:color-black'
+							onPress={handleSkip}
+						/>
+					</View>
+					<Image
+						source={currentSlideData.image}
+						className='w-full h-full'
+						resizeMode='cover'
 					/>
 				</View>
-				<Image
-					source={currentSlideData.image}
-					className='w-full h-full'
-					resizeMode='cover'
-				/>
-			</View>
-			<ThemedView className="mx-4 mt-5 flex flex-col gap-4">
-				{/*Title and caption*/}
-				<ThemedView className="flex flex-col gap-3 items-center">
-					<ThemedText type="title"
-								className="text-center max-w-[300px]">{currentSlideData.title}</ThemedText>
-					<ThemedText className="text-center">{currentSlideData.subtitle}</ThemedText>
-				</ThemedView>
-				
-				{/*Pagination Dots*/}
-				<ThemedView className="flex flex-row justify-center gap-2 mb-2">
-					{slidesData.map((_, index) => (
-						<View
-							key={`dot-${index}`}
-							className={`w-2 h-2 rounded-full ${currentSlide === index ? 'bg-primary-light' : 'bg-gray-300'}`}
-						/>
-					))}
-				</ThemedView>
-				
-				{/* Navigation Buttons */}
-				<ThemedView>
-					<ThemedButton
-						title={!isLastSlide ? 'Next' : 'Login with Student ID'}
-						variant="primary"
-						size="large"
-						onPress={handleNext}
-					/>
+				<ThemedView className="mx-4 mt-5 flex flex-col gap-4">
+					{/*Title and caption*/}
+					<ThemedView className="flex flex-col gap-3 items-center">
+						<ThemedText type="title"
+									className="text-center max-w-[300px]">{currentSlideData.title}</ThemedText>
+						<ThemedText className="text-center">{currentSlideData.subtitle}</ThemedText>
+					</ThemedView>
 					
-					{/*Back or help button*/}
-					<ThemedButton
-						title={!isLastSlide ? 'Back' : 'Need Help?'}
-						variant='text'
-						size="large"
-						className={currentSlide > 0 ? 'block' : 'invisible'}
-						onPress={handlePrev}
-					/>
+					{/*Pagination Dots*/}
+					<ThemedView className="flex flex-row justify-center gap-2 mb-2">
+						{slidesData.map((_, index) => (
+							<View
+								key={`dot-${index}`}
+								className={`w-2 h-2 rounded-full ${currentSlide === index ? 'bg-primary-light' : 'bg-gray-300'}`}
+							/>
+						))}
+					</ThemedView>
+					
+					{/* Navigation Buttons */}
+					<ThemedView>
+						<ThemedButton
+							title={!isLastSlide ? 'Next' : 'Login with Student ID'}
+							variant="primary"
+							size="large"
+							onPress={handleNext}
+						/>
+						
+						{/*Back or help button*/}
+						<ThemedButton
+							title={!isLastSlide ? 'Back' : 'Need Help?'}
+							variant='text'
+							size="large"
+							className={currentSlide > 0 ? 'block' : 'invisible'}
+							onPress={handlePrev}
+						/>
+					</ThemedView>
 				</ThemedView>
 			</ThemedView>
 			<StatusBar style='dark'/>
