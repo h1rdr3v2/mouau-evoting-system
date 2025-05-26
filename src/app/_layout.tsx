@@ -7,7 +7,6 @@ import {onlineManager} from '@tanstack/react-query'
 import {ThemeProvider} from "@/core/contexts/ThemeContext";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 onlineManager.setEventListener((setOnline) => {
 	const eventSubscription = Network.addNetworkStateListener((state) => {
@@ -95,14 +94,12 @@ const queryClient = new QueryClient({
 
 export default function RootLayout() {
 	return (
-		<SafeAreaProvider>
-			<GestureHandlerRootView style={{flex: 1}}>
-				<QueryClientProvider client={queryClient}>
-					<ThemeProvider>
-						<AppContent/>
-					</ThemeProvider>
-				</QueryClientProvider>
-			</GestureHandlerRootView>
-		</SafeAreaProvider>
+		<GestureHandlerRootView style={{flex: 1}}>
+			<QueryClientProvider client={queryClient}>
+				<ThemeProvider>
+					<AppContent/>
+				</ThemeProvider>
+			</QueryClientProvider>
+		</GestureHandlerRootView>
 	);
 }
