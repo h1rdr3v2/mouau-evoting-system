@@ -12,7 +12,6 @@ export default function ProtectedLayout() {
 			<Stack.Screen name="election" options={{headerShown: false}}/>
 			<Stack.Screen name="trending-news" options={{
 				headerShown: true,
-				headerTransparent: true,
 				headerBackTitle: "Home",
 				headerTitle: "News",
 			}}/>

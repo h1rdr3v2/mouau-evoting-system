@@ -6,9 +6,9 @@ export function useNavigationTheme(customOptions = {}): NativeStackNavigationOpt
 	
 	const defaultOptions: NativeStackNavigationOptions = {
 		headerShown: false,
-		headerTransparent: true,
+		// headerTransparent: true,
 		headerStyle: {
-			backgroundColor: colors.navigation.header.background,
+			backgroundColor: colors.navigation.content.background
 		},
 		headerTitleStyle: {
 			fontWeight: 'bold',

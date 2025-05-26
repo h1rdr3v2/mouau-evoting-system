@@ -18,7 +18,9 @@ function VoteScreen() {
 		<ThemedSafeAreaView className='bg-blend-overlay'>
 			<ScrollView
 				bounces={!noElection}
-				refreshControl={<RefreshControl onRefresh={refetch} refreshing={isRefetching}/>}
+				refreshControl={<RefreshControl onRefresh={() => {
+					refetch()
+				}} refreshing={isRefetching}/>}
 				showsVerticalScrollIndicator={false}
 				keyboardShouldPersistTaps="handled"
 				contentContainerStyle={{flexGrow: 1, paddingBottom: 0}}
