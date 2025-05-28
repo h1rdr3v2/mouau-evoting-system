@@ -47,7 +47,7 @@ const Index = () => {
 										variant='primary'
 										title="Vote"
 										className='rounded-[999px] min-w-0 p-0 m-0 w-[78px] h-[50px]'
-										onPress={() => router.push('/(protected)/election/voting-rules')}
+										onPress={() => router.push(`/(protected)/election/voting-rules?electionId=${id}`)}
 									/>
 								)}
 							</View>

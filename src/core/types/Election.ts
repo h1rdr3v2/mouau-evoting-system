@@ -133,3 +133,7 @@ export interface CandidateApiResponse {
 	data?: CandidateApiData;
 	success: boolean;
 }
+
+export interface SelectedCandidates {
+	[positionName: string]: string[]; // Array of candidate IDs
+}

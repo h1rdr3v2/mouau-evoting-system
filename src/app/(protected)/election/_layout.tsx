@@ -31,6 +31,7 @@ export default function ElectionLayout() {
 				presentation: "modal",
 				headerShown: false,
 			}}/>
+			<Stack.Screen name="confirm-vote" options={{headerShown: true, headerTitle: "Confirm Voting"}}/>
 		</Stack>
 	);
 }

@@ -1,6 +1,6 @@
 import React from 'react';
-import {router} from "expo-router";
 import {View, Image, Dimensions} from "react-native";
+import {router, useLocalSearchParams} from "expo-router";
 import {ThemedText} from "@/components/Themed/ThemedText";
 import {ThemedButton} from "@/components/Themed/ThemedButton";
 import {ThemedSafeAreaView} from "@/components/Themed/ThemedSafeAreaView";
@@ -8,6 +8,8 @@ import {ThemedSafeAreaView} from "@/components/Themed/ThemedSafeAreaView";
 const screenWidth = Dimensions.get('window').width;
 
 const VotingRules = () => {
+	const {electionId} = useLocalSearchParams<{ electionId: string }>();
+	
 	return (
 		<ThemedSafeAreaView>
 			<View className='px-4 flex-1 justify-between'>
@@ -42,7 +44,7 @@ const VotingRules = () => {
 					<ThemedButton
 						size='large'
 						title='I understand'
-						onPress={() => router.push('/election/cast-vote')}
+						onPress={() => router.push(`/election/cast-vote?electionId=${electionId}`)}
 					/>
 					<ThemedButton
 						variant='text'
