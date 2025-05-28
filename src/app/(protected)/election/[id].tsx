@@ -1,20 +1,22 @@
 import {Skeleton} from "moti/skeleton";
-import {useTheme} from "@/core/contexts/ThemeContext";
 import React, {useMemo, useState} from 'react';
+import {useTheme} from "@/core/contexts/ThemeContext";
 import {ThemedText} from "@/components/Themed/ThemedText";
 import {ThemedButton} from "@/components/Themed/ThemedButton";
 import {Link, router, useLocalSearchParams} from 'expo-router';
 import {SceneMap, TabBar, TabView} from "react-native-tab-view";
-import {ScrollView, useWindowDimensions, View} from "react-native";
 import {ThemedSafeAreaView} from "@/components/Themed/ThemedSafeAreaView";
+import {Image, ScrollView, useWindowDimensions, View} from "react-native";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import {getElection, getPositionsAndCandidates} from "@/core/queries/useElections";
+import {PositonCandidateApiResponse, PositionsCandidatesResult} from "@/core/types/Election";
+
 
 const Index = () => {
 	const {id} = useLocalSearchParams<{ id: string }>();
-	const {data, isLoading} = getElection(id)
-	const {colors, themeMode} = useTheme()
-	const {data: posCandid} = getPositionsAndCandidates(id);
+	const {data, isLoading} = getElection(id);
+	const {colors, themeMode} = useTheme();
+	const {data: posCandid, isLoading: isLoadingCandidates} = getPositionsAndCandidates(id);
 	
 	return (
 		<ThemedSafeAreaView>
@@ -53,48 +55,55 @@ const Index = () => {
 					</Skeleton>
 				</Skeleton.Group>
 			</View>
-			<View className='flex-1  pt-8'>
-				{isLoading ? (
+			<View className='flex-1 pt-8'>
+				{isLoading || isLoadingCandidates ? (
 					<View className='px-4 flex-1 flex-grow'>
 						<Skeleton height={'100%'} width='100%' colorMode={themeMode === 'dark' ? 'dark' : 'light'}/>
 					</View>
-				) : (<ViewArea/>)}
+				) : (
+					<ViewArea positionsData={posCandid?.data}/>
+				)}
 			</View>
 		</ThemedSafeAreaView>
 	);
 };
 
-// Component for a candidate on live result
-const LiveResultCandidate = ({name, votes, position}: { name: string, votes: number, position: number }) => {
-	// Helper function to get ordinal suffix
-	const getSuffix = (number: number): string => {
-		const lastDigit = number % 10;
-		const lastTwoDigits = number % 100;
-		
-		if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
-			return 'th';
-		}
-		
-		switch (lastDigit) {
-			case 1:
-				return 'st';
-			case 2:
-				return 'nd';
-			case 3:
-				return 'rd';
-			default:
-				return 'th';
-		}
-	};
+// Helper function to get ordinal suffix
+const getOrdinalSuffix = (number: number): string => {
+	const lastDigit = number % 10;
+	const lastTwoDigits = number % 100;
 	
+	if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
+		return 'th';
+	}
+	
+	switch (lastDigit) {
+		case 1:
+			return 'st';
+		case 2:
+			return 'nd';
+		case 3:
+			return 'rd';
+		default:
+			return 'th';
+	}
+};
+
+// Component for a candidate on live result
+const LiveResultCandidate = ({candidate, position}: { candidate: PositonCandidateApiResponse; position: number }) => {
 	return (
 		<View
 			className='flex-row justify-between items-center border border-primary-light dark:border-primary-dark p-4 rounded-xl'>
 			<View className='flex-row gap-3 items-center'>
-				<View className='bg-neutral-100 rounded-xl w-16 h-16 items-center gap-2'></View>
+				<Image
+					source={{uri: candidate.imageUrl}}
+					importantForAccessibility={'yes'}
+					className='bg-neutral-100 rounded-xl w-16 h-16'
+					resizeMode="cover"
+				/>
 				<View>
-					<ThemedText type='subtitle'>{name}</ThemedText>
-					<ThemedText>Votes: {votes}</ThemedText>
+					<ThemedText type='subtitle'>{candidate.name}</ThemedText>
+					<ThemedText>Votes: {candidate.votes}</ThemedText>
 				</View>
 			</View>
 			<View className='flex-row items-start'>
@@ -107,102 +116,117 @@ const LiveResultCandidate = ({name, votes, position}: { name: string, votes: num
 				<ThemedText
 					className='font-montserrat-medium dark:text-primary-light text-primary-light -top-1'
 				>
-					{getSuffix(position)}
+					{getOrdinalSuffix(position)}
 				</ThemedText>
 			</View>
 		</View>
-	)
-}
+	);
+};
 
-const Candidate = ({name}: { name: string }) => {
+const CandidateCard = ({candidate}: { candidate: PositonCandidateApiResponse }) => {
 	return (
-		<Link href='/election/candidate-modal'>
+		<Link
+			href={{
+				pathname: '/election/candidate-modal',
+				params: {candidateId: candidate.id}
+			}}
+		>
 			<View
 				className='flex-row justify-between items-center border border-primary-light dark:border-primary-dark p-4 rounded-xl w-full'>
 				<View className='flex-row gap-3 items-center'>
-					<View className='bg-neutral-100 rounded-xl w-16 h-16 items-center gap-2'></View>
+					<Image
+						source={{uri: candidate.imageUrl}}
+						className='bg-neutral-100 rounded-xl w-16 h-16'
+						resizeMode="cover"
+					/>
 					<View>
-						<ThemedText type='subtitle'>{name}</ThemedText>
+						<ThemedText type='subtitle'>{candidate.name}</ThemedText>
+						<ThemedText className='text-sm'>{candidate.department}</ThemedText>
 					</View>
 				</View>
 			</View>
 		</Link>
-	)
-}
+	);
+};
 
 // Component for Live result tab content
-const LiveResultRoute = () => (
-	<ScrollView
-		bounces={false}
-		contentContainerStyle={{paddingBlock: 30, paddingInline: 16}}
-		showsVerticalScrollIndicator={false}
-	>
-		<View className='gap-6'>
-			<ThemedText
-				type='subtitle'
-				className='text-primary-light dark:text-primary-dark'
-			>
-				Presidential
-			</ThemedText>
-			<LiveResultCandidate name={'Destiny Ezenwata'} votes={1200} position={1}/>
-			<LiveResultCandidate name={'Destiny Ezenwata'} votes={1200} position={2}/>
-			<LiveResultCandidate name={'Destiny Ezenwata'} votes={1200} position={3}/>
-			<ThemedText
-				type='subtitle'
-				className='text-primary-light dark:text-primary-dark'
-			>
-				Vice-President
-			</ThemedText>
-			<LiveResultCandidate name={'Destiny Ezenwata'} votes={1200} position={1}/>
-			<LiveResultCandidate name={'Destiny Ezenwata'} votes={1200} position={2}/>
-			<LiveResultCandidate name={'Destiny Ezenwata'} votes={1200} position={3}/>
-		</View>
-	</ScrollView>
-);
+const LiveResultRoute = ({positionsData}: { positionsData: PositionsCandidatesResult }) => {
+	// Sort candidates by votes and get positions
+	const positionsWithSortedCandidates = useMemo(() => {
+		if (!positionsData) return {};
+		
+		return Object.entries(positionsData).reduce((acc, [positionName, position]) => {
+			acc[positionName] = [...position.candidates].sort((a, b) => b.votes - a.votes);
+			return acc;
+		}, {} as Record<string, PositonCandidateApiResponse[]>);
+	}, [positionsData]);
+	
+	return (
+		<ScrollView
+			bounces={false}
+			contentContainerStyle={{paddingVertical: 30, paddingHorizontal: 16}}
+			showsVerticalScrollIndicator={false}
+		>
+			<View className='gap-6'>
+				{Object.entries(positionsWithSortedCandidates).map(([positionName, candidates]) => (
+					<React.Fragment key={positionName}>
+						<ThemedText
+							type='subtitle'
+							className='text-primary-light dark:text-primary-dark'
+						>
+							{positionName}
+						</ThemedText>
+						{candidates.map((candidate, index) => (
+							<LiveResultCandidate
+								key={candidate.id}
+								candidate={candidate}
+								position={index + 1}
+							/>
+						))}
+					</React.Fragment>
+				))}
+			</View>
+		</ScrollView>
+	);
+};
 
 // Component for Candidates tab content
-const CandidatesRoute = () => (
-	<ScrollView
-		bounces={false}
-		contentContainerStyle={{paddingBlock: 30, paddingInline: 16}}
-		showsVerticalScrollIndicator={false}
-	>
-		<View className='gap-6'>
-			<ThemedText
-				type='subtitle'
-				className='text-primary-light dark:text-primary-dark'
-			>
-				Presidential
-			</ThemedText>
-			<Candidate name={'Destiny Ezenwata'}/>
-			<Candidate name={'Destiny Ezenwata'}/>
-			<Candidate name={'Destiny Ezenwata'}/>
-			<ThemedText
-				type='subtitle'
-				className='text-primary-light dark:text-primary-dark'
-			>
-				Vice-President
-			</ThemedText>
-			<Candidate name={'Destiny Ezenwata'}/>
-			<Candidate name={'Destiny Ezenwata'}/>
-			<Candidate name={'Destiny Ezenwata'}/>
-		</View>
-	</ScrollView>
-);
+const CandidatesRoute = ({positionsData}: { positionsData: PositionsCandidatesResult }) => {
+	return (
+		<ScrollView
+			bounces={false}
+			contentContainerStyle={{paddingVertical: 30, paddingHorizontal: 16}}
+			showsVerticalScrollIndicator={false}
+		>
+			<View className='gap-6'>
+				{positionsData && Object.entries(positionsData).map(([positionName, position]) => (
+					<React.Fragment key={positionName}>
+						<ThemedText
+							type='subtitle'
+							className='text-primary-light dark:text-primary-dark'
+						>
+							{positionName}
+						</ThemedText>
+						{position.candidates.map((candidate) => (
+							<CandidateCard key={candidate.id} candidate={candidate}/>
+						))}
+					</React.Fragment>
+				))}
+			</View>
+		</ScrollView>
+	);
+};
 
-const renderScene = SceneMap({
-	liveResult: LiveResultRoute,
-	candidates: CandidatesRoute,
-})
-
-const ViewArea = () => {
+const ViewArea = ({positionsData}: { positionsData: PositionsCandidatesResult | undefined }) => {
+	if (positionsData == undefined) return <></>;
+	
 	const {id} = useLocalSearchParams<{ id: string }>();
-	const {data} = getElection(id)
+	const {data} = getElection(id);
 	
 	const {colors} = useTheme();
 	const layout = useWindowDimensions();
 	
-	// Get theme colors (adjust based on your actual theming system)
+	// Get theme colors
 	const backgroundColor = colors.background;
 	const primaryColor = colors.primary;
 	const secondaryColor = "#95a5a6";
@@ -223,6 +247,14 @@ const ViewArea = () => {
 		}
 	}, [data?.election?.dateBasedStatus]);
 	
+	// Create scene map with positionsData
+	const renderScene = useMemo(() =>
+		SceneMap({
+			liveResult: () => <LiveResultRoute positionsData={positionsData}/>,
+			candidates: () => <CandidatesRoute positionsData={positionsData}/>,
+		}), [positionsData]
+	);
+	
 	// Custom tab bar
 	const renderTabBar = (props: any) => (
 		<TabBar
@@ -230,7 +262,7 @@ const ViewArea = () => {
 			indicatorStyle={{height: 3, backgroundColor: primaryColor}}
 			style={{
 				backgroundColor,
-				width: data?.election?.dateBasedStatus == 'upcoming' ? '50%' : '80%',
+				width: data?.election?.dateBasedStatus === 'upcoming' ? '50%' : '80%',
 				alignSelf: 'center'
 			}}
 			activeColor={primaryColor}
@@ -245,9 +277,8 @@ const ViewArea = () => {
 			onIndexChange={setIndex}
 			initialLayout={{width: layout.width}}
 			renderTabBar={renderTabBar}
-			// pagerStyle={{paddingTop: 25}}
 		/>
 	);
-	
-}
+};
+
 export default Index;

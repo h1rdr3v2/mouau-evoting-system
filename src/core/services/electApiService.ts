@@ -1,5 +1,5 @@
 import {USE_MOCK_DATA} from "@/core/data/config";
-import {ElectionPayload, PositionsCandidatesResult} from "@/core/types/Election";
+import {CandidateApiData, ElectionPayload, PositionsCandidatesResult} from "@/core/types/Election";
 import {mockElections} from "@/core/data/mockElections";
 import {getPositionsAndCandidates} from "@/core/queries/useElections";
 import {mockPositions} from "@/core/data/mockPositions";
@@ -93,6 +93,36 @@ export const electApiService = {
 			return {
 				success: true,
 				data: result,
+			};
+		} else {
+			// Real API implementation
+			try {
+				// const response = await fetch('your-services-endpoint/login', {...})
+				// const data = await response.json();
+				// return {...}
+				return {success: false};
+			} catch (error) {
+				console.error('news error:', error);
+				return {success: false};
+			}
+		}
+	},
+	getCandidate: async (candidateId: string): Promise<{
+		success: boolean;
+		data?: CandidateApiData;
+	}> => {
+		if (USE_MOCK_DATA) {
+			await new Promise(resolve => setTimeout(resolve, 400)); // Wait for 200ms
+			
+			// Filter positions for the given election
+			const candidate = mockCandidates.filter(
+				(candidate) => candidate.id === candidateId
+			);
+			
+			// return result;
+			return {
+				success: true,
+				data: candidate[0],
 			};
 		} else {
 			// Real API implementation

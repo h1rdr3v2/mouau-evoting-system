@@ -1,6 +1,6 @@
-import {CandidateApiResponse} from "@/core/types/Election";
+import {CandidateApiData} from "@/core/types/Election";
 
-export const mockCandidates: CandidateApiResponse[] = [
+export const mockCandidates: CandidateApiData[] = [
 	{
 		id: 'cand1',
 		name: 'John Adebayo',
@@ -11,6 +11,15 @@ export const mockCandidates: CandidateApiResponse[] = [
 		department: 'Computer Science',
 		level: 400,
 		votes: 45,
+		profile: "I am a dedicated student leader with 3 years of experience in various student organizations. My passion lies in bridging the gap between students and administration.",
+		campaignPromises: [
+			"Improve Wi-Fi connectivity across campus",
+			"Establish 24/7 study spaces",
+			"Create mentorship programs",
+			"Organize monthly tech workshops"
+		],
+		bio: "Born and raised in Lagos, I've always been passionate about technology and education."
+		
 	},
 	{
 		id: 'cand2',
@@ -44,6 +53,15 @@ export const mockCandidates: CandidateApiResponse[] = [
 		department: 'Information Systems',
 		level: 400,
 		votes: 36,
+		profile: "I am a dedicated student leader with 3 years of experience in various student organizations. My passion lies in bridging the gap between students and administration.",
+		campaignPromises: [
+			"Improve Wi-Fi connectivity across campus",
+			"Establish 24/7 study spaces",
+			"Create mentorship programs",
+			"Organize monthly tech workshops"
+		],
+		bio: "Born and raised in Lagos, I've always been passionate about technology and education."
+		
 	},
 	{
 		id: 'cand5',
@@ -88,6 +106,15 @@ export const mockCandidates: CandidateApiResponse[] = [
 		department: 'Software Engineering',
 		level: 300,
 		votes: 30,
+		profile: "I am a dedicated student leader with 3 years of experience in various student organizations. My passion lies in bridging the gap between students and administration.",
+		campaignPromises: [
+			"Improve Wi-Fi connectivity across campus",
+			"Establish 24/7 study spaces",
+			"Create mentorship programs",
+			"Organize monthly tech workshops"
+		],
+		bio: "Born and raised in Lagos, I've always been passionate about technology and education."
+		
 	},
 	{
 		id: 'cand9',
@@ -110,5 +137,14 @@ export const mockCandidates: CandidateApiResponse[] = [
 		department: 'Information Systems',
 		level: 400,
 		votes: 35,
+		profile: "I am a dedicated student leader with 3 years of experience in various student organizations. My passion lies in bridging the gap between students and administration.",
+		campaignPromises: [
+			"Improve Wi-Fi connectivity across campus",
+			"Establish 24/7 study spaces",
+			"Create mentorship programs",
+			"Organize monthly tech workshops"
+		],
+		bio: "Born and raised in Lagos, I've always been passionate about technology and education."
+		
 	},
 ];

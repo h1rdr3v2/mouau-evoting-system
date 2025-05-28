@@ -19,6 +19,10 @@ export type Candidate = {
 	votes: number;
 	department: string;
 	level: number;
+	profile?: string;
+	campaignPromises?: string[];
+	achievements?: string[];
+	bio?: string;
 	createdAt: string;
 	updatedAt: string;
 };
@@ -109,20 +113,23 @@ export interface ElectionApiResponse {
 	success: boolean;
 }
 
-export type CandidateApiResponse = Omit<Candidate, 'createdAt' | 'updatedAt'>;
+export type CandidateApiData = Omit<Candidate, 'createdAt' | 'updatedAt'>;
 
-interface CandidateWithPosition extends CandidateApiResponse {
-	positionTitle?: string;
-}
+export type PositonCandidateApiResponse = Omit<CandidateApiData, 'profile' | 'campaignPromises' | 'bio' | 'achievements'>;
 
 export interface PositionsCandidatesResult {
 	[positionTitle: string]: {
-		candidates: CandidateApiResponse[];
+		candidates: PositonCandidateApiResponse[];
 		maxSelections: number;
 	};
 }
 
 export interface PositionsCandidatesApiresponse {
 	data?: PositionsCandidatesResult;
+	success: boolean;
+}
+
+export interface CandidateApiResponse {
+	data?: CandidateApiData;
 	success: boolean;
 }
