@@ -1,6 +1,6 @@
 import React from 'react';
-import {ActivityIndicator, Pressable, Text, View} from 'react-native';
 import {useTheme} from '@/core/contexts/ThemeContext';
+import {ActivityIndicator, Pressable, Text, View} from 'react-native';
 
 export type ThemedButtonProps = {
 	variant?: 'primary' | 'secondary' | 'text' | 'destructive';

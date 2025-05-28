@@ -6,5 +6,5 @@ export type ThemedViewProps = ViewProps & {
 
 export function ThemedSafeAreaView({className = '', ...rest}: ThemedViewProps) {
 	return <SafeAreaView
-		className={` flex-1 bg-background-light dark:bg-background-dark border border-red-500 ${className}`} {...rest} />;
+		className={` flex-1 bg-background-light dark:bg-background-dark ${className}`} {...rest} />;
 }

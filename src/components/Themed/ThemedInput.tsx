@@ -1,6 +1,6 @@
 import React, {forwardRef} from 'react';
-import {View, TextInput, Text, Pressable, TextInputProps, Platform, StyleSheet} from 'react-native';
 import {useTheme} from '@/core/contexts/ThemeContext';
+import {View, TextInput, Text, Pressable, TextInputProps, Platform, StyleSheet} from 'react-native';
 
 export type ThemedInputProps = TextInputProps & {
 	variant?: 'default' | 'outlined' | 'filled';
