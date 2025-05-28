@@ -2,9 +2,9 @@ import React from 'react';
 import {MotiView} from 'moti';
 import {router} from "expo-router";
 import {Skeleton} from 'moti/skeleton';
-import {ThemedText} from '@/components/ThemedText';
 import {LinearGradient} from 'expo-linear-gradient';
 import {useTheme} from "@/core/contexts/ThemeContext";
+import {ThemedText} from '@/components/Themed/ThemedText';
 import {NewsItemType, TrendingNews} from "@/core/types/News";
 import {Image, ImageSourcePropType, Pressable, ScrollView, View} from 'react-native';
 

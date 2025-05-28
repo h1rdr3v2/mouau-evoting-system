@@ -2,13 +2,13 @@ import React from 'react';
 import {Feather} from "@expo/vector-icons";
 import {useUser} from "@/core/hooks/useUser";
 import {useAuth} from "@/core/queries/useAuth";
-import {ThemedView} from "@/components/ThemedView";
-import {ThemedText} from "@/components/ThemedText";
 import {Image, ScrollView, View} from "react-native";
-import {ThemedButton} from "@/components/ThemedButton";
-import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
+import {ThemedView} from "@/components/Themed/ThemedView";
+import {ThemedText} from "@/components/Themed/ThemedText";
+import {ThemedButton} from "@/components/Themed/ThemedButton";
 import Notification from "@/components/Preferences/Notification";
 import AppAppearance from "@/components/Preferences/AppAppeareance";
+import {ThemedSafeAreaView} from "@/components/Themed/ThemedSafeAreaView";
 import HelpAndSupportSection from "@/components/Preferences/HelpAndSupportSection";
 
 function SettingsScreen() {
@@ -16,14 +16,14 @@ function SettingsScreen() {
 	const {logout} = useAuth();
 	
 	return (
-		<ThemedSafeAreaView className='bg-background-dark/10 dark:bg-background-dark/95 px-4'>
+		<ThemedSafeAreaView className='bg-background-dark/10 dark:bg-background-dark/95'>
 			<ScrollView
 				bounces={true}
 				showsVerticalScrollIndicator={false}
 				keyboardShouldPersistTaps="handled"
 				contentContainerStyle={{flexGrow: 1, paddingBottom: 50}}
 			>
-				<View className='my-5 gap-8'>
+				<View className='my-5 px-4 gap-8'>
 					{/*User profile bubble*/}
 					<ThemedView className='flex flex-row gap-3 px-4 py-6 rounded-xl'>
 						<Image

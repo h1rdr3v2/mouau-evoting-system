@@ -2,10 +2,10 @@ import {router} from "expo-router";
 import React, {useState} from 'react';
 import {Checkbox} from 'expo-checkbox';
 import {useAuth} from "@/core/queries/useAuth";
-import {ThemedView} from "@/components/ThemedView";
-import {ThemedText} from "@/components/ThemedText";
-import {ThemedInput} from "@/components/ThemedInput";
-import {ThemedButton} from "@/components/ThemedButton";
+import {ThemedView} from "@/components/Themed/ThemedView";
+import {ThemedText} from "@/components/Themed/ThemedText";
+import {ThemedInput} from "@/components/Themed/ThemedInput";
+import {ThemedButton} from "@/components/Themed/ThemedButton";
 import {Image, KeyboardAvoidingView, ScrollView, Text, View, Platform, Pressable} from "react-native";
 
 function LoginScreen() {

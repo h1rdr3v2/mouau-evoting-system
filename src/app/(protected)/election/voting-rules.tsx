@@ -1,9 +1,9 @@
 import React from 'react';
 import {router} from "expo-router";
-import {ThemedText} from "@/components/ThemedText";
 import {View, Image, Dimensions} from "react-native";
-import {ThemedButton} from "@/components/ThemedButton";
-import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
+import {ThemedText} from "@/components/Themed/ThemedText";
+import {ThemedButton} from "@/components/Themed/ThemedButton";
+import {ThemedSafeAreaView} from "@/components/Themed/ThemedSafeAreaView";
 
 const screenWidth = Dimensions.get('window').width;
 

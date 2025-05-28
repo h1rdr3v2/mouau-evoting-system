@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {ThemedView} from "@/components/ThemedView";
-import {ThemedText} from "@/components/ThemedText";
+import {FontAwesome5 as Icon} from "@expo/vector-icons";
+import {ThemedView} from "@/components/Themed/ThemedView";
+import {ThemedText} from "@/components/Themed/ThemedText";
 import {Modal, TouchableOpacity, View} from 'react-native';
 import {ThemeModeProp, useTheme} from "@/core/contexts/ThemeContext";
-import {FontAwesome5 as Icon} from "@expo/vector-icons";
 
 interface AppearanceItemProps {
 	icon: string;

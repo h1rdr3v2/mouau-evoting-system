@@ -13,7 +13,7 @@ export function getElections() {
 	return useQuery<ElectionsApiResponse, Error, ElectionsQueryResult>({
 		queryKey: ['elections'],
 		queryFn: () => electApiService.getElections(),
-		staleTime: 600,
+		staleTime: 6000, //1 minute
 		retry: 2,
 		retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
 		select: (data) => {
@@ -49,7 +49,7 @@ export function getElection(id: string) {
 	return useQuery<ElectionApiResponse, Error, ElectionQueryResult>({
 		queryKey: ['election', id],
 		queryFn: () => electApiService.getElection(id),
-		staleTime: 600,
+		staleTime: 60000 * 5,
 		retry: 2,
 		retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
 		select: (data) => {
@@ -67,7 +67,7 @@ export function getPositionsAndCandidates(electionId: string) {
 	return useQuery<PositionsCandidatesApiresponse, Error>({
 		queryKey: ['positionsWithCandidates', electionId],
 		queryFn: () => electApiService.getPositionsAndCandidates(electionId),
-		staleTime: 600,
+		staleTime: 6000,
 		retry: 2,
 		retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
 	})

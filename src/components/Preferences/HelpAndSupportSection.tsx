@@ -1,9 +1,9 @@
 import React from 'react';
 import {FontAwesome} from '@expo/vector-icons';
-import {ThemedView} from '@/components/ThemedView';
-import {ThemedText} from '@/components/ThemedText';
 import {TouchableOpacity, View} from 'react-native';
 import {useTheme} from "@/core/contexts/ThemeContext";
+import {ThemedView} from '@/components/Themed/ThemedView';
+import {ThemedText} from '@/components/Themed/ThemedText';
 
 interface SupportItemProps {
 	icon: React.ComponentProps<typeof FontAwesome>['name'];

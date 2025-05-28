@@ -1,12 +1,12 @@
 import React from 'react';
 import {router} from "expo-router";
 import {BlurView} from 'expo-blur';
-import {ThemedText} from "@/components/ThemedText";
 import {useTheme} from "@/core/contexts/ThemeContext";
-import {ThemedButton} from "@/components/ThemedButton";
 import {View, ScrollView, StyleSheet} from "react-native";
+import {ThemedText} from "@/components/Themed/ThemedText";
+import {ThemedButton} from "@/components/Themed/ThemedButton";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
-import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
+import {ThemedSafeAreaView} from "@/components/Themed/ThemedSafeAreaView";
 
 
 const CastVote = () => {

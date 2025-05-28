@@ -2,10 +2,10 @@ import React from 'react';
 import {View} from "react-native";
 import {router} from "expo-router";
 import {Skeleton} from "moti/skeleton";
-import {ThemedText} from '@/components/ThemedText';
 import {useTheme} from "@/core/contexts/ThemeContext";
-import {ThemedButton} from "@/components/ThemedButton";
 import {ProcessedElection} from "@/core/types/Election";
+import {ThemedText} from '@/components/Themed/ThemedText';
+import {ThemedButton} from "@/components/Themed/ThemedButton";
 import {useElectionTimer} from '@/core/hooks/useElectionTimer';
 import EligibilityBadge from "@/components/Badges/EligibilityBadge";
 
@@ -63,25 +63,30 @@ export const ElectionListSkeleton = ({count = 1}) => {
 };
 
 export const OngoingElection = ({ongoing, isLoading}: { ongoing?: ProcessedElection[], isLoading: boolean }) => {
-	return isLoading ?
-		(<ElectionListSkeleton/>) : (
-			<View className='gap-4'>
-				{/*Ongoing elections*/}
-				<ThemedText>Ongoing Election{ongoing && ongoing.length <= 1 ? "" : "s"}</ThemedText>
-				{ongoing?.map((item, index) => (
-					<ElectionCard
-						key={index}
-						electionId={item.id}
-						title={item.title}
-						description={item.description}
-						EndDate={item.formattedEndDate}
-						endTimeStamp={item.endTimestamp}
-						positions={`${item.positions}`}
-						buttonText={"Vote Now"}
-					/>
-				))}
-			</View>
-		)
+	return isLoading ? (
+		<ElectionListSkeleton/>
+	) : (
+		<>
+			{ongoing && ongoing.length >= 1 && (
+				<View className='gap-4'>
+					{/*Ongoing elections*/}
+					<ThemedText>Ongoing Election{ongoing && ongoing.length <= 1 ? "" : "s"}</ThemedText>
+					{ongoing?.map((item, index) => (
+						<ElectionCard
+							key={index}
+							electionId={item.id}
+							title={item.title}
+							description={item.description}
+							EndDate={item.formattedEndDate}
+							endTimeStamp={item.endTimestamp}
+							positions={`${item.positions}`}
+							buttonText={"Vote Now"}
+						/>
+					))}
+				</View>
+			)}
+		</>
+	)
 };
 
 

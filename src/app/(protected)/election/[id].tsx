@@ -1,12 +1,12 @@
 import {Skeleton} from "moti/skeleton";
-import {ThemedText} from "@/components/ThemedText";
 import {useTheme} from "@/core/contexts/ThemeContext";
-import {ThemedButton} from "@/components/ThemedButton";
 import React, {useEffect, useMemo, useState} from 'react';
+import {ThemedText} from "@/components/Themed/ThemedText";
+import {ThemedButton} from "@/components/Themed/ThemedButton";
 import {Link, router, useLocalSearchParams} from 'expo-router';
 import {SceneMap, TabBar, TabView} from "react-native-tab-view";
 import {ScrollView, useWindowDimensions, View} from "react-native";
-import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
+import {ThemedSafeAreaView} from "@/components/Themed/ThemedSafeAreaView";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import {getElection, getPositionsAndCandidates} from "@/core/queries/useElections";
 

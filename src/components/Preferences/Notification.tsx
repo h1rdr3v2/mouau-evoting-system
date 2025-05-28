@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {ThemedView} from '@/components/ThemedView';
-import {ThemedText} from '@/components/ThemedText';
 import {useTheme} from "@/core/contexts/ThemeContext";
+import {ThemedView} from '@/components/Themed/ThemedView';
+import {ThemedText} from '@/components/Themed/ThemedText';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {FontAwesome, Feather, FontAwesome5, FontAwesome6} from '@expo/vector-icons';
 

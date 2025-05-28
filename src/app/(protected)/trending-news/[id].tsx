@@ -1,11 +1,11 @@
 import React from 'react';
 import {Skeleton} from "moti/skeleton";
 import {useLocalSearchParams} from "expo-router";
-import {ThemedText} from "@/components/ThemedText";
+import {ThemedText} from "@/components/Themed/ThemedText";
 import {getNewsById} from "@/core/queries/useNews";
 import {Image, ScrollView, View} from "react-native";
 import {useTheme} from "@/core/contexts/ThemeContext";
-import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
+import {ThemedSafeAreaView} from "@/components/Themed/ThemedSafeAreaView";
 
 const TrendingNews = () => {
 	const {id} = useLocalSearchParams<{ id: string }>();

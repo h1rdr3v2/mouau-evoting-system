@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {ScrollView, useWindowDimensions, View} from "react-native";
-import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
-import {ThemedText} from "@/components/ThemedText";
-import {SceneMap, TabBar, TabView} from "react-native-tab-view";
 import {useTheme} from "@/core/contexts/ThemeContext";
+import {ThemedText} from "@/components/Themed/ThemedText";
+import {SceneMap, TabBar, TabView} from "react-native-tab-view";
+import {ScrollView, useWindowDimensions, View} from "react-native";
+import {ThemedSafeAreaView} from "@/components/Themed/ThemedSafeAreaView";
 
 const CandidateModal = () => {
 	return (

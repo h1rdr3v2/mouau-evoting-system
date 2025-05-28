@@ -1,10 +1,10 @@
 import {router} from "expo-router";
 import React, {useState} from 'react';
 import {useAuth} from "@/core/queries/useAuth";
-import {ThemedText} from "@/components/ThemedText";
-import {ThemedView} from "@/components/ThemedView";
-import {ThemedButton} from "@/components/ThemedButton";
-import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
+import {ThemedText} from "@/components/Themed/ThemedText";
+import {ThemedView} from "@/components/Themed/ThemedView";
+import {ThemedButton} from "@/components/Themed/ThemedButton";
+import {ThemedSafeAreaView} from "@/components/Themed/ThemedSafeAreaView";
 import {CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell} from 'react-native-confirmation-code-field';
 import {KeyboardAvoidingView, ScrollView, Platform, View, Image, TextInput, Alert, Pressable} from "react-native";
 

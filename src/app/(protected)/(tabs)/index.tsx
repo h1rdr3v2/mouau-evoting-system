@@ -1,11 +1,11 @@
 import React from 'react';
 import {useUser} from "@/core/hooks/useUser";
-import {ThemedText} from '@/components/ThemedText';
+import {ThemedText} from '@/components/Themed/ThemedText';
 import {getElections} from "@/core/queries/useElections";
 import {getAllTrendingNews} from "@/core/queries/useNews";
 import {ScrollView, View, RefreshControl} from 'react-native';
-import {ThemedSafeAreaView} from "@/components/ThemedSafeAreaView";
 import {TrendingNewsSection} from "@/components/Pages/TrendingNews";
+import {ThemedSafeAreaView} from "@/components/Themed/ThemedSafeAreaView";
 import {OngoingElection, UpcomingElection} from "@/components/Pages/Elections";
 import FreeFairElectionBanner from "@/components/Banner/FreeFairElectionBanner";
 

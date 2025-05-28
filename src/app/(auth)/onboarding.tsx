@@ -2,10 +2,10 @@ import {useState} from "react";
 import {router} from "expo-router";
 import {StatusBar} from "expo-status-bar";
 import {slidesData} from "@/core/data/slidesData";
-import {ThemedView} from "@/components/ThemedView";
-import {ThemedText} from "@/components/ThemedText";
 import {Image, ScrollView, View} from "react-native";
-import {ThemedButton} from "@/components/ThemedButton";
+import {ThemedView} from "@/components/Themed/ThemedView";
+import {ThemedText} from "@/components/Themed/ThemedText";
+import {ThemedButton} from "@/components/Themed/ThemedButton";
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const OnboardingScreen = () => {
