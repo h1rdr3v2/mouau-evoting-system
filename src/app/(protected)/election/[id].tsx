@@ -1,6 +1,6 @@
 import {Skeleton} from "moti/skeleton";
 import {useTheme} from "@/core/contexts/ThemeContext";
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {ThemedText} from "@/components/Themed/ThemedText";
 import {ThemedButton} from "@/components/Themed/ThemedButton";
 import {Link, router, useLocalSearchParams} from 'expo-router';
