@@ -1,5 +1,5 @@
 import {BlurView} from 'expo-blur';
-import React, {useState, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {router, useLocalSearchParams} from "expo-router";
 import {useTheme} from "@/core/contexts/ThemeContext";
 import {ThemedText} from "@/components/Themed/ThemedText";
@@ -7,9 +7,9 @@ import {ThemedButton} from "@/components/Themed/ThemedButton";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {ThemedSafeAreaView} from "@/components/Themed/ThemedSafeAreaView";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import {getElection, getPositionsAndCandidates} from "@/core/queries/useElections";
-import {View, ScrollView, StyleSheet, Platform, Image, Alert, ActivityIndicator} from "react-native";
+import {getElection, getPositionsAndCandidates, useSubmitVote} from "@/core/queries/useElections";
 import {PositonCandidateApiResponse, PositionsCandidatesResult, SelectedCandidates} from "@/core/types/Election";
+import {View, ScrollView, StyleSheet, Image, Alert, ActivityIndicator} from "react-native";
 
 const ConfirmVote = () => {
 	const {bottom} = useSafeAreaInsets();
@@ -18,8 +18,6 @@ const ConfirmVote = () => {
 		electionId: string;
 		selections: string;
 	}>();
-	
-	const [isSubmitting, setIsSubmitting] = useState(false);
 	
 	// Parse selections
 	const selectedCandidates: SelectedCandidates = useMemo(() => {
@@ -33,6 +31,9 @@ const ConfirmVote = () => {
 	// Fetch data
 	const {data: electionData} = getElection(electionId);
 	const {data: posCandid, isLoading} = getPositionsAndCandidates(electionId);
+	
+	// Use the mutation hook
+	const submitVoteMutation = useSubmitVote();
 	
 	// Get selected candidate details
 	const selectedCandidateDetails = useMemo(() => {
@@ -66,22 +67,18 @@ const ConfirmVote = () => {
 				{
 					text: "Confirm",
 					style: "default",
-					onPress: async () => {
-						setIsSubmitting(true);
-						try {
-							// TODO: Submit vote to API
-							// await submitVote(electionId, selectedCandidates);
-							
-							// Simulate API call
-							await new Promise(resolve => setTimeout(resolve, 2000));
-							
-							// Navigate to success page
-							router.replace('/election/vote-success');
-						} catch (error) {
-							Alert.alert("Error", "Failed to submit vote. Please try again.");
-						} finally {
-							setIsSubmitting(false);
-						}
+					onPress: () => {
+						submitVoteMutation.mutate(electionId, {
+							onSuccess: (data) => {
+								console.log('Vote submitted successfully:', data);
+								// Navigate to success page
+								router.replace('/election/vote-success')
+							},
+							onError: (error) => {
+								console.error('Failed to submit vote:', error);
+								Alert.alert("Error", "Failed to submit vote. Please try again.");
+							}
+						});
 					}
 				}
 			]
@@ -100,83 +97,80 @@ const ConfirmVote = () => {
 	
 	return (
 		<>
-			<ThemedSafeAreaView>
-				<ScrollView
-					style={{flex: 1}}
-					contentInset={{bottom: 100}}
-					contentContainerStyle={{
-						padding: 16,
-						paddingBottom: Platform.OS === 'android' ? 120 : 0,
-					}}
-					showsVerticalScrollIndicator={false}
-				>
-					<View className='gap-5'>
-						<ThemedText type='defaultSemiBold' className='text-lg'>
-							Confirm your selected candidates
-						</ThemedText>
-						<ThemedText type='title'>
-							{electionData?.election?.title || 'Election'}
-						</ThemedText>
-						<ThemedText className='text-sm opacity-70'>
-							Please review your selections before submitting your vote
-						</ThemedText>
-						
-						{/* Warning */}
-						<View className='bg-yellow-100 dark:bg-yellow-900/30 p-4 rounded-xl flex-row gap-3'>
-							<MaterialCommunityIcons
-								name="alert-circle"
-								size={24}
-								color={colors.text}
-							/>
-							<View className='flex-1'>
-								<ThemedText type='defaultSemiBold' className='text-sm'>
-									Important Notice
-								</ThemedText>
-								<ThemedText className='text-sm mt-1'>
-									Once you confirm your vote, it cannot be changed or undone.
-									Please ensure you have selected the correct candidates.
-								</ThemedText>
-							</View>
+			<ScrollView
+				style={{flex: 1}}
+				contentInset={{bottom: 100}}
+				contentContainerStyle={{
+					padding: 16,
+					paddingBottom: 150,
+				}}
+				showsVerticalScrollIndicator={false}
+			>
+				<View className='gap-5'>
+					<ThemedText type='defaultSemiBold' className='text-lg'>
+						Confirm your selected candidates
+					</ThemedText>
+					<ThemedText type='title'>
+						{electionData?.election?.title || 'Election'}
+					</ThemedText>
+					<ThemedText className='text-sm opacity-70'>
+						Please review your selections before submitting your vote
+					</ThemedText>
+					
+					{/* Warning */}
+					<View className='bg-yellow-100 dark:bg-yellow-900/30 p-4 rounded-xl flex-row gap-3'>
+						<MaterialCommunityIcons
+							name="alert-circle"
+							size={24}
+							color={colors.text}
+						/>
+						<View className='flex-1'>
+							<ThemedText type='defaultSemiBold' className='text-sm'>
+								Important Notice
+							</ThemedText>
+							<ThemedText className='text-sm mt-1'>
+								Once you confirm your vote, it cannot be changed or undone.
+								Please ensure you have selected the correct candidates.
+							</ThemedText>
 						</View>
-						
-						{/* Selected Candidates by Position */}
-						<View className='gap-6 mt-4'>
+					</View>
+					
+					{/* Selected Candidates by Position */}
+					<View className='gap-6 mt-4'>
+						{Object.entries(selectedCandidateDetails).map(([positionName, candidates]) => (
+							<View key={positionName} className='gap-3'>
+								<ThemedText
+									type='subtitle'
+									className='text-primary-light dark:text-primary-dark'
+								>
+									{positionName}
+								</ThemedText>
+								
+								{candidates.map((candidate) => (
+									<ConfirmationCard key={candidate.id} candidate={candidate}/>
+								))}
+							</View>
+						))}
+					</View>
+					
+					{/* Vote Summary */}
+					<View className='mt-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-xl'>
+						<ThemedText type='defaultSemiBold' className='mb-2'>
+							Vote Summary
+						</ThemedText>
+						<View className='gap-1'>
 							{Object.entries(selectedCandidateDetails).map(([positionName, candidates]) => (
-								<View key={positionName} className='gap-3'>
-									<ThemedText
-										type='subtitle'
-										className='text-primary-light dark:text-primary-dark'
-									>
-										{positionName}
+								<View key={positionName} className='flex-row justify-between'>
+									<ThemedText className='text-sm'>{positionName}:</ThemedText>
+									<ThemedText className='text-sm font-medium'>
+										{candidates.length} candidate{candidates.length > 1 ? 's' : ''} selected
 									</ThemedText>
-									
-									{candidates.map((candidate) => (
-										<ConfirmationCard key={candidate.id} candidate={candidate}/>
-									))}
 								</View>
 							))}
 						</View>
-						
-						{/* Vote Summary */}
-						<View className='mt-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-xl'>
-							<ThemedText type='defaultSemiBold' className='mb-2'>
-								Vote Summary
-							</ThemedText>
-							<View className='gap-1'>
-								{Object.entries(selectedCandidateDetails).map(([positionName, candidates]) => (
-									<View key={positionName} className='flex-row justify-between'>
-										<ThemedText className='text-sm'>{positionName}:</ThemedText>
-										<ThemedText className='text-sm font-medium'>
-											{candidates.length} candidate{candidates.length > 1 ? 's' : ''} selected
-										</ThemedText>
-									</View>
-								))}
-							</View>
-						</View>
 					</View>
-				</ScrollView>
-			</ThemedSafeAreaView>
-			
+				</View>
+			</ScrollView>
 			{/* Fixed bottom button with blur effect */}
 			<BlurView
 				intensity={10}
@@ -186,16 +180,17 @@ const ConfirmVote = () => {
 				<View className='px-4 py-4'>
 					<ThemedButton
 						size='large'
-						title={isSubmitting ? 'Submitting...' : 'Confirm Vote'}
+						title={submitVoteMutation.isPending ? 'Submitting...' : 'Confirm Vote'}
 						onPress={handleConfirmVote}
-						disabled={isSubmitting}
-						className={isSubmitting ? 'opacity-50' : ''}
+						disabled={submitVoteMutation.isPending}
+						className={submitVoteMutation.isPending ? 'opacity-50' : ''}
 					/>
 				</View>
 			</BlurView>
 		</>
 	);
 };
+
 
 // Confirmation Card Component
 const ConfirmationCard = ({candidate}: { candidate: PositonCandidateApiResponse }) => {

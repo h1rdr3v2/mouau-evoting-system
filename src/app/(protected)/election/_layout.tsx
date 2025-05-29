@@ -32,6 +32,7 @@ export default function ElectionLayout() {
 				headerShown: false,
 			}}/>
 			<Stack.Screen name="confirm-vote" options={{headerShown: true, headerTitle: "Confirm Voting"}}/>
+			<Stack.Screen name="vote-success" options={{headerShown: true, headerTitle: ""}}/>
 		</Stack>
 	);
 }

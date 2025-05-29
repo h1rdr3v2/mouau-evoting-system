@@ -1,12 +1,14 @@
 import {
-	ElectionPayload,
-	ProcessedElection,
-	ElectionQueryResult,
 	ElectionApiResponse,
-	ElectionsApiResponse, ElectionsQueryResult, PositionsCandidatesApiresponse,
+	ElectionPayload,
+	ElectionQueryResult,
+	ElectionsApiResponse,
+	ElectionsQueryResult,
+	PositionsCandidatesApiresponse,
+	ProcessedElection,
 } from "@/core/types/Election";
-import {useQuery} from '@tanstack/react-query';
-import {format, isPast, isFuture} from 'date-fns';
+import {useMutation, useQuery} from '@tanstack/react-query';
+import {format, isFuture, isPast} from 'date-fns';
 import {electApiService} from "@/core/services/electApiService";
 
 export function getElections() {
@@ -86,4 +88,10 @@ const processElection = (election: ElectionPayload): ProcessedElection => {
 		// Dynamic status based on dates
 		dateBasedStatus: isPast(startDate) && isFuture(endDate) ? 'ongoing' : isFuture(startDate) ? 'upcoming' : 'ended'
 	};
+}
+
+export const useSubmitVote = () => {
+	return useMutation({
+		mutationFn: (electionId: string) => electApiService.submitVote(electionId),
+	});
 }
