@@ -238,7 +238,7 @@ const CandidateSelectionCard = ({
 				</View>
 			</View>
 			
-			{/* Manifesto Preview (optional) */}
+			{/* Manifesto Preview */}
 			{isSelected && (
 				<View className='mt-3 pt-3 border-t border-gray-200 dark:border-gray-700'>
 					<ThemedText className='text-sm italic' numberOfLines={2}>
