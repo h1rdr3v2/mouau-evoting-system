@@ -72,6 +72,7 @@ const ConfirmVote = () => {
 							onSuccess: (data) => {
 								console.log('Vote submitted successfully:', data);
 								// Navigate to success page
+								router.dismissAll();
 								router.replace('/election/vote-success')
 							},
 							onError: (error) => {

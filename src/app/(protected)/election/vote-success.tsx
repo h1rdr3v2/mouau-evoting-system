@@ -10,7 +10,9 @@ const VoteSuccess = () => {
 	return (
 		<ThemedSafeAreaView>
 			<View className='px-4 justify-around flex-1'>
-				<ThemedText type='title' className='text-center pt-3'>Thanks for voting!</ThemedText>
+				<ThemedText type='title' className='text-center pt-3'>
+					Thanks for voting!
+				</ThemedText>
 				<View className='gap-5'>
 					<LottieView
 						autoPlay
@@ -33,7 +35,7 @@ const VoteSuccess = () => {
 						size={'large'}
 						title="Go Home"
 						variant='text'
-						onPress={() => router.dismissTo('/')}
+						onPress={() => router.replace('/')}
 					/>
 				</View>
 			</View>
