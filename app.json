@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "election_project",
-    "slug": "election_project",
+    "name": "Mouau Vote",
+    "slug": "MouauVote",
     "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -10,7 +10,10 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "co.bleon.electionproject"
+      "bundleIdentifier": "co.bleon.electionproject",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -41,6 +44,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "9e06912b-b4cb-4f82-9ec4-7de81ae4f065"
+      }
     }
   }
 }
