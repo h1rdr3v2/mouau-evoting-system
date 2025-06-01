@@ -7,9 +7,9 @@ import {ThemedButton} from "@/components/Themed/ThemedButton";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {ThemedSafeAreaView} from "@/components/Themed/ThemedSafeAreaView";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import {getElection, getPositionsAndCandidates, useSubmitVote} from "@/core/queries/useElections";
-import {PositonCandidateApiResponse, PositionsCandidatesResult, SelectedCandidates} from "@/core/types/Election";
 import {View, ScrollView, StyleSheet, Image, Alert, ActivityIndicator} from "react-native";
+import {getElection, getPositionsAndCandidates, useSubmitVote} from "@/core/queries/useElections";
+import {CandidateApiData, PositionsCandidatesResult, SelectedCandidates} from "@/core/types/Election";
 
 const ConfirmVote = () => {
 	const {bottom} = useSafeAreaInsets();
@@ -39,7 +39,7 @@ const ConfirmVote = () => {
 	const selectedCandidateDetails = useMemo(() => {
 		if (!posCandid?.data) return {};
 		
-		const details: { [positionName: string]: PositonCandidateApiResponse[] } = {};
+		const details: { [positionName: string]: CandidateApiData[] } = {};
 		const positionsData = posCandid.data as PositionsCandidatesResult;
 		
 		Object.entries(selectedCandidates).forEach(([positionName, candidateIds]) => {
@@ -69,8 +69,7 @@ const ConfirmVote = () => {
 					style: "default",
 					onPress: () => {
 						submitVoteMutation.mutate(electionId, {
-							onSuccess: (data) => {
-								console.log('Vote submitted successfully:', data);
+							onSuccess: () => {
 								// Navigate to success page
 								router.dismissAll();
 								router.replace('/election/vote-success')
@@ -194,7 +193,7 @@ const ConfirmVote = () => {
 
 
 // Confirmation Card Component
-const ConfirmationCard = ({candidate}: { candidate: PositonCandidateApiResponse }) => {
+const ConfirmationCard = ({candidate}: { candidate: CandidateApiData }) => {
 	const {colors} = useTheme();
 	
 	return (
@@ -202,14 +201,14 @@ const ConfirmationCard = ({candidate}: { candidate: PositonCandidateApiResponse 
 			className='border border-primary-light dark:border-primary-dark rounded-xl p-4 bg-primary-light/5 dark:bg-primary-dark/5'>
 			<View className='flex-row gap-3 items-center'>
 				<Image
-					source={{uri: candidate.imageUrl}}
+					source={{uri: candidate.profile.imageUrl}}
 					className='w-14 h-14 rounded-xl bg-gray-200'
 					resizeMode='cover'
 				/>
 				<View className='flex-1'>
 					<View className='flex-row items-center gap-2'>
 						<ThemedText type='subtitle' numberOfLines={1}>
-							{candidate.name}
+							{candidate.profile.name}
 						</ThemedText>
 						<MaterialCommunityIcons
 							name="check-circle"
@@ -218,10 +217,10 @@ const ConfirmationCard = ({candidate}: { candidate: PositonCandidateApiResponse 
 						/>
 					</View>
 					<ThemedText className='text-sm' numberOfLines={1}>
-						{candidate.department}
+						{candidate.academic.department}
 					</ThemedText>
 					<ThemedText className='text-xs opacity-70'>
-						Level {candidate.level}
+						Level {candidate.academic.level}
 					</ThemedText>
 				</View>
 			</View>

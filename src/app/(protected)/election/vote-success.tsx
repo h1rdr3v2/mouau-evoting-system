@@ -34,7 +34,7 @@ const VoteSuccess = () => {
 					<ThemedButton
 						size={'large'}
 						title="Go Home"
-						variant='text'
+						variant='secondary'
 						onPress={() => router.replace('/')}
 					/>
 				</View>

@@ -15,7 +15,7 @@ export const mockElections: ElectionPayload[] = [
 	{
 		id: 'election2',
 		title: 'Computer Science Rep 2025',
-		description: 'Annual elections for the executive committee of the National Association of Computing Students.',
+		description: 'Election to determine to next course rep and asst. of the incoming CS 24/25',
 		startDate: '2026-04-10T09:00:00.000Z',
 		endDate: '2027-04-12T18:00:00.000Z',
 		positions: countElectionPositions('election2', mockPositions),

@@ -8,7 +8,7 @@ import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {ThemedSafeAreaView} from "@/components/Themed/ThemedSafeAreaView";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import {getElection, getPositionsAndCandidates} from "@/core/queries/useElections";
-import {PositonCandidateApiResponse, PositionsCandidatesResult, SelectedCandidates} from "@/core/types/Election";
+import {CandidateApiData, PositionsCandidatesResult, SelectedCandidates} from "@/core/types/Election";
 import {View, ScrollView, StyleSheet, TouchableOpacity, Image, ActivityIndicator} from "react-native";
 
 const CastVote = () => {
@@ -179,7 +179,7 @@ const CandidateSelectionCard = ({
 									onSelect,
 									disabled
 								}: {
-	candidate: PositonCandidateApiResponse;
+	candidate: CandidateApiData;
 	isSelected: boolean;
 	onSelect: () => void;
 	disabled: boolean;
@@ -201,19 +201,19 @@ const CandidateSelectionCard = ({
 			<View className='flex-row items-center justify-between'>
 				<View className='flex-row gap-3 items-center flex-1'>
 					<Image
-						source={{uri: candidate.imageUrl}}
+						source={{uri: candidate.profile.imageUrl}}
 						className='w-16 h-16 rounded-xl bg-gray-200'
 						resizeMode='cover'
 					/>
 					<View className='flex-1'>
 						<ThemedText type='subtitle' numberOfLines={1}>
-							{candidate.name}
+							{candidate.profile.name}
 						</ThemedText>
 						<ThemedText className='text-sm' numberOfLines={1}>
-							{candidate.department}
+							{candidate.academic.department}
 						</ThemedText>
 						<ThemedText className='text-xs opacity-70'>
-							Level {candidate.level}
+							Level {candidate.academic.level}
 						</ThemedText>
 					</View>
 				</View>
@@ -242,7 +242,7 @@ const CandidateSelectionCard = ({
 			{isSelected && (
 				<View className='mt-3 pt-3 border-t border-gray-200 dark:border-gray-700'>
 					<ThemedText className='text-sm italic' numberOfLines={2}>
-						"{candidate.manifesto}"
+						"{candidate.campaign.profile}"
 					</ThemedText>
 				</View>
 			)}

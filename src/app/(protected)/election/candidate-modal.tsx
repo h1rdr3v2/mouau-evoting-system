@@ -52,14 +52,14 @@ const CandidateModal = () => {
 				<View className='gap-3'>
 					<View className='mt-10'>
 						<ThemedText type='title'>
-							{candidate.data.name}
+							{candidate.data.profile.name}
 						</ThemedText>
 						<ThemedText type='light'>
-							{candidate.data.department}, {candidate.data.level} lvl
+							{candidate.data.academic.department}, {candidate.data.academic.level} lvl
 						</ThemedText>
 					</View>
 					<Image
-						source={{uri: candidate.data.imageUrl}}
+						source={{uri: candidate.data.profile.bannerUrl}}
 						className='h-[200px] rounded-xl bg-neutral-200'
 						resizeMode="cover"
 					/>
@@ -82,13 +82,13 @@ const ProfileRoute = ({candidate}: { candidate: Candidate }) => (
 		<View className='gap-6'>
 			<View>
 				<ThemedText type='subtitle' className='mb-2'>About Me</ThemedText>
-				<ThemedText>{candidate.bio || candidate.profile || "No bio available"}</ThemedText>
+				<ThemedText>{candidate.profile.bio || "No bio available"}</ThemedText>
 			</View>
 			
 			<View>
 				<ThemedText type='subtitle' className='mb-2'>Academic Information</ThemedText>
-				<ThemedText>Department: {candidate.department}</ThemedText>
-				<ThemedText>Level: {candidate.level}</ThemedText>
+				<ThemedText>Department: {candidate.academic.department}</ThemedText>
+				<ThemedText>Level: {candidate.academic.level}</ThemedText>
 			</View>
 			
 			{candidate.achievements && candidate.achievements.length > 0 && (
@@ -127,8 +127,8 @@ const CampaignRoute = ({candidate}: { candidate: Candidate }) => (
 		<View className='gap-6'>
 			<View>
 				<ThemedText type='subtitle' className='mb-3'>Campaign Promises</ThemedText>
-				{candidate.campaignPromises && candidate.campaignPromises.length > 0 ? (
-					candidate.campaignPromises.map((promise, index) => (
+				{candidate.campaign.key_promises && candidate.campaign.key_promises.length > 0 ? (
+					candidate.campaign.key_promises.map((promise, index) => (
 						<View key={index} className='mb-3 flex-row'>
 							<ThemedText className='mr-2'>•</ThemedText>
 							<ThemedText className='flex-1'>{promise}</ThemedText>
@@ -142,7 +142,7 @@ const CampaignRoute = ({candidate}: { candidate: Candidate }) => (
 			<View>
 				<ThemedText type='subtitle' className='mb-2'>Why Vote For Me?</ThemedText>
 				<ThemedText className='leading-6'>
-					{candidate.profile || "I am committed to serving the student body with dedication and integrity."}
+					{candidate.campaign.profile || "I am committed to serving the student body with dedication and integrity."}
 				</ThemedText>
 			</View>
 		</View>

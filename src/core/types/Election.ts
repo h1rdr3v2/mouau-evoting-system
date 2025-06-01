@@ -11,36 +11,44 @@ export type Position = {
 // Candidate type
 export type Candidate = {
 	id: string;
-	name: string;
 	positionId: string;
 	electionId: string;
-	manifesto: string;
-	imageUrl: string;
+	profile: {
+		name: string;
+		bio: string;
+		imageUrl: string;
+		bannerUrl: string;
+	},
+	academic: {
+		level: number;
+		department: string;
+		cgpa: string | number;
+	},
+	campaign: {
+		profile: string;
+		key_promises?: string[];
+	}
 	votes: number;
-	department: string;
-	level: number;
-	profile?: string;
-	campaignPromises?: string[];
+	manifesto: string;
 	achievements?: string[];
-	bio?: string;
 	createdAt: string;
 	updatedAt: string;
 };
 
-// Type for vote
-export type SubmittedVote = {
-	positionId: string;
-	candidateId: string;
-};
-
-// VotePayload for sending vote to backend
-export type VotePayload = {
-	id: string;
-	userId: string;
-	electionId: string;
-	votes: SubmittedVote[];
-	timestamp: string;
-};
+// // Type for vote
+// export type SubmittedVote = {
+// 	positionId: string;
+// 	candidateId: string;
+// };
+//
+// // VotePayload for sending vote to backend
+// export type VotePayload = {
+// 	id: string;
+// 	userId: string;
+// 	electionId: string;
+// 	votes: SubmittedVote[];
+// 	timestamp: string;
+// };
 
 // Election type
 export type Election = {
@@ -58,23 +66,23 @@ export type Election = {
 	updatedAt: string; // ISO date string
 };
 
-// VoterStatus type (tracking if a user has voted for a position)
-export type VoterStatus = {
-	id: string;
-	userId: string;
-	electionId: string;
-	hasVoted: boolean;
-	votedAt: string;
-};
-
-export type VoteReceipt = {
-	voteId: string;
-	electionTitle: string;
-	candidateName: string;
-	position: string;
-	timestamp: string;
-	verificationCode: string;
-};
+// // VoterStatus type (tracking if a user has voted for a position)
+// export type VoterStatus = {
+// 	id: string;
+// 	userId: string;
+// 	electionId: string;
+// 	hasVoted: boolean;
+// 	votedAt: string;
+// };
+//
+// export type VoteReceipt = {
+// 	voteId: string;
+// 	electionTitle: string;
+// 	candidateName: string;
+// 	position: string;
+// 	timestamp: string;
+// 	verificationCode: string;
+// };
 
 export type ElectionPayload = Omit<Election, 'isPublished' | 'createdAt' | 'updatedAt' | 'createdBy'>;
 
@@ -115,11 +123,9 @@ export interface ElectionApiResponse {
 
 export type CandidateApiData = Omit<Candidate, 'createdAt' | 'updatedAt'>;
 
-export type PositonCandidateApiResponse = Omit<CandidateApiData, 'profile' | 'campaignPromises' | 'bio' | 'achievements'>;
-
 export interface PositionsCandidatesResult {
 	[positionTitle: string]: {
-		candidates: PositonCandidateApiResponse[];
+		candidates: CandidateApiData[];
 		maxSelections: number;
 	};
 }

@@ -5,11 +5,11 @@ import {ThemedText} from "@/components/Themed/ThemedText";
 import {ThemedButton} from "@/components/Themed/ThemedButton";
 import {Link, router, useLocalSearchParams} from 'expo-router';
 import {SceneMap, TabBar, TabView} from "react-native-tab-view";
-import {ThemedSafeAreaView} from "@/components/Themed/ThemedSafeAreaView";
 import {Image, ScrollView, useWindowDimensions, View} from "react-native";
+import {ThemedSafeAreaView} from "@/components/Themed/ThemedSafeAreaView";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import {CandidateApiData, PositionsCandidatesResult} from "@/core/types/Election";
 import {getElection, getPositionsAndCandidates} from "@/core/queries/useElections";
-import {PositonCandidateApiResponse, PositionsCandidatesResult} from "@/core/types/Election";
 
 
 const Index = () => {
@@ -90,19 +90,19 @@ const getOrdinalSuffix = (number: number): string => {
 };
 
 // Component for a candidate on live result
-const LiveResultCandidate = ({candidate, position}: { candidate: PositonCandidateApiResponse; position: number }) => {
+const LiveResultCandidate = ({candidate, position}: { candidate: CandidateApiData; position: number }) => {
 	return (
 		<View
 			className='flex-row justify-between items-center border border-primary-light dark:border-primary-dark p-4 rounded-xl'>
 			<View className='flex-row gap-3 items-center'>
 				<Image
-					source={{uri: candidate.imageUrl}}
+					source={{uri: candidate.profile.imageUrl}}
 					importantForAccessibility={'yes'}
 					className='bg-neutral-100 rounded-xl w-16 h-16'
 					resizeMode="cover"
 				/>
 				<View>
-					<ThemedText type='subtitle'>{candidate.name}</ThemedText>
+					<ThemedText type='subtitle'>{candidate.profile.name}</ThemedText>
 					<ThemedText>Votes: {candidate.votes}</ThemedText>
 				</View>
 			</View>
@@ -123,7 +123,7 @@ const LiveResultCandidate = ({candidate, position}: { candidate: PositonCandidat
 	);
 };
 
-const CandidateCard = ({candidate}: { candidate: PositonCandidateApiResponse }) => {
+const CandidateCard = ({candidate}: { candidate: CandidateApiData }) => {
 	return (
 		<Link
 			href={{
@@ -135,13 +135,13 @@ const CandidateCard = ({candidate}: { candidate: PositonCandidateApiResponse }) 
 				className='flex-row justify-between items-center border border-primary-light dark:border-primary-dark p-4 rounded-xl w-full'>
 				<View className='flex-row gap-3 items-center'>
 					<Image
-						source={{uri: candidate.imageUrl}}
+						source={{uri: candidate.profile.imageUrl}}
 						className='bg-neutral-100 rounded-xl w-16 h-16'
 						resizeMode="cover"
 					/>
 					<View>
-						<ThemedText type='subtitle'>{candidate.name}</ThemedText>
-						<ThemedText className='text-sm'>{candidate.department}</ThemedText>
+						<ThemedText type='subtitle'>{candidate.profile.name}</ThemedText>
+						<ThemedText className='text-sm'>{candidate.academic.department}</ThemedText>
 					</View>
 				</View>
 			</View>
@@ -158,7 +158,7 @@ const LiveResultRoute = ({positionsData}: { positionsData: PositionsCandidatesRe
 		return Object.entries(positionsData).reduce((acc, [positionName, position]) => {
 			acc[positionName] = [...position.candidates].sort((a, b) => b.votes - a.votes);
 			return acc;
-		}, {} as Record<string, PositonCandidateApiResponse[]>);
+		}, {} as Record<string, CandidateApiData[]>);
 	}, [positionsData]);
 	
 	return (
