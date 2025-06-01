@@ -3,74 +3,25 @@ import {Text, Animated, Platform} from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 
 const NetworkStatusToast: React.FC = () => {
-	const [isConnected, setIsConnected] = useState<boolean | null>(null);
 	const [shouldShow, setShouldShow] = useState<boolean>(false);
 	const [showReconnectedMessage, setShowReconnectedMessage] = useState<boolean>(false);
 	const translateY = useRef(new Animated.Value(-60)).current;
-	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const lastConnectionState = useRef<boolean | null>(null);
 	
-	useEffect(() => {
-		// Check initial network status when app opens
-		NetInfo.fetch().then(state => {
-			const initialConnected = state.isConnected;
-			setIsConnected(initialConnected);
-			
-			// If no internet on initial load, show the badge
-			if (initialConnected === false) {
-				setShouldShow(true);
-				showBadge();
-			}
+	// Helper function to hide the badge
+	const hideBadge = () => {
+		Animated.timing(translateY, {
+			toValue: -60,
+			duration: 300,
+			useNativeDriver: true,
+		}).start(() => {
+			setShouldShow(false);
+			setShowReconnectedMessage(false);
 		});
-		
-		// Subscribe to network status changes
-		const unsubscribe = NetInfo.addEventListener(state => {
-			const previousConnected = isConnected;
-			const newConnected = state.isConnected;
-			
-			// Only respond to actual connection changes
-			if (previousConnected !== null && newConnected !== previousConnected) {
-				if (newConnected === false) {
-					// Lost connection - show badge and keep it visible
-					setShouldShow(true);
-					setShowReconnectedMessage(false);
-					showBadge();
-				} else if (newConnected === true) {
-					// Connection restored - show reconnected message
-					setShouldShow(true);
-					setShowReconnectedMessage(true);
-					
-					// Clear any existing timeout
-					if (timeoutRef.current) {
-						clearTimeout(timeoutRef.current);
-					}
-					
-					showBadge();
-					
-					// Hide after 3 seconds
-					timeoutRef.current = setTimeout(() => {
-						Animated.timing(translateY, {
-							toValue: -60,
-							duration: 300,
-							useNativeDriver: true,
-						}).start(() => {
-							setShouldShow(false);
-							setShowReconnectedMessage(false);
-						});
-					}, 3000);
-				}
-			}
-			
-			setIsConnected(newConnected);
-		});
-		
-		return () => {
-			unsubscribe();
-			if (timeoutRef.current) {
-				clearTimeout(timeoutRef.current);
-			}
-		};
-	}, [isConnected]);
+	};
 	
+	// Helper function to show the badge
 	const showBadge = () => {
 		Animated.timing(translateY, {
 			toValue: 0,
@@ -78,6 +29,71 @@ const NetworkStatusToast: React.FC = () => {
 			useNativeDriver: true,
 		}).start();
 	};
+	
+	useEffect(() => {
+		// Check initial network status when app opens
+		NetInfo.fetch().then(state => {
+			lastConnectionState.current = state.isConnected;
+			
+			// If no internet on initial load, show the badge
+			if (state.isConnected === false) {
+				setShouldShow(true);
+				showBadge();
+			}
+		});
+		
+		// Subscribe to network status changes
+		const unsubscribe = NetInfo.addEventListener(state => {
+			const currentConnected = state.isConnected;
+			const previousConnected = lastConnectionState.current;
+			
+			// Only respond to actual connection changes
+			if (previousConnected !== null && currentConnected !== previousConnected) {
+				if (currentConnected === false) {
+					// Lost connection - show badge and keep it visible
+					setShouldShow(true);
+					setShowReconnectedMessage(false);
+					
+					// Clear any existing timeout
+					if (timeoutRef.current) {
+						clearTimeout(timeoutRef.current);
+						timeoutRef.current = null;
+					}
+					
+					showBadge();
+				} else if (currentConnected === true && !previousConnected) {
+					// Connection restored - show reconnected message
+					setShouldShow(true);
+					setShowReconnectedMessage(true);
+					
+					// Clear any existing timeout
+					if (timeoutRef.current) {
+						clearTimeout(timeoutRef.current);
+						timeoutRef.current = null;
+					}
+					
+					showBadge();
+					
+					// Hide after 3 seconds
+					timeoutRef.current = setTimeout(() => {
+						hideBadge();
+						timeoutRef.current = null;
+					}, 3000);
+				}
+			}
+			
+			// Update the last known connection state
+			lastConnectionState.current = currentConnected;
+		});
+		
+		return () => {
+			unsubscribe();
+			if (timeoutRef.current) {
+				clearTimeout(timeoutRef.current);
+				timeoutRef.current = null;
+			}
+		};
+	}, []);
 	
 	if (!shouldShow) return null;
 	
