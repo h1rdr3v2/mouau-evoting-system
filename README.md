@@ -1,50 +1,164 @@
-# Welcome to your Expo app 👋
+# MOUAU E-Voting System 🗳️
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A modern, secure, and user-friendly mobile voting platform designed for Michael Okpara University of Agriculture, Umudike (MOUAU). This cross-platform application enables seamless digital elections with real-time results and robust security features.
 
-## Get started
+## 🎓 Academic Project
+**Final Year Project**  
+**Institution:** Michael Okpara University of Agriculture, Umudike (MOUAU)  
+**Program:** Bachelor of Science BSc.  
+**Academic Year:** 400 Level
 
-1. Install dependencies
+## 🚀 Features
 
-   ```bash
-   npm install
-   ```
+- **Cross-Platform Compatibility** - Works on both iOS and Android
+- **Real-time Voting** - Instant vote counting and results
+- **Secure Authentication** - Multi-layer security system
+- **User-Friendly Interface** - Intuitive design for all users
+- **Offline Capability** - Vote storage when network is unavailable
+- **Admin Dashboard** - Complete election management system
+- **Vote Analytics** - Comprehensive reporting and statistics
 
-2. Start the app
+## 🛠️ Tech Stack
 
-   ```bash
-    npx expo start
-   ```
+- **Framework:** React Native with Expo
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS (NativeWind)
+- **State Management:** Zustand
+- **Database:** `To be implemented`
+- **Authentication:** `To be implemented`
+- **Backend:** `To be implemented`
 
-In the output, you'll find options to open the app in a
+## 📱 Screenshots
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+[Add screenshots of your app here]
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 🔧 Installation & Setup
 
-## Get a fresh project
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
+- Expo CLI
+- Git
 
-When you're ready, run:
-
+### Clone the Repository
 ```bash
-npm run reset-project
+git clone https://github.com/h1rdr3v2/mouau-evoting-system.git
+cd mouau-evoting-system
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Install Dependencies
+```bash
+npm install
+# or
+yarn install
+```
 
-## Learn more
+### Run the Application
+```bash
+# Start the development server
+npm start
+# or
+yarn start
 
-To learn more about developing your project with Expo, look at the following resources:
+# For specific platforms
+npm run android
+npm run ios
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 🏗️ Project Structure
 
-## Join the community
+```
+mouau-evoting-system/
+├── src/
+│   ├── app/               # Application
+│   ├── components/        # Reusable UI components
+│   └── core/              # Navigation configuration
+│      ├── store/          # Zustand store configurations
+│      ├── services/       # API and external services
+│      ├── utils/          # Utility functions
+│      └── types/          # TypeScript type definitions
+├── assets/                # Images, fonts, and other assets
+└── __tests__/             # Test files
+```
 
-Join our community of developers creating universal apps.
+## 🔐 Security Features
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- End-to-end encryption for vote data
+- Secure user authentication
+- Vote integrity verification
+- Audit trail logging
+- Anti-fraud mechanisms
+
+## 📊 Core Functionality
+
+### For Voters
+- Secure login/registration
+- View available elections
+- Cast votes securely
+- View election results
+- Vote history tracking
+
+### For Administrators (not available yet)
+- Election creation and management
+- Candidate management
+- Real-time monitoring
+- Results compilation
+- User management
+
+## 🧪 Testing
+
+```bash
+# Run tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+```
+
+## 📈 Performance Optimization
+
+- Optimized bundle size
+- Efficient state management
+- Lazy loading implementation
+- Caching strategies
+- Offline-first architecture
+
+## 🤝 Contributing
+
+This is an academic project, but suggestions and feedback are welcome!
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👨‍💻 Author
+
+**[Your Name]**
+- GitHub: [@h1rdr3v2](https://github.com/h1rdr3v2)
+- LinkedIn: [Destiny's LinkedIn Profile](https://linkedin.com/in/destinyezenwata)
+- Email: destinyezenwata@gmail.com
+
+**Academic Supervisor:** Chigbundu Kanu  
+**Department:** Computer Science  
+**University:** Michael Okpara University of Agriculture, Umudike
+
+## 🙏 Acknowledgments
+
+- Michael Okpara University of Agriculture, Umudike
+- Mr. Chigbundu Kanu for academic guidance
+- React Native and Expo communities
+- All contributors and testers
+
+## 📞 Support
+
+For support, email destinyezenwata@gmail.com or create an issue in this repository.
+
+---
+
+**Note:** This is an academic project developed for educational purposes as part of a final year project at MOUAU.
