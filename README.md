@@ -37,9 +37,9 @@ security features.
 
 <div align="center">
   <img src="assets/screenshots/login-screen.png" width="250" alt="Login Screen"/>
-  <img src="assets/screenshots/home-screen.png" width="250" alt="Voting Screen"/>
-  <img src="assets/screenshots/election-screen.png" width="250" alt="Results Screen"/>
-  <img src="assets/screenshots/settings-screen.png" width="250" alt="Results Screen"/>
+  <img src="assets/screenshots/home-screen.png" width="250" alt="Home Screen"/>
+  <img src="assets/screenshots/election-screen.png" width="250" alt="Election Screen"/>
+  <img src="assets/screenshots/settings-screen.png" width="250" alt="Settings Screen"/>
 </div>
 
 ## 🔧 Installation & Setup
