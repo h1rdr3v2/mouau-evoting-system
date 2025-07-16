@@ -1,8 +1,11 @@
 # MOUAU E-Voting System 🗳️
 
-A modern, secure, and user-friendly mobile voting platform designed for Michael Okpara University of Agriculture, Umudike (MOUAU). This cross-platform application enables seamless digital elections with real-time results and robust security features.
+A modern, secure, and user-friendly mobile voting platform designed for Michael Okpara University of Agriculture,
+Umudike (MOUAU). This cross-platform application enables seamless digital elections with real-time results and robust
+security features.
 
 ## 🎓 Academic Project
+
 **Final Year Project**  
 **Institution:** Michael Okpara University of Agriculture, Umudike (MOUAU)  
 **Program:** Bachelor of Science BSc.  
@@ -30,23 +33,33 @@ A modern, secure, and user-friendly mobile voting platform designed for Michael 
 
 ## 📱 Screenshots
 
-[Add screenshots of your app here]
+### Voter App
+
+<div align="center">
+  <img src="assets/screenshots/login-screen.png" width="250" alt="Login Screen"/>
+  <img src="assets/screenshots/home-screen.png" width="250" alt="Voting Screen"/>
+  <img src="assets/screenshots/election-screen.png" width="250" alt="Results Screen"/>
+  <img src="assets/screenshots/settings-screen.png" width="250" alt="Results Screen"/>
+</div>
 
 ## 🔧 Installation & Setup
 
 ### Prerequisites
+
 - Node.js (v16 or higher)
 - npm or yarn
 - Expo CLI
 - Git
 
 ### Clone the Repository
+
 ```bash
 git clone https://github.com/h1rdr3v2/mouau-evoting-system.git
 cd mouau-evoting-system
 ```
 
 ### Install Dependencies
+
 ```bash
 npm install
 # or
@@ -54,6 +67,7 @@ yarn install
 ```
 
 ### Run the Application
+
 ```bash
 # Start the development server
 npm start
@@ -92,6 +106,7 @@ mouau-evoting-system/
 ## 📊 Core Functionality
 
 ### For Voters
+
 - Secure login/registration
 - View available elections
 - Cast votes securely
@@ -99,6 +114,7 @@ mouau-evoting-system/
 - Vote history tracking
 
 ### For Administrators (not available yet)
+
 - Election creation and management
 - Candidate management
 - Real-time monitoring
@@ -140,6 +156,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **[Your Name]**
+
 - GitHub: [@h1rdr3v2](https://github.com/h1rdr3v2)
 - LinkedIn: [Destiny's LinkedIn Profile](https://linkedin.com/in/destinyezenwata)
 - Email: destinyezenwata@gmail.com
