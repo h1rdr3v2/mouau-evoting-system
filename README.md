@@ -161,7 +161,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - LinkedIn: [Destiny's LinkedIn Profile](https://linkedin.com/in/destinyezenwata)
 - Email: destinyezenwata@gmail.com
 
-**Academic Supervisor:** Chigbundu Kanu  
+**Academic Supervisor:** Mr. Chigbundu Kanu  
 **Department:** Computer Science  
 **University:** Michael Okpara University of Agriculture, Umudike
 
