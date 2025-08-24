@@ -155,7 +155,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author
 
-**[Your Name]**
+**Destiny Ezenwata**
 
 - GitHub: [@h1rdr3v2](https://github.com/h1rdr3v2)
 - LinkedIn: [Destiny's LinkedIn Profile](https://linkedin.com/in/destinyezenwata)
